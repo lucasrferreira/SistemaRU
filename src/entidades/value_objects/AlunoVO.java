@@ -4,15 +4,18 @@ import java.io.Serializable;
 
 public class AlunoVO extends ConsumidorVO implements Serializable{
 
-
 	private CursoVO curso;
 	
-
-	public AlunoVO(String nome, int matricula, int anoIngresso, Sexo sexo,
-			Titulo titulo, CPF cpf) {
+	public AlunoVO(String nome, int matricula, int anoIngresso, Sexo sexo, Titulo titulo, CPF cpf) {
 		super(nome, matricula, anoIngresso, sexo, titulo, cpf);
-		// TODO Auto-generated constructor stub
+		
+	}	
+	
+	public AlunoVO()
+	{
+		super();
 	}
+
 	public CursoVO getCurso(){
 		return curso;
 	}
@@ -20,7 +23,8 @@ public class AlunoVO extends ConsumidorVO implements Serializable{
 		this.curso = curso;
 	}
 
-	
+
+
 
 
 }

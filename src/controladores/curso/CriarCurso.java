@@ -29,34 +29,36 @@ public class CriarCurso extends HttpServlet {
 		if (acao != null){
 			switch (acao) {
 				case "Criar":
+				try {
 					criarCurso(request,response);
+				} catch (DepartamentoNotFound e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 					break;
 				default:
 					request.getRequestDispatcher("ListarCurso").forward(request,response);
 			}
 		}else{
-			request.getRequestDispatcher("WEB-INF/CriarCurso.jsp").forward(request,response);	
+			request.getRequestDispatcher("WEB-INF/curso/CriarCurso.jsp").forward(request,response);	
 		}
 	}
 
-	private void criarCurso(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void criarCurso(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DepartamentoNotFound {
 		String nome = (String) request.getParameter("nome");
 		String sigla = (String) request.getParameter("sigla");
 		
 		try {
-			GerirCurso.criarCurso(request.getSession(), nome, sigla, request.getParameter("departamento"));
+			GerirCurso.criarCurso(request.getSession(), nome, sigla, request.getParameter("aluno"));
 			request.setAttribute("message", "Novo departamento criado!");
 			request.getRequestDispatcher("ListarCurso").forward(request,response);
 		} catch (SiglaNotFoundException | NomeNotFoundException e2) {
 			request.setAttribute("erro", "Um curso deve conter um nome, uma sigla e um departamento");
-			request.getRequestDispatcher("WEB-INF/CriarCurso.jsp").forward(request,response);
+			request.getRequestDispatcher("WEB-INF/curso/CriarCurso.jsp").forward(request,response);
 		}catch (SiglaAlreadyExistsException e) {
 			request.setAttribute("erro", "Sigla informada já existe");
-			request.getRequestDispatcher("WEB-INF/CriarCurso.jsp").forward(request,response);
-		}catch (DepartamentoNotFound e) {
-			request.setAttribute("erro", "Informe um departamento valido");
-			request.getRequestDispatcher("WEB-INF/CriarCurso.jsp").forward(request,response);
+			request.getRequestDispatcher("WEB-INF/curso/CriarCurso.jsp").forward(request,response);
+
 		}
-		
 	}
 }

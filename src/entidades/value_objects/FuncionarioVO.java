@@ -5,11 +5,15 @@ import java.io.Serializable;
 public class FuncionarioVO extends ConsumidorVO implements Serializable {
 	private DepartamentoVO dpto;
 	
-	public FuncionarioVO(String nome, int matricula, int anoIngresso) {
-		super(nome, matricula, anoIngresso);
+	public FuncionarioVO(String nome, int matricula, int anoIngresso, Sexo sexo, Titulo titulo, CPF cpf) {
+		super(nome, matricula, anoIngresso, sexo, titulo, cpf);
+		
+	}	
+	
+	public FuncionarioVO() {
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public DepartamentoVO getDepartamento(){
 		return dpto;
 	}

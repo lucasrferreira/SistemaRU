@@ -1,5 +1,6 @@
 package controladores.ccu;
 
+import java.sql.SQLException;
 import java.util.Collection;
 
 import javax.servlet.http.HttpSession;
@@ -19,23 +20,9 @@ public class GerirDepartamento {
 		return Departamento._listarDepartamentosDisponiveis();
 	}
 	
-	public static DepartamentoVO buscarDepartamento(HttpSession session, String sigla) throws DepartamentoNotFound{
-		DepartamentoVO departamentoAntigo = new DepartamentoVO("", sigla);
-		try {
-			departamentoAntigo = Departamento._buscarDepartamento(sigla);
-		} catch (NullPointerException e) {
-			throw new DepartamentoNotFound();
-		}
-		if (departamentoAntigo == null){
-			throw new DepartamentoNotFound();
-		}
+	public static void criarDepartamento(DepartamentoVO dpto) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException {
 		
-		return departamentoAntigo;
-	}	
-	
-	public static void criarDepartamento(DepartamentoVO dpto) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException {
-		
-		if (Departamento._buscarDepartamento(dpto.getSigla()).getSigla() != null){
+		if (Departamento._buscarDepartamento(dpto).getSigla() != null){
 			if (dpto.getSigla()==""){
 				throw new SiglaNotFoundException();
 			}else{
@@ -50,15 +37,4 @@ public class GerirDepartamento {
 			throw new SiglaAlreadyExistsException(dpto.getSigla());
 		}
 	}
-	
-	public static void atualizarDepartamento(HttpSession session, String nome, String sigla) throws DepartamentoNotFound{
-		DepartamentoVO dpto = new DepartamentoVO(nome,sigla);
-		
-		DepartamentoVO departamentoAntigo = buscarDepartamento(session,sigla);
-		if (departamentoAntigo == null){
-			throw new DepartamentoNotFound();	
-		}else{
-			Departamento._atualizarDepartamento(session, dpto);
-		}
-	}	
 }

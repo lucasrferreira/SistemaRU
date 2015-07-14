@@ -19,8 +19,8 @@ public class ConsumidorService extends Conexao {
 		pstmt.setString(1, consumidor.getNome());
 		pstmt.setInt(2, consumidor.getMatricula());
 		pstmt.setInt(3, consumidor.getAnoIngresso());
-		pstmt.setString(4, consumidor.getSexo());
-		pstmt.setString(5, consumidor.getTitulo());
+		pstmt.setString(4, consumidor.getSexo().getSexo());
+		pstmt.setString(5, consumidor.getTitulo().getTitulo());
 		pstmt.setString(6, consumidor.getCpf().toString());
 		
 		
@@ -48,7 +48,7 @@ public class ConsumidorService extends Conexao {
 		pstmt.setString(1, consumidor.getNome());
 		pstmt.setInt(2, consumidor.getAnoIngresso());
 		pstmt.setInt(3, consumidor.getMatricula());
-		pstmt.setString(4, consumidor.getSexo());
+		pstmt.setString(4, consumidor.getSexo().getSexo());
 		
 		
 		pstmt.setString(5, consumidor.getCpf().toString());

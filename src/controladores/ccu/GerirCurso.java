@@ -1,6 +1,6 @@
 package controladores.ccu;
 
-import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 import controladores.ccu.exceptions.CursoNotFound;
 import controladores.ccu.exceptions.DepartamentoNotFound;
@@ -12,63 +12,96 @@ import entidades.Departamento;
 import entidades.value_objects.CursoVO;
 import entidades.value_objects.DepartamentoVO;
 
-public class GerirCurso {
-	public static Object listarCursos(HttpSession session) {
-		return Curso._listarCursosDisponiveis(session);
+public class GerirCurso
+{
+	public static Object listarCursos()
+	{
+		try
+		{
+			return Curso._listarCursosDisponiveis();
+		} catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
-	public static CursoVO buscarCurso(HttpSession session, String sigla) throws CursoNotFound{
-		CursoVO cursoAntigo = new CursoVO("", sigla,null);
-		try {
-			cursoAntigo = Curso._buscarCurso(session, cursoAntigo.getSigla());
-		} catch (NullPointerException e) {
+	public static CursoVO buscarCurso(CursoVO cursoAntigo) throws CursoNotFound
+	{
+		try
+		{
+			try
+			{
+				cursoAntigo = Curso._buscarCurso(cursoAntigo);
+			} catch (ClassNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (NullPointerException e)
+		{
 			throw new CursoNotFound();
 		}
-		if (cursoAntigo == null){
+		if (cursoAntigo == null)
+		{
 			throw new CursoNotFound();
 		}
-		
+
 		return cursoAntigo;
 	}
 
-	public static void criarCurso(HttpSession session, String nome, String sigla, String siglaDpto) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, DepartamentoNotFound {
-		DepartamentoVO dpto = Departamento._buscarDepartamento(siglaDpto);
-		
-		if (dpto == null){
+	public static void criarCurso(CursoVO curso) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, DepartamentoNotFound, ClassNotFoundException, SQLException
+	{
+		DepartamentoVO dpto = Departamento._buscarDepartamento(curso.getDepartamento());
+
+		if (dpto == null)
+		{
 			throw new DepartamentoNotFound();
-		} else{
-			CursoVO curso = new CursoVO(nome,sigla,dpto);
-			
-			if (Curso._buscarCurso(session,sigla) == null){
-				if (sigla==""){
+		} else
+		{
+			if (Curso._buscarCurso(curso) == null)
+			{
+				if (curso.getSigla() == "")
+				{
 					throw new SiglaNotFoundException();
-				}else{
-					if (nome==""){
+				} else
+				{
+					if (curso.getNome() == "")
+					{
 						throw new NomeNotFoundException();
-					}else{
-						Curso._adicionarCurso(session,curso);
+					} else
+					{
+						Curso._adicionarCurso(curso);
 					}
 				}
-			}else{
-				throw new SiglaAlreadyExistsException(sigla);
+			} else
+			{
+				throw new SiglaAlreadyExistsException(curso.getSigla());
 			}
 		}
 	}
 
-	public static void atualizarCurso(HttpSession session, String nome, String sigla, String siglaDpto) throws CursoNotFound, DepartamentoNotFound{
-		DepartamentoVO dpto = Departamento._buscarDepartamento(siglaDpto);
-		
-		if (dpto == null){
+	public static void atualizarCurso(CursoVO cursoAntigo) throws CursoNotFound, DepartamentoNotFound, ClassNotFoundException, SQLException
+	{
+		DepartamentoVO dpto = Departamento._buscarDepartamento(cursoAntigo.getDepartamento());
+
+		if (dpto == null)
+		{
 			throw new DepartamentoNotFound();
-		} else{
-			CursoVO cursoAntigo = buscarCurso(session,sigla);
-			if (cursoAntigo == null){
-				throw new CursoNotFound();
-			}else{
-				cursoAntigo.setNome(nome);
-				cursoAntigo.setDepartamento(dpto);
-				Curso._atualizarCurso(session, cursoAntigo);
-			}
+		} else
+		{
+
+			Curso._atualizarCurso(cursoAntigo);
+
 		}
-	}			
+	}
 }

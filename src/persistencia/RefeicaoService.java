@@ -16,7 +16,7 @@ public class RefeicaoService extends Conexao {
 		
 		
 		pstmt.setString(1, refeicao.getDescricao());
-		pstmt.setString(2, refeicao.getTurno());
+		pstmt.setString(2, refeicao.getTurno().getTurno());
 		pstmt.setString(3, refeicao.getOpVeg());
 		
 		return execute();
@@ -40,7 +40,7 @@ public class RefeicaoService extends Conexao {
 		
 		PreparedStatement pstmt = Conexao.prepare(prepare);
 		
-		psmt.setString(1, refeicao.getTurno());
+		psmt.setString(1, refeicao.getTurno().getTurno());
 		psmt.setString(2, refeicao.getDescricao());
 		psmt.setString(3, refeicao.getOpVeg());
 		

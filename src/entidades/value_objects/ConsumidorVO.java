@@ -1,10 +1,7 @@
 package entidades.value_objects;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 
-public abstract class ConsumidorVO {
+public class ConsumidorVO {
 	private String nome;
 	private int matricula;
 	private int anoIngresso;
@@ -12,12 +9,11 @@ public abstract class ConsumidorVO {
 	private Titulo titulo;
 	private CPF cpf;
 	
-	public enum Sexo{
-		MASCULINO,FEMININO;
-	}	
-	public enum Titulo{
-		ESPECIALIZACAO, MESTRADO, DOUTORADO;
+	
+	public ConsumidorVO(){
+		
 	}
+	
 	
 	public ConsumidorVO(String nome, int matricula, int anoIngresso) {
 		this.nome = nome;
@@ -56,5 +52,24 @@ public abstract class ConsumidorVO {
 		return cpf;
 	}
 	
+	public void setNome(String nome){
+		this.nome = nome;
+	}
 	
+	public void setMatricula(int matricula){
+		this.matricula = matricula;
+	}
+	public void setAnoIngresso(int anoIngresso){
+		this.anoIngresso = anoIngresso;
+	}
+	
+	public void setSexo(Sexo sexo){
+		this.sexo = sexo;
+	}
+	public void setTitulo(Titulo titulo){
+		this.titulo = titulo;
+	}
+	public void setCpf(CPF cpf){
+		this.cpf = cpf;
+	}
 }

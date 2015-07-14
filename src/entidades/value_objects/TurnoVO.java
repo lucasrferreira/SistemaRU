@@ -1,11 +1,13 @@
 package entidades.value_objects;
 
 public enum TurnoVO {
-	MANHA(0.5,3), TARDE(6,1), NOITE(6,1);
+	MANHA("manha",0.5,3), TARDE("tarde",6,1), NOITE("noite",6,1);
 	
 	private double valorAluno, valorFuncionario;
-
-	private TurnoVO(double valorAluno, double valorFuncionario) {
+	private String turno;
+	
+	private TurnoVO(String turno, double valorAluno, double valorFuncionario) {
+		this.turno = turno;
 		this.valorAluno = valorAluno;
 		this.valorFuncionario = valorFuncionario;
 	}
@@ -17,11 +19,10 @@ public enum TurnoVO {
 	public double getValorFuncionario() {
 		return valorFuncionario;
 	}
+
+	public String getTurno() {
+		return turno;
+	}
 	
-	public void setValorAluno(double valorAluno) {
-		this.valorAluno = valorAluno;
-	}
-	public void setValorFuncionario(double valorFuncionario) {
-		this.valorFuncionario = valorFuncionario;
-	}
+
 }

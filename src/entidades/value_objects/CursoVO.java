@@ -13,6 +13,10 @@ public class CursoVO implements Serializable {
 		this.departamento = departamento;
 	}
 	
+	public CursoVO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -31,5 +35,9 @@ public class CursoVO implements Serializable {
 	
 	public void setDepartamento(DepartamentoVO departamento){
 		this.departamento = departamento;
+	}
+
+	public void setSigla(String sigla) {
+		this.sigla = sigla;		
 	}
 }

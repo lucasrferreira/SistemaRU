@@ -42,7 +42,6 @@ public class TicketVO implements Serializable {
 		this.consumidor =  consumidor;
 	}
 
-
 	public int getIdTicket() {
 		return idTicket;
 	}

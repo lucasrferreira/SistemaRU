@@ -37,9 +37,7 @@ public class ListarCurso extends HttpServlet {
 			case "Atualizar":
 				request.getRequestDispatcher("AtualizarCurso").forward(request,response);
 				break;
-			case "Ver":
-				request.getRequestDispatcher("VerCurso").forward(request,response);
-				break;
+
 			case "":
 			default:
 				listarCursos(request,response);				

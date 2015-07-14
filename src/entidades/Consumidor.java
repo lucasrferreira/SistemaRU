@@ -1,52 +1,99 @@
 package entidades;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
+
+import javax.servlet.http.HttpSession;
+
+import persistencia.ConsumidorService;
+import entidades.value_objects.CPF;
+import entidades.value_objects.ConsumidorVO;
+import entidades.value_objects.Sexo;
+import entidades.value_objects.Titulo;
 
 public abstract class Consumidor {
-	private String nome;
-	private int matricula;
-	private int anoIngresso;
-	private Sexo sexo;
-	private Titulo titulo;
-	private CPF cpf;
+
+	public static Collection<ConsumidorVO> _listarConsumidoresDisponiveis() throws Exception 
+	{
+		Collection<ConsumidorVO> colConsumidor = new ArrayList<ConsumidorVO>();
+		ResultSet rs = null;
+
+		ConsumidorService.initConnection();
+		rs = ConsumidorService.listar();
+		while (rs.next()) {
+			ConsumidorVO consumidor = new ConsumidorVO();
+
+			consumidor.setNome(rs.getString("nome"));
+			consumidor.setMatricula(rs.getInt("matricula"));
+			consumidor.setCpf(CPF.fromString(rs.getString("cpf")));
+			consumidor.setAnoIngresso(rs.getInt("ano"));
+
+			if(rs.getString("sexo").equals(Sexo.FEMININO.getSexo()))
+				consumidor.setSexo(Sexo.FEMININO);
+			if(rs.getString("sexo").equals(Sexo.MASCULINO.getSexo()))
+				consumidor.setSexo(Sexo.MASCULINO);
+			
+			if(rs.getString("titulo").equals(Titulo.MESTRADO.getTitulo()))
+				consumidor.setTitulo(Titulo.MESTRADO);
+			if(rs.getString("titulo").equals(Titulo.DOUTORADO.getTitulo()))
+				consumidor.setTitulo(Titulo.DOUTORADO);
+			if(rs.getString("titulo").equals(Titulo.ESPECIALIZACAO.getTitulo()))
+				consumidor.setTitulo(Titulo.ESPECIALIZACAO);
+			
+			
+			colConsumidor.add(consumidor);
+		}
+
+		ConsumidorService.closeConnection();
+		return colConsumidor;
+
+	}
+
+	public static void _adicionarConsumidor(ConsumidorVO curso)
+			throws ClassNotFoundException, SQLException {
+		ConsumidorService.initConnection();
+		ConsumidorService.insert(curso);
+		ConsumidorService.closeConnection();
+	}
+
+	public static ConsumidorVO _buscarConsumidor(ConsumidorVO consumidor) throws SQLException, Exception {
 	
-	public Consumidor(String nome, int matricula, int anoIngresso) {
-		this.nome = nome;
-		this.matricula = matricula;
-		this.anoIngresso = anoIngresso;
+		ResultSet rs = null;
+
+		ConsumidorService.initConnection();
+		rs = ConsumidorService.listar();
+		if (rs.next()) {
+
+			consumidor.setNome(rs.getString("nome"));
+			consumidor.setMatricula(rs.getInt("matricula"));
+			consumidor.setCpf(CPF.fromString(rs.getString("cpf")));
+			consumidor.setAnoIngresso(rs.getInt("ano"));
+
+			if(rs.getString("sexo").equals(Sexo.FEMININO.getSexo()))
+				consumidor.setSexo(Sexo.FEMININO);
+			if(rs.getString("sexo").equals(Sexo.MASCULINO.getSexo()))
+				consumidor.setSexo(Sexo.MASCULINO);
+			
+			if(rs.getString("titulo").equals(Titulo.MESTRADO.getTitulo()))
+				consumidor.setTitulo(Titulo.MESTRADO);
+			if(rs.getString("titulo").equals(Titulo.DOUTORADO.getTitulo()))
+				consumidor.setTitulo(Titulo.DOUTORADO);
+			if(rs.getString("titulo").equals(Titulo.ESPECIALIZACAO.getTitulo()))
+				consumidor.setTitulo(Titulo.ESPECIALIZACAO);
+			
+		}
+
+		ConsumidorService.closeConnection();
+		return consumidor;
 	}
 
-	public Consumidor(String nome, int matricula, int anoIngresso, Sexo sexo, Titulo titulo, CPF cpf) {
-		this(nome,matricula,anoIngresso);
-		this.sexo = sexo;
-		this.titulo = titulo;
-		this.cpf = cpf;
+	public static void _atualizarConsumidor(ConsumidorVO consumidor) throws ClassNotFoundException, SQLException {
+		ConsumidorService.initConnection();
+		ConsumidorService.alterar(consumidor);
+		ConsumidorService.closeConnection();		
+		
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public int getMatricula() {
-		return matricula;
-	}
-
-	public int getAnoIngresso() {
-		return anoIngresso;
-	}
-
-	public Sexo getSexo() {
-		return sexo;
-	}
-
-	public Titulo getTitulo() {
-		return titulo;
-	}
-
-	public CPF getCpf() {
-		return cpf;
-	}
-	
 }

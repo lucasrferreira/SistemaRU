@@ -32,7 +32,7 @@ public class AtualizarDepartamento extends HttpServlet {
 				break;
 			default:
 				try {
-					DepartamentoVO departamentoAntigo = GerirDepartamento.buscarDepartamento(request.getSession(),request.getParameter("sigla"));
+					DepartamentoVO departamentoAntigo = GerirDepartamento.buscarDepartamento(request.getParameter("sigla"));
 					request.setAttribute("departamento antigo",departamentoAntigo);
 					request.getRequestDispatcher("WEB-INF/departamento/AtualizarDepartamento.jsp").forward(request,response);
 				} catch (DepartamentoNotFound e2) {

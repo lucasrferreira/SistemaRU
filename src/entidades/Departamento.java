@@ -7,91 +7,84 @@ import java.util.Collection;
 
 import javax.servlet.http.HttpSession;
 
-import persistencia.Conexao;
 import persistencia.DepartamentoService;
-import persistencia.RepositorioDepartamento;
 import entidades.value_objects.DepartamentoVO;
 
-public class Departamento {
+public class Departamento
+{
 
-	public static Collection<DepartamentoVO> _listarDepartamentosDisponiveis(){
+	public static Collection<DepartamentoVO> _listarDepartamentosDisponiveis()
+	{
 
 		Collection<DepartamentoVO> colDpto = new ArrayList<DepartamentoVO>();
-		ResultSet rs = null;		
-		try {
-			 
+		ResultSet rs = null;
+		try
+		{
+
 			DepartamentoService.initConnection();
 			rs = DepartamentoService.listar();
-			while(rs.next()){
+			while (rs.next())
+			{
 				DepartamentoVO dpart = new DepartamentoVO();
-				
+
 				dpart.setSigla(rs.getString("sigla"));
 				dpart.setNome(rs.getString("nome"));
 				colDpto.add(dpart);
 			}
 
 			DepartamentoService.closeConnection();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (ClassNotFoundException | SQLException e)
+		{
 			// TODO Auto-generated catch block
 			System.out.println("Erro ao buscar os dados do banco");
 			e.printStackTrace();
 		}
-		return 	colDpto ;
+		return colDpto;
 	}
 
 	// metodos de persistencia para Departamento
-	
-	public static void _adicionarDepartamento(DepartamentoVO dpto) {
-		try {
+
+	public static void _adicionarDepartamento(DepartamentoVO dpto)
+	{
+		try
+		{
 
 			DepartamentoService.initConnection();
-			if (DepartamentoService.insert(dpto));
+			if (DepartamentoService.insert(dpto))
+				;
 			DepartamentoService.closeConnection();
-			
-		} catch (ClassNotFoundException | SQLException e) {
+
+		} catch (ClassNotFoundException | SQLException e)
+		{
 			// TODO Auto-generated catch block
 			System.out.println("Erro ao adicionar os dados no banco");
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	public static DepartamentoVO _buscarDepartamento( String sigla) {
-		
-		DepartamentoVO dp = new DepartamentoVO();
-		dp.setSigla(sigla);
-		try {
-			DepartamentoService.initConnection();
-			ResultSet rs = DepartamentoService.busca(dp);
-			
-			while(rs.next()){				
-				dp.setSigla(rs.getString("sigla"));
-				dp.setNome(rs.getString("nome"));
-			}
-			DepartamentoService.closeConnection();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public static DepartamentoVO _buscarDepartamento(DepartamentoVO dp) throws ClassNotFoundException, SQLException
+	{
+
+		DepartamentoService.initConnection();
+		ResultSet rs = DepartamentoService.busca(dp);
+
+		while (rs.next())
+		{
+			dp.setSigla(rs.getString("sigla"));
+			dp.setNome(rs.getString("nome"));
 		}
+		DepartamentoService.closeConnection();
 
-		
-		return 	dp;
+		return dp;
 	}
 
-	public static void _atualizarDepartamento (HttpSession session, DepartamentoVO dpto){
-		try {
-
+	public static void _atualizarDepartamento(HttpSession session, DepartamentoVO dpto) throws ClassNotFoundException, SQLException
+	{
+	
 			DepartamentoService.initConnection();
 			if (DepartamentoService.alterar(dpto));
 			DepartamentoService.closeConnection();
-			
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Erro ao adicionar os dados no banco");
-			e.printStackTrace();
-		}
+
 	}
 }

@@ -13,29 +13,76 @@ import controladores.ccu.exceptions.DepartamentoNotFound;
 import entidades.value_objects.DepartamentoVO;
 
 @WebServlet("/VerDepartamento")
-public class VerDepartamento extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class VerDepartamento extends HttpServlet
+{
+	private static final long	serialVersionUID	= 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 
 		String acao = (String) request.getParameter("acaoVer");
 		if (acao == null)
 			acao = "";
 
-		switch (acao) {
+		switch (acao)
+		{
 			case "Voltar":
-				request.getRequestDispatcher("ListarDepartamento").forward(request,response);
+				request.getRequestDispatcher("ListarDepartamento").forward(request, response);
 				break;
 			default:
-			DepartamentoVO departamentoAntigo;
-			try {
-				departamentoAntigo = GerirDepartamento.buscarDepartamento(request.getSession(),request.getParameter("sigla"));
-				request.setAttribute("departamento antigo",departamentoAntigo);
-				request.getRequestDispatcher("WEB-INF/VerDepartamento.jsp").forward(request,response);
-			} catch (DepartamentoNotFound e) {
-				request.setAttribute("erro", "Departamento não existe!");
-				request.getRequestDispatcher("WEB-INF/VerDepartamento.jsp").forward(request,response);
+				buscar(request, response);
+		}
+	}
+
+	private void buscar(HttpServletRequest request, HttpServletResponse response)
+	{
+		DepartamentoVO departamentoAntigo = formToVo(request);
+		try
+		{
+			departamentoAntigo = GerirDepartamento.buscarDepartamento(departamentoAntigo);
+			request.setAttribute("departamento antigo", departamentoAntigo);
+			try
+			{
+				request.getRequestDispatcher("WEB-INF/departamento/VerDepartamento.jsp").forward(request, response);
+			} catch (ServletException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (DepartamentoNotFound e)
+		{
+			request.setAttribute("erro", "Departamento não existe!");
+			try
+			{
+				request.getRequestDispatcher("WEB-INF/VerDepartamento.jsp").forward(request, response);
+			} catch (ServletException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1)
+			{
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
+	}
+
+	private DepartamentoVO formToVo(HttpServletRequest request)
+	{
+		DepartamentoVO dpto = new DepartamentoVO();
+
+		dpto.setNome((String) request.getParameter("nome"));
+		dpto.setSigla((String) request.getParameter("sigla"));
+
+		return dpto;
+	}
+
+	private void voToForm(HttpServletRequest request, DepartamentoVO dpto)
+	{
+
 	}
 }

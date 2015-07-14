@@ -1,6 +1,6 @@
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="entidades.Consumidor" %>
+<%@ page import="entidades.value_objects.ConsumidorVO" %>
 <%@ page import="entidades.Aluno" %>
 <%@ page import="entidades.Funcionario" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -18,7 +18,7 @@
 		return new String[]{"","Nome","Matricula","Ano Ingresso", "Sexo","CPF", "Departamento","Curso" };
 	}
 
-	public Collection<String> getValuesConsumidor(Consumidor consumidori){
+	public Collection<String> getValuesConsumidor(ConsumidorVO consumidori){
 		Collection<String> results = new ArrayList<String>();
 		results.add("<input type='radio' name ='cpf' value = '"+consumidori.getCpf().toString()+"'>");
 		results.add(consumidori.getNome());

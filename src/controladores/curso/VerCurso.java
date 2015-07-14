@@ -36,10 +36,10 @@ public class VerCurso extends HttpServlet {
 				try {
 					cursoAntigo = GerirCurso.buscarCurso(request.getSession(),request.getParameter("sigla"));
 					request.setAttribute("curso antigo",cursoAntigo);
-					request.getRequestDispatcher("WEB-INF/VerCurso.jsp").forward(request,response);
+					request.getRequestDispatcher("WEB-INF/curso/VerCurso.jsp").forward(request,response);
 				} catch (CursoNotFound e) {
-					request.setAttribute("erro", "Curso não existe!");
-					request.getRequestDispatcher("WEB-INF/VerCurso.jsp").forward(request,response);
+					request.setAttribute("erro", "Curso nao existe!");
+					request.getRequestDispatcher("WEB-INF/curso/VerCurso.jsp").forward(request,response);
 				}				
 		}
 	}

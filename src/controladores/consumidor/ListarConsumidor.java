@@ -2,8 +2,6 @@ package controladores.consumidor;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -13,16 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import entidades.Aluno;
-import entidades.CPF;
 import entidades.Consumidor;
-import entidades.Curso;
-import entidades.Departamento;
-import entidades.Funcionario;
-import entidades.Sexo;
-import entidades.Titulo;
-import entidades.value_objects.CursoVO;
-import entidades.value_objects.DepartamentoVO;
+import entidades.value_objects.CPF;
 
 @WebServlet("/ListarConsumidor")
 public class ListarConsumidor extends HttpServlet {
@@ -76,7 +66,7 @@ public class ListarConsumidor extends HttpServlet {
 
 	private void listarConsumidores(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("consumidores", _listarConsumidoresDisponiveis(request));
-		request.getRequestDispatcher("WEB-INF/ListarConsumidor.jsp").forward(request,response);
+		request.getRequestDispatcher("WEB-INF/consumidor/ListarConsumidor.jsp").forward(request,response);
 	}
 
 	// metodos de persistencia de Consumidor

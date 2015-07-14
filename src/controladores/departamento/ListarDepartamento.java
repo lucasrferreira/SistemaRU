@@ -32,9 +32,7 @@ public class ListarDepartamento extends HttpServlet {
 			case "Atualizar":
 				request.getRequestDispatcher("AtualizarDepartamento").forward(request,response);
 				break;
-			case "Ver":
-				request.getRequestDispatcher("VerDepartamento").forward(request,response);
-				break;
+
 			case "":
 			default:
 				listarDepartamentos(request,response);				

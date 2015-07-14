@@ -3,14 +3,14 @@ package entidades.value_objects;
 import java.io.Serializable;
 
 public class RefeicaoVO implements Serializable {
-	private String turno;
+	private TurnoVO turno;
 	private String descricao;
 	private String op_veg;
 	private int idRefeicao;
 	
 	public RefeicaoVO() { }
 
-	public RefeicaoVO(String turno, String descricao, String op_veg) {
+	public RefeicaoVO(TurnoVO turno, String descricao, String op_veg) {
 		this.op_veg = op_veg;
 		this.descricao = descricao;
 		this.turno = turno;
@@ -23,7 +23,7 @@ public class RefeicaoVO implements Serializable {
 	public String getDescricao() {
 		return descricao;
 	}
-	public String getTurno() {
+	public TurnoVO getTurno() {
 		return turno;
 	}
 	
@@ -36,7 +36,7 @@ public class RefeicaoVO implements Serializable {
 		this.descricao = descricao;
 	}
 	
-	public void setTurno(String turno)
+	public void setTurno(TurnoVO turno)
 	{
 		this.turno = turno;
 	}
@@ -48,5 +48,7 @@ public class RefeicaoVO implements Serializable {
 	public void setIdRefeicao(int idRefeicao) {
 		this.idRefeicao = idRefeicao;
 	}
+
+
 	
 }

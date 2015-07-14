@@ -97,12 +97,12 @@ public class AtualizarCurso extends HttpServlet {
 				|| curso.getDepartamento() == null) {
 			request.setAttribute("erro",
 					"Um curso deve conter um nome, uma sigla e um departamento");
-			request.getRequestDispatcher("WEB-INF/AtualizarCurso.jsp").forward(
+			request.getRequestDispatcher("WEB-INF/curso/AtualizarCurso.jsp").forward(
 					request, response);
 		} else {
 			CursoVO cursoAntigo = buscarCursoAntigo(request);
 			if (cursoAntigo == null) {
-				request.getRequestDispatcher("WEB-INF/AtualizarCurso.jsp")
+				request.getRequestDispatcher("WEB-INF/curso/AtualizarCurso.jsp")
 						.forward(request, response);
 			} else {
 				GerirCurso.atualizarCurso(request.getSession(), curso.getNome(), curso.getSigla(), curso.getDepartamento().getSigla());
