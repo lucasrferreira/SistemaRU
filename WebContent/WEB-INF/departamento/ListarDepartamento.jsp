@@ -36,9 +36,6 @@
 		</table>
 
 		<input type="submit" name ="acaoListar" value = "Criar">
-		<input type="submit" name ="acaoListar" value = "Atualizar">
-		<input type="submit" name ="acaoListar" value = "Ver">
-		<!-- <input type="submit" name ="acaoListar" value = "Remover"> -->
 	</form>
 </body>
 

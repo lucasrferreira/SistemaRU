@@ -27,6 +27,19 @@ public class GerirAluno {
 		
 		Aluno aluno = (Aluno) new Consumidor(nome, matricula, ano);
 		
+		if (sexo.equals(Sexo.FEMININO.getSexo()))
+			aluno.setSexo(Sexo.FEMININO);
+		if (sexo.equals(Sexo.MASCULINO.getSexo()))
+			aluno.setSexo(Sexo.MASCULINO);
+
+		if (titulo.equals(Titulo.MESTRADO.getTitulo()))
+			aluno.setTitulo(Titulo.MESTRADO);
+		if (titulo.equals(Titulo.DOUTORADO.getTitulo()))
+			aluno.setTitulo(Titulo.DOUTORADO);
+		if (titulo.equals(Titulo.ESPECIALIZACAO.getTitulo()))
+			aluno.setTitulo(Titulo.ESPECIALIZACAO);
+	
+		
 		aluno.setCurso(CursoFinder._buscarCurso(curso));
 		try
 		{
@@ -63,18 +76,7 @@ public class GerirAluno {
 					}
 						}
 
-		if (sexo.equals(Sexo.FEMININO.getSexo()))
-			aluno.setSexo(Sexo.FEMININO);
-		if (sexo.equals(Sexo.MASCULINO.getSexo()))
-			aluno.setSexo(Sexo.MASCULINO);
 
-		if (titulo.equals(Titulo.MESTRADO.getTitulo()))
-			aluno.setTitulo(Titulo.MESTRADO);
-		if (titulo.equals(Titulo.DOUTORADO.getTitulo()))
-			aluno.setTitulo(Titulo.DOUTORADO);
-		if (titulo.equals(Titulo.ESPECIALIZACAO.getTitulo()))
-			aluno.setTitulo(Titulo.ESPECIALIZACAO);
-	
 		
 		try
 		{

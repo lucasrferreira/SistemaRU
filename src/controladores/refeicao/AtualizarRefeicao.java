@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirRefeicao;
 import controladores.ccu.exceptions.DepartamentoNotFound;
+import controladores.ccu.exceptions.DescricaoNotFound;
+import controladores.ccu.exceptions.OpVegNotFound;
+import controladores.ccu.exceptions.TurnoNotFound;
 import entidades.Refeicao;
 
 @WebServlet("/AtualizarRefeicao")
@@ -65,7 +68,7 @@ public class AtualizarRefeicao extends HttpServlet {
 				GerirRefeicao.atualizarRefeicao(idRefeicao, op_veg, descricao, turno);
 				request.getRequestDispatcher("ListarDepartamento").forward(request,response);
 				
-			} catch (ClassNotFoundException | SQLException e2) {
+			} catch (ClassNotFoundException | SQLException | DescricaoNotFound | OpVegNotFound | TurnoNotFound e2) {
 				request.setAttribute("erro", "A refeicao informada nao existe");
 				request.getRequestDispatcher("WEB-INF/refeicao/AtualizarRefeicao.jsp").forward(request,response);
 			}			

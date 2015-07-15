@@ -30,8 +30,9 @@ public class CriarDepartamento extends HttpServlet
 				case "Criar":
 					criarDepartamento(request, response);
 					break;
-				default:
+				case "Cancelar":
 					request.getRequestDispatcher("ListarDepartamento").forward(request, response);
+					break;
 			}
 		} else
 		{
@@ -63,7 +64,7 @@ public class CriarDepartamento extends HttpServlet
 			request.getRequestDispatcher("WEB-INF/departamento/CriarDepartamento.jsp").forward(request, response);
 		} catch (SiglaAlreadyExistsException e)
 		{
-			request.setAttribute("erro", "Sigla informada ja existe");
+			request.setAttribute("erro", "Sigla informada ja existe: " +e.getSigla());
 			request.getRequestDispatcher("WEB-INF/departamento/CriarDepartamento.jsp").forward(request, response);
 		}
 

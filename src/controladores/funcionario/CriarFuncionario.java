@@ -10,9 +10,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirFuncionario;
+import controladores.ccu.exceptions.AnoIngressoNotFound;
+import controladores.ccu.exceptions.CursoNotFound;
+import controladores.ccu.exceptions.MatriculaNotFound;
 import controladores.ccu.exceptions.NomeNotFoundException;
+import controladores.ccu.exceptions.SexoNotFound;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
+import controladores.ccu.exceptions.TituloNotFound;
 
 @WebServlet("/CriarFuncionario")
 public class CriarFuncionario extends HttpServlet
@@ -56,7 +61,7 @@ public class CriarFuncionario extends HttpServlet
 			request.setAttribute("message", "Novo Funcionario criado!");
 			request.getRequestDispatcher("ListarFuncionario").forward(request, response);
 
-		} catch (ClassNotFoundException | SiglaNotFoundException | NomeNotFoundException | SiglaAlreadyExistsException | SQLException e)
+		} catch (ClassNotFoundException | SiglaNotFoundException | NomeNotFoundException | SiglaAlreadyExistsException | SQLException | CursoNotFound | AnoIngressoNotFound | SexoNotFound | MatriculaNotFound | TituloNotFound e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();

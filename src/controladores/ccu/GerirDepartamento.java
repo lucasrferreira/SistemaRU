@@ -39,7 +39,8 @@ public class GerirDepartamento {
 		
 		Departamento dpto = new Departamento(nome, sigla);
 		
-		if (DepartamentoFinder._buscarDepartamento(sigla)!= null){
+		Departamento busca = DepartamentoFinder._buscarDepartamento(sigla);
+		if (busca == null){
 			if (dpto.getSigla()==""){
 				throw new SiglaNotFoundException("Preencha a sigla");
 			}else{
@@ -51,7 +52,7 @@ public class GerirDepartamento {
 				}
 			}
 		}else{
-			throw new SiglaAlreadyExistsException(dpto.getSigla());
+			throw new SiglaAlreadyExistsException(busca.getSigla());
 		}
 	}
 }

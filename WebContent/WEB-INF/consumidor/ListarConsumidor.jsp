@@ -1,6 +1,6 @@
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="entidades.value_objects.ConsumidorVO" %>
+<%@ page import="entidades.Consumidor" %>
 <%@ page import="entidades.Aluno" %>
 <%@ page import="entidades.Funcionario" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -18,7 +18,7 @@
 		return new String[]{"","Nome","Matricula","Ano Ingresso", "Sexo","CPF", "Departamento","Curso" };
 	}
 
-	public Collection<String> getValuesConsumidor(ConsumidorVO consumidori){
+	public Collection<String> getValuesConsumidor(Consumidor consumidori){
 		Collection<String> results = new ArrayList<String>();
 		results.add("<input type='radio' name ='cpf' value = '"+consumidori.getCpf().toString()+"'>");
 		results.add(consumidori.getNome());
@@ -50,19 +50,21 @@
 				
 		<table width="80%">
 		  <tr>
-		  <% for (String headeri: getHeaders()){ %>
-		  <th><%=headeri %></th>
-		  <%}%>
-		  </tr>
+		 	<th>Nome</th>
+		    <th>Matricula</th>
+		    <th>Ano Ingresso</th>
+		    <th>Sexo</th>
+		    <th>CPF</th>
+		   </tr>
 		  <%
 			  try{
 				  Collection<Consumidor> consumidoresDisponiveis = (Collection<Consumidor>)request.getAttribute("consumidores");
 				  for (Consumidor consumidori: consumidoresDisponiveis){
-					  %> <tr align="center"> <%
-					  for (String headeri: getValuesConsumidor(consumidori)){ %>
-					  <td><%=headeri %></td>
-					  <%}
-					  %> </tr> <%
+					  %>   <tr align="center">
+							    <td><input type="radio" name='CPF' value='<%=consumidori.getCpf().toString()%>'><%=consumidori.getCpf().toString()%></td>
+							    <td><%=consumidori.getNome()%></td>
+							  </tr>
+					  	 </tr> <%
 				  }
 			  }catch(Exception e){ }
 		  %>

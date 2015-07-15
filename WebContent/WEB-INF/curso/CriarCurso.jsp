@@ -1,5 +1,5 @@
 <%@ page import="java.util.Collection" %>
-<%@ page import="entidades.value_objects.DepartamentoVO" %>
+<%@ page import="entidades.Departamento" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -9,7 +9,7 @@
 <title>Criar curso</title>
 </head>
 <%@include file="../messagePage.jsp" %>
-<% Collection<DepartamentoVO> departamentosDisponiveis = (Collection<DepartamentoVO>)request.getAttribute("departamentosDisponiveis"); %>
+<% Collection<Departamento> departamentosDisponiveis = (Collection<Departamento>)request.getAttribute("departamentosDisponiveis"); %>
 
 <body>
 	<form action="CriarCurso" method="post">
@@ -17,7 +17,7 @@
 	Sigla : <input type="text" name ="sigla" value = "">
 	Departamento : <select name ="departamento">
 	<option value=""></option>
-	<% for(DepartamentoVO dptoi : departamentosDisponiveis){ %>
+	<% for(Departamento dptoi : departamentosDisponiveis){ %>
 		<option value="<%=dptoi.getSigla()%>"><%=dptoi.getNome()%></option>
 	<% } %>
 	</select>

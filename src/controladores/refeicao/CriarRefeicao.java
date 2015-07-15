@@ -10,12 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirRefeicao;
+import controladores.ccu.exceptions.DescricaoNotFound;
 import controladores.ccu.exceptions.NomeNotFoundException;
+import controladores.ccu.exceptions.OpVegNotFound;
 //import controladores.ccu.exceptions.DescricaoNotFoundException;
 //import controladores.ccu.exceptions.TurnoNotFoundException;
 //import controladores.ccu.exceptions.OpVegNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
+import controladores.ccu.exceptions.TurnoNotFound;
 import entidades.value_objects.TurnoVO;
 
 @WebServlet("/CriarRefeicao")
@@ -53,7 +56,14 @@ public class CriarRefeicao extends HttpServlet
 		// try {
 		try
 		{
-			GerirRefeicao.criarRefeicao( op_veg, descricao, turno);
+			try
+			{
+				GerirRefeicao.criarRefeicao( op_veg, descricao, turno);
+			} catch (DescricaoNotFound | OpVegNotFound | TurnoNotFound e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			request.setAttribute("message", "Nova refeicao criada!");
 			request.getRequestDispatcher("ListarRefeicao").forward(request, response);
 		} catch (ClassNotFoundException e)

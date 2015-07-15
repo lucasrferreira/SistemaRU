@@ -76,6 +76,7 @@ public class GerirCurso
 		} else
 		{
 			Curso curso = new Curso(sigla, nome);
+			curso.setDepartamento(dpto);
 
 			if (CursoFinder._buscarCurso(sigla) == null)
 			{

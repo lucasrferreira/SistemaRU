@@ -1,6 +1,7 @@
 package controladores.consumidor;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -16,44 +17,55 @@ import entidades.Consumidor;
 import entidades.value_objects.CPF;
 
 @WebServlet("/ListarConsumidor")
-public class ListarConsumidor extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class ListarConsumidor extends HttpServlet
+{
+	private static final long	serialVersionUID	= 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		listarConsumidores(request, response);
 	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String acao = (String) request.getParameter("acaoListar");
-		
-		if (acao == null) acao = "";
-		
-		switch (acao) {
-		case "Criar":
-			request.getRequestDispatcher("CriarConsumidor").forward(request,response);
-			break;
-		case "Atualizar":
-			request.getRequestDispatcher("AtualizarConsumidor").forward(request,response);
-			break;
 
-		case "":
-		default:
-			listarConsumidores(request,response);			
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+
+		String acao = (String) request.getParameter("acaoListar");
+
+		if (acao == null)
+			acao = "";
+
+		switch (acao)
+		{
+			case "Atualizar":
+				request.getRequestDispatcher("AtualizarConsumidor").forward(request, response);
+				break;
+			case "Criar Aluno":
+				request.getRequestDispatcher("CriarAluno").forward(request, response);
+				break;
+			case "Criar Funcionario":
+				request.getRequestDispatcher("CriarFuncionario").forward(request, response);
+				break;
+
+			case "":
+			default:
+				listarConsumidores(request, response);
 		}
 	}
 
-	private void listarConsumidores(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void listarConsumidores(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		try
 		{
 			request.setAttribute("consumidores", GerirConsumidor.listarConsumidores());
 		} catch (Exception e)
 		{
-			// TODO Auto-generated catch block
+			request.setAttribute("consumidores", new ArrayList<Consumidor>());
 			e.printStackTrace();
-		}
-		request.getRequestDispatcher("WEB-INF/consumidor/ListarConsumidores.jsp").forward(request,response);
-	}
+		} finally
+		{
+			request.getRequestDispatcher("WEB-INF/consumidor/ListarConsumidor.jsp").forward(request, response);
 
+		}
+	}
 
 }

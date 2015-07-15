@@ -9,12 +9,14 @@
 <body>
 OLA MUNDO
 
-<form action="Aluno" method="post">
-	<input type="submit" name="navegacao" value="Aluno">
+<form action="Consumidor" method="post">
+	<input type="submit" name="navegacao" value="Consumidor">
 </form>
 	<input type="submit" name="navegacao" value="Funcionario">
 	<input type="submit" name="navegacao" value="Refeiçao">
+<form action="Curso" method="post">
 	<input type="submit" name="navegacao" value="Curso">
+</form>
 <form action="Departamento" method="post">
 	<input type="submit" name="navegacao" value="Departamento">
 </form>

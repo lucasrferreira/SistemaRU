@@ -8,4 +8,12 @@ public class SiglaAlreadyExistsException extends Exception {
 		this.sigla = sigla;
 	}
 
+	public String getSigla()
+	{
+		return sigla;
+	}
+
+
+
+	
 }

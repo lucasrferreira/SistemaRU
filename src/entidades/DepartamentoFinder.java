@@ -31,6 +31,7 @@ public class DepartamentoFinder
 			colDpto.add(Departamento.load(rs));
 		}
 		
+		rs.close();
 		Conexao.closeConnection();
 
 		return colDpto;
@@ -49,13 +50,15 @@ public class DepartamentoFinder
 
 		ResultSet rs = psmt.executeQuery();
 
-		while (rs.next())
+		if (rs.next())
 		{
 			dp = Departamento.load(rs);
+			return dp;
 		}
+		rs.close();
 		Conexao.closeConnection();
 
-		return dp;
+		return null;
 	}
 
 }

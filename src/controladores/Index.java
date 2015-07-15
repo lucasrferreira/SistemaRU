@@ -44,11 +44,11 @@ public class Index extends HttpServlet {
 			case "Departamento":
 				request.getRequestDispatcher("ListarDepartamento").forward(request,response);
 				break;
-			case "Atualizar":
-				request.getRequestDispatcher("AtualizarDepartamento").forward(request,response);
+			case "Curso":
+				request.getRequestDispatcher("ListarCurso").forward(request,response);
 				break;
-			case "Ver":
-				request.getRequestDispatcher("VerDepartamento").forward(request,response);
+			case "Consumidor":
+				request.getRequestDispatcher("ListarConsumidor").forward(request,response);
 				break;
 			case "":
 			default:

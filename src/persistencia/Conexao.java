@@ -17,8 +17,7 @@ public class Conexao {
 
 	private static Connection connection;
 	protected static PreparedStatement psmt;
-	private static ResultSet result;
-
+	
 	public static void initConnection() throws SQLException,
 			ClassNotFoundException {
 		Class.forName("org.postgresql.Driver");
@@ -30,20 +29,8 @@ public class Conexao {
 		psmt =  connection.prepareStatement(sql);
 		return psmt;
 	}
-
-	public static ResultSet executeQuery() throws SQLException
-	{
-		result = psmt.executeQuery();
-		return result;
-	}
-	public static boolean execute() throws SQLException
-	{
-		return psmt.execute();
-	}
 	
 	public static void closeConnection() throws SQLException {
-		if(!result.isClosed())
-			result.close();
 		if (!psmt.isClosed())
 			psmt.close();
 		if(!connection.isClosed())
