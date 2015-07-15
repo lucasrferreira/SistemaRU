@@ -3,8 +3,10 @@ package controladores.ccu;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import controladores.ccu.exceptions.BancoErro;
 import controladores.ccu.exceptions.CursoNotFound;
 import controladores.ccu.exceptions.DepartamentoNotFound;
+import controladores.ccu.exceptions.NenhumResultado;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
@@ -15,22 +17,25 @@ import entidades.DepartamentoFinder;
 
 public class GerirCurso
 {
-	public static Collection<Curso> listarCursos()
+	public static Collection<Curso> listarCursos() throws NenhumResultado, BancoErro, ClassNotFoundException, SQLException
 	{
 		try
 		{
-			return CursoFinder._listarCursosDisponiveis();
-		} catch (ClassNotFoundException e)
+			Collection<Curso> colCurso = CursoFinder._listarCursosDisponiveis();
+			if(colCurso.size() == 0)
+			{
+				throw new NenhumResultado("Banco vazio");
+			}
+
+		} catch (ClassNotFoundException | SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new BancoErro("Erro ao listar Cursos");
 		}
-		return null;
+		
+		return CursoFinder._listarCursosDisponiveis();
 	}
+	
 
 	public static Curso buscarCurso(String sigla) throws CursoNotFound
 	{
@@ -51,11 +56,11 @@ public class GerirCurso
 			}
 		} catch (NullPointerException e)
 		{
-			throw new CursoNotFound();
+			throw new CursoNotFound("");
 		}
 		if (curso == null)
 		{
-			throw new CursoNotFound();
+			throw new CursoNotFound("Curso nao encontrado");
 		}
 
 		return curso;
@@ -76,12 +81,12 @@ public class GerirCurso
 			{
 				if (curso.getSigla() == "")
 				{
-					throw new SiglaNotFoundException();
+					throw new SiglaNotFoundException("Preencha a sigla");
 				} else
 				{
 					if (curso.getNome() == "")
 					{
-						throw new NomeNotFoundException();
+						throw new NomeNotFoundException("Preencha o nome");
 					} else
 					{
 						curso._adicionarCurso();
@@ -107,12 +112,12 @@ public class GerirCurso
 
 			if (curso.getSigla() == "")
 			{
-				throw new SiglaNotFoundException();
+				throw new SiglaNotFoundException("Preencha a sigla");
 			} else
 			{
 				if (curso.getNome() == "")
 				{
-					throw new NomeNotFoundException();
+					throw new NomeNotFoundException("Preencha o nome");
 				} else
 				{
 					curso._adicionarCurso();

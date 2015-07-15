@@ -1,11 +1,12 @@
 package controladores.ccu.exceptions;
 
-public class CursoNotFound extends Exception {
+public class BancoErro extends Exception {
 	
 	String erro;
 	
-	public CursoNotFound(String erro)
+	public BancoErro(String erro)
 	{
 		this.erro = erro;
 	}
+	
 }
