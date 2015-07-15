@@ -48,7 +48,7 @@ public class GerirDepartamento {
 					throw new NomeNotFoundException("Preencha o nome");
 				}else{
 					dpto._adicionarDepartamento();
-					//retorno um departamento bobo
+					
 				}
 			}
 		}else{

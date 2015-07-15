@@ -46,12 +46,13 @@ public class GerirConsumidor
 		return ConsumidorFinder._buscarConsumidor(CPF.fromString(cpf));
 	}
 
-	public static void criarConsumidor(String nome, String cpf, String sexo, int matricula, String titulo, int ano)
+	public static void criarConsumidor(String nome, String cpf, String sexo, int matricula, String titulo, int ano, Consumidor con)
 			throws AnoIngressoNotFound, SexoNotFound, MatriculaNotFound, TituloNotFound, Exception{
-
+		
+		Consumidor consumidor = new Consumidor(nome, matricula, ano);
+		
 		if (ConsumidorFinder._buscarConsumidor(CPF.fromString(cpf)) != null)
-		{
-			Consumidor consumidor = new Consumidor(nome, matricula, ano);
+		{		
 			
 			consumidor.setCpf(CPF.fromString(cpf));
 			
@@ -71,7 +72,7 @@ public class GerirConsumidor
 						throw new TituloNotFound("Preencha o titulo");
 				}else{	
 					consumidor._adicionarConsumidor();
-					//retorno um departamento bobo
+					
 				}
 					}
 						}
@@ -92,9 +93,9 @@ public class GerirConsumidor
 				consumidor.setTitulo(Titulo.ESPECIALIZACAO);
 			
 			consumidor._adicionarConsumidor();
-			// retorno um consumidor bobo }
+			
 		}else{
-			//validar cpf do consumidor - n funciona :/ throw new CpfAlreadyExists(consumidor.getCpf());
+			throw new CpfAlreadyExists(consumidor.getCpf());
 		}
 		
 	}

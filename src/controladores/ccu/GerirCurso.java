@@ -65,7 +65,9 @@ public class GerirCurso{
 		return curso;
 	}
 
-	public static void criarCurso(String sigla, String nome, String departamento) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, DepartamentoNotFound, ClassNotFoundException, SQLException
+	public static void criarCurso(String sigla, String nome, String departamento) 
+			throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, 
+			DepartamentoNotFound, ClassNotFoundException, SQLException
 	{
 		Departamento dpto = DepartamentoFinder._buscarDepartamento(departamento);
 
