@@ -45,14 +45,10 @@ public class GerirRefeicao
 		return refeicaoAntigo;
 	}
 
-<<<<<<< HEAD
-	public static void criarRefeicao(String op_veg, String descricao, String turno) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound
-
-=======
 	public static void criarRefeicao(int idRefeicao, String op_veg, String descricao, String turno) 
 			throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, 
 			ClassNotFoundException, SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound
->>>>>>> refs/remotes/origin/master
+
 	{
 
 		if (RefeicaoFinder._buscarRefeicao(idRefeicao) != null)

@@ -46,7 +46,7 @@ public class GerirConsumidor
 		return ConsumidorFinder._buscarConsumidor(CPF.fromString(cpf));
 	}
 
-	public static void criarConsumidor(String nome, String cpf, String sexo, int matricula, String titulo, int ano, Consumidor con)
+	public static void criarConsumidor(String nome, String cpf, String sexo, int matricula, String titulo, int ano)
 			throws AnoIngressoNotFound, SexoNotFound, MatriculaNotFound, TituloNotFound, Exception{
 		
 		Consumidor consumidor = new Consumidor(nome, matricula, ano);
