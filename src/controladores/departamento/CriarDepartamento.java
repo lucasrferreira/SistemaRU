@@ -19,11 +19,6 @@ public class CriarDepartamento extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
 
-<<<<<<< HEAD
-	DepartamentoVO	departamento;
-=======
->>>>>>> refs/remotes/origin/master
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String acao = (String) request.getParameter("acaoCriar");
@@ -74,10 +69,6 @@ public class CriarDepartamento extends HttpServlet
 
 	}
 
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> refs/remotes/origin/master
 
 }

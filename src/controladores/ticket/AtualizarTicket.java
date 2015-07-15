@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirTicket;
-import entidades.Consumidor;
-import entidades.value_objects.RefeicaoVO;
-import entidades.value_objects.TicketVO;
 
 
 @WebServlet("/AtualizarTicket")
@@ -23,7 +20,6 @@ public class AtualizarTicket extends HttpServlet {
 		String acao = (String) request.getParameter("acaoAtualizar");
 		if (acao == null)
 			acao = "";
-
 		switch (acao) {
 			case "Cancelar":
 			case "Voltar":

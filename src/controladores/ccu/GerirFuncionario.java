@@ -15,7 +15,6 @@ import entidades.value_objects.Titulo;
 
 public class GerirFuncionario {
 	
-	
 	public static void criarFuncionario(String nome, String cpf, String sexo, int matricula, String titulo, int ano, String departamento) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException {
 		
 		Funcionario funcionario = (Funcionario) new Consumidor(nome, matricula, ano);
