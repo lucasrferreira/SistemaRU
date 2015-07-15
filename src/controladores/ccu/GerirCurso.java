@@ -15,8 +15,7 @@ import entidades.CursoFinder;
 import entidades.Departamento;
 import entidades.DepartamentoFinder;
 
-public class GerirCurso
-{
+public class GerirCurso{
 	public static Collection<Curso> listarCursos() throws NenhumResultado, BancoErro, ClassNotFoundException, SQLException
 	{
 		try
@@ -66,7 +65,9 @@ public class GerirCurso
 		return curso;
 	}
 
-	public static void criarCurso(String sigla, String nome, String departamento) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, DepartamentoNotFound, ClassNotFoundException, SQLException
+	public static void criarCurso(String sigla, String nome, String departamento) 
+			throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, 
+			DepartamentoNotFound, ClassNotFoundException, SQLException
 	{
 		Departamento dpto = DepartamentoFinder._buscarDepartamento(departamento);
 

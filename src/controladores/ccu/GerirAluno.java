@@ -18,15 +18,15 @@ import entidades.value_objects.CPF;
 import entidades.value_objects.Sexo;
 import entidades.value_objects.Titulo;
 
-public class GerirAluno {
-	
-	
+public class GerirAluno
+{
+
 	public static void criarAluno(String nome, String cpf, String sexo, int matricula, String titulo, int ano, String curso) 
 			throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException, 
 			AnoIngressoNotFound, SexoNotFound, TituloNotFound, MatriculaNotFound, CursoNotFound {
 		
 		Aluno aluno = (Aluno) new Consumidor(nome, matricula, ano);
-		
+
 		if (sexo.equals(Sexo.FEMININO.getSexo()))
 			aluno.setSexo(Sexo.FEMININO);
 		if (sexo.equals(Sexo.MASCULINO.getSexo()))
@@ -77,10 +77,10 @@ public class GerirAluno {
 						}
 
 
-		
 		try
 		{
-			if (AlunoFinder._buscarAluno(CPF.fromString(cpf))!= null){
+			if (AlunoFinder._buscarAluno(CPF.fromString(cpf)) != null)
+			{
 				aluno._adicionarAluno();
 			}
 		} catch (Exception e)
@@ -89,5 +89,5 @@ public class GerirAluno {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

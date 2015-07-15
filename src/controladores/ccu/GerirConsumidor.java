@@ -5,15 +5,15 @@ import java.util.Collection;
 
 import controladores.ccu.exceptions.AnoIngressoNotFound;
 import controladores.ccu.exceptions.BancoErro;
+import controladores.ccu.exceptions.CpfAlreadyExists;
 import controladores.ccu.exceptions.MatriculaNotFound;
 import controladores.ccu.exceptions.NenhumResultado;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SexoNotFound;
+import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.TituloNotFound;
 import entidades.Consumidor;
 import entidades.ConsumidorFinder;
-import entidades.Departamento;
-import entidades.DepartamentoFinder;
 import entidades.value_objects.CPF;
 import entidades.value_objects.Sexo;
 import entidades.value_objects.Titulo;
@@ -46,17 +46,18 @@ public class GerirConsumidor
 		return ConsumidorFinder._buscarConsumidor(CPF.fromString(cpf));
 	}
 
-	public static void criarConsumidor(String nome, String cpf, String sexo, int matricula, String titulo, int ano) throws Exception
-	{
-
+	public static void criarConsumidor(String nome, String cpf, String sexo, int matricula, String titulo, int ano, Consumidor con)
+			throws AnoIngressoNotFound, SexoNotFound, MatriculaNotFound, TituloNotFound, Exception{
+		
+		Consumidor consumidor = new Consumidor(nome, matricula, ano);
+		
 		if (ConsumidorFinder._buscarConsumidor(CPF.fromString(cpf)) != null)
-		{
-			Consumidor consumidor = new Consumidor(nome, matricula, ano);
+		{		
 			
 			consumidor.setCpf(CPF.fromString(cpf));
 			
 				if (consumidor.getNome() == ""){
-					throw new NomeNotFoundException(nome);
+					throw new NomeNotFoundException("Preencha o nome");
 				}else{
 					if (consumidor.getAnoIngresso() == 0){
 						throw new AnoIngressoNotFound("Preencha o ano de ingresso");
@@ -71,13 +72,13 @@ public class GerirConsumidor
 						throw new TituloNotFound("Preencha o titulo");
 				}else{	
 					consumidor._adicionarConsumidor();
-					//retorno um departamento bobo
+					
 				}
 					}
 						}
 							}
 								}
-					
+				
 	
 			if (sexo.equals(Sexo.FEMININO.getSexo()))
 				consumidor.setSexo(Sexo.FEMININO);
@@ -92,7 +93,9 @@ public class GerirConsumidor
 				consumidor.setTitulo(Titulo.ESPECIALIZACAO);
 			
 			consumidor._adicionarConsumidor();
-			// retorno um consumidor bobo }
+			
+		}else{
+			throw new CpfAlreadyExists(consumidor.getCpf());
 		}
 		
 	}

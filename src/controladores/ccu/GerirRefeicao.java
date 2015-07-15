@@ -23,7 +23,7 @@ public class GerirRefeicao
 		try
 		{
 			Collection<Refeicao> colRefeicao = RefeicaoFinder._listarRefeicoesDisponiveis();
-			if (colRefeicao.size() == 0)
+			if(colRefeicao.size() == 0)
 			{
 				throw new NenhumResultado("Banco vazio");
 			}
@@ -33,83 +33,79 @@ public class GerirRefeicao
 			e.printStackTrace();
 			throw new BancoErro("Erro ao listar Refeicoes");
 		}
-
+	
 		return RefeicaoFinder._listarRefeicoesDisponiveis();
 	}
 
 	public static Refeicao buscarRefeicao(int idRefeicao) throws ClassNotFoundException, SQLException
 	{
+		
 		Refeicao refeicaoAntigo = RefeicaoFinder._buscarRefeicao(idRefeicao);
 
 		return refeicaoAntigo;
 	}
 
+<<<<<<< HEAD
 	public static void criarRefeicao(String op_veg, String descricao, String turno) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound
 
+=======
+	public static void criarRefeicao(int idRefeicao, String op_veg, String descricao, String turno) 
+			throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, 
+			ClassNotFoundException, SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound
+>>>>>>> refs/remotes/origin/master
 	{
 
-		Refeicao refeicao = new Refeicao(descricao, op_veg);
-		if (turno.equals(TurnoVO.MANHA.getTurno()))
-			refeicao.setTurno(TurnoVO.MANHA);
-		if (turno.equals(TurnoVO.NOITE.getTurno()))
-			refeicao.setTurno(TurnoVO.NOITE);
-		if (turno.equals(TurnoVO.TARDE.getTurno()))
-			refeicao.setTurno(TurnoVO.TARDE);
+		if (RefeicaoFinder._buscarRefeicao(idRefeicao) != null)
+		{
 
-		if (refeicao.getDescricao() == "")
-		{
-			throw new DescricaoNotFound("Preencha a descricao");
-		} else
-		{
-			if (refeicao.getOp_veg() == "")
-			{
-				throw new OpVegNotFound("Preencha a opcao vegetariana");
-			} else
-			{
-				if (refeicao.getTurno() == null)
-				{
-					throw new TurnoNotFound("Preencha o turno");
+			Refeicao refeicao = new Refeicao(idRefeicao, descricao, op_veg);
+			if (refeicao.getDescricao() == ""){
+				throw new DescricaoNotFound("Preencha a descricao");
+			}else{
+				if (refeicao.getOp_veg() == ""){
+					throw new OpVegNotFound("Preencha a opcao vegetariana");
+				}else{
+					if (refeicao.getTurno() == null){
+						throw new TurnoNotFound("Preencha o turno");
+					}
 				}
-			}
+					refeicao._adicionarRefeicao();
+					//retorno um departamento bobo
+				}
+		
+	
+			if (turno.equals(TurnoVO.MANHA.getTurno()))
+				refeicao.setTurno(TurnoVO.MANHA);
+			if (turno.equals(TurnoVO.NOITE.getTurno()))
+				refeicao.setTurno(TurnoVO.NOITE);
+			if (turno.equals(TurnoVO.TARDE.getTurno()))
+				refeicao.setTurno(TurnoVO.TARDE);
+			
 			refeicao._adicionarRefeicao();
-			// retorno um departamento bobo
+			// retorno um refeicao bobo }
 		}
-
-		if (turno.equals(TurnoVO.MANHA.getTurno()))
-			refeicao.setTurno(TurnoVO.MANHA);
-		if (turno.equals(TurnoVO.NOITE.getTurno()))
-			refeicao.setTurno(TurnoVO.NOITE);
-		if (turno.equals(TurnoVO.TARDE.getTurno()))
-			refeicao.setTurno(TurnoVO.TARDE);
-
-		refeicao._adicionarRefeicao();
-		// retorno um refeicao bobo }
 	}
 
-	public static void atualizarRefeicao(int idRefeicao, String op_veg, String descricao, String turno) throws ClassNotFoundException, SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound
+	public static void atualizarRefeicao(int idRefeicao, String op_veg, String descricao, String turno)
+			throws ClassNotFoundException, SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound
 	{
 		Refeicao refeicao = new Refeicao(idRefeicao, descricao, op_veg);
-
+		
 		refeicao = RefeicaoFinder._buscarRefeicao(idRefeicao);
-
-		if (refeicao.getDescricao() == "")
-		{
+		
+		if (refeicao.getDescricao() == ""){
 			throw new DescricaoNotFound("Preencha a descricao");
-		} else
-		{
-			if (refeicao.getOp_veg() == "")
-			{
+		}else{
+			if (refeicao.getOp_veg() == ""){
 				throw new OpVegNotFound("Preencha a opcao vegetariana");
-			} else
-			{
-				if (refeicao.getTurno() == null)
-				{
+			}else{
+				if (refeicao.getTurno() == null){
 					throw new TurnoNotFound("Preencha o turno");
 				}
 			}
-			refeicao._adicionarRefeicao();
-			// retorno um departamento bobo
-		}
+				refeicao._adicionarRefeicao();
+				//retorno um departamento bobo
+			}
 		if (turno.equals(TurnoVO.MANHA.getTurno()))
 			refeicao.setTurno(TurnoVO.MANHA);
 		if (turno.equals(TurnoVO.NOITE.getTurno()))
@@ -118,6 +114,7 @@ public class GerirRefeicao
 			refeicao.setTurno(TurnoVO.TARDE);
 		refeicao.setDescricao(descricao);
 		refeicao.setOp_veg(op_veg);
+		
 		refeicao._atualizarRefeicao();
 	}
 }

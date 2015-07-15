@@ -23,7 +23,7 @@ public class GerirFuncionario
 {
 
 	public static void criarFuncionario(String nome, String cpf, String sexo, int matricula, String titulo, int ano, String departamento) 
-			throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException,
+			throws SiglaNotFoundException, NomeNotFoundException, ClassNotFoundException, SQLException,
 			CursoNotFound, AnoIngressoNotFound, SexoNotFound, MatriculaNotFound, TituloNotFound {
 		
 		Funcionario funcionario = (Funcionario) new Consumidor(nome, matricula, ano);
@@ -58,7 +58,7 @@ public class GerirFuncionario
 				throw new CursoNotFound("Preencha o departamento");
 			}
 			funcionario._adicionarFuncionario();
-			//retorno um departamento bobo
+			
 		}
 			}
 				}

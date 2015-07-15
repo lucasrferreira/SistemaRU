@@ -35,7 +35,8 @@ public class GerirDepartamento {
 
 	}
 	
-	public static void criarDepartamento(String sigla, String nome) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException {
+	public static void criarDepartamento(String sigla, String nome) 
+			throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException {
 		
 		Departamento dpto = new Departamento(nome, sigla);
 		
@@ -48,7 +49,7 @@ public class GerirDepartamento {
 					throw new NomeNotFoundException("Preencha o nome");
 				}else{
 					dpto._adicionarDepartamento();
-					//retorno um departamento bobo
+					
 				}
 			}
 		}else{
