@@ -3,6 +3,8 @@ package controladores.ccu;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import controladores.ccu.exceptions.BancoErro;
+import controladores.ccu.exceptions.NenhumResultado;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
@@ -12,16 +14,25 @@ import entidades.DepartamentoFinder;
 public class GerirDepartamento {
 	
 	
-	
-	public static Collection<Departamento> listarDepartamentos()  {
+
+	public static Collection<Departamento> listarDepartamentos() throws BancoErro, NenhumResultado, ClassNotFoundException, SQLException {
+
 		try
 		{
-			return DepartamentoFinder._listarDepartamentosDisponiveis();
+			Collection<Departamento> colDepartamento = DepartamentoFinder._listarDepartamentosDisponiveis();
+			if(colDepartamento.size() == 0)
+			{
+				throw new NenhumResultado("Banco vazio");
+			}
+
 		} catch (ClassNotFoundException | SQLException e)
 		{
 			e.printStackTrace();
+
+			throw new BancoErro("Erro ao listar Departamentos");
 		}
-		return null;
+		return DepartamentoFinder._listarDepartamentosDisponiveis();
+
 	}
 	
 	public static void criarDepartamento(String sigla, String nome) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException {
@@ -30,10 +41,10 @@ public class GerirDepartamento {
 		
 		if (DepartamentoFinder._buscarDepartamento(sigla)!= null){
 			if (dpto.getSigla()==""){
-				throw new SiglaNotFoundException();
+				throw new SiglaNotFoundException("Preencha a sigla");
 			}else{
 				if (dpto.getNome()==""){
-					throw new NomeNotFoundException();
+					throw new NomeNotFoundException("Preencha o nome");
 				}else{
 					dpto._adicionarDepartamento();
 					//retorno um departamento bobo
