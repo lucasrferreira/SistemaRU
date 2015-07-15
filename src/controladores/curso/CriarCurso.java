@@ -1,6 +1,7 @@
 package controladores.curso;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Collection;
 
 import javax.servlet.ServletException;
@@ -10,12 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirCurso;
-import controladores.ccu.GerirDepartamento;
 import controladores.ccu.exceptions.DepartamentoNotFound;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
-import entidades.value_objects.DepartamentoVO;
+import entidades.Curso;
 
 @WebServlet("/CriarCurso")
 public class CriarCurso extends HttpServlet {
@@ -23,8 +23,8 @@ public class CriarCurso extends HttpServlet {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String acao = (String) request.getParameter("acaoCriar");
-		Collection<DepartamentoVO> departamentosDisponiveis = GerirDepartamento.listarDepartamentos();
-		request.setAttribute("departamentosDisponiveis", departamentosDisponiveis);
+		Collection<Curso> cursosDisponiveis = GerirCurso.listarCursos();
+		request.setAttribute("departamentosDisponiveis", cursosDisponiveis);
 		
 		if (acao != null){
 			switch (acao) {
@@ -49,14 +49,28 @@ public class CriarCurso extends HttpServlet {
 		String sigla = (String) request.getParameter("sigla");
 		
 		try {
-			GerirCurso.criarCurso(request.getSession(), nome, sigla, request.getParameter("aluno"));
-			request.setAttribute("message", "Novo departamento criado!");
-			request.getRequestDispatcher("ListarCurso").forward(request,response);
+			try
+			{
+				GerirCurso.criarCurso(nome, sigla, request.getParameter("aluno"));
+				request.setAttribute("message", "Novo departamento criado!");
+				request.getRequestDispatcher("ListarCurso").forward(request,response);
+			} catch (ClassNotFoundException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			
 		} catch (SiglaNotFoundException | NomeNotFoundException e2) {
 			request.setAttribute("erro", "Um curso deve conter um nome, uma sigla e um departamento");
 			request.getRequestDispatcher("WEB-INF/curso/CriarCurso.jsp").forward(request,response);
+			
 		}catch (SiglaAlreadyExistsException e) {
-			request.setAttribute("erro", "Sigla informada já existe");
+			request.setAttribute("erro", "Sigla informada ja existe");
 			request.getRequestDispatcher("WEB-INF/curso/CriarCurso.jsp").forward(request,response);
 
 		}

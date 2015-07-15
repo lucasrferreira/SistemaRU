@@ -55,7 +55,7 @@ public class AtualizarTicket extends HttpServlet {
 		
 		double valor = (Double.parseDouble(request.getParameter("valor")));
 		//duvida em como pegar
-		RefeicaoVO refeicao = ;
+		RefeicaoVO refeicao =  ;
 		
 
 		

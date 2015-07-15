@@ -32,8 +32,8 @@ public class AtualizarRefeicao extends HttpServlet {
 				break;
 			default:
 				try {
-					RefeicaoVO departamentoAntigo = GerirRefeicao.buscarDepartamento(request.getSession(),request.getParameter("sigla"));
-					request.setAttribute("refeicao antiga",departamentoAntigo);
+					RefeicaoVO refeicaoAntiga = GerirRefeicao.buscarRefeicao(request.getSession(),request.getParameter("sigla"));
+					request.setAttribute("refeicao antiga",refeicaoAntiga);
 					request.getRequestDispatcher("WEB-INF/refeicao/AtualizarRefeicao.jsp").forward(request,response);
 				} catch (DepartamentoNotFound e2) {
 					request.setAttribute("erro", "A refeicao informada nao existe");
@@ -47,12 +47,13 @@ public class AtualizarRefeicao extends HttpServlet {
 		String descricao = (String) request.getParameter("descricao");
 		String op_veg = (String) request.getParameter("op_veg");
 		
-		if (descricao =="" || op_veg ==""){
+		
+		if (descricao == "" || op_veg == ""){
 			request.setAttribute("erro", "Uma refeicao deve conter uma descricao, turno e uma opcao vegetariana");
 			request.getRequestDispatcher("WEB-INF/departamento/AtualizarDepartamento.jsp").forward(request,response);
 		}else{
 			try {
-				GerirRefeicao.atualizarDepartamento(request.getSession(), descricao, op_veg);
+				GerirRefeicao.atualizarRefeicao(request.getSession(), descricao, op_veg);
 				request.getRequestDispatcher("ListarDepartamento").forward(request,response);
 				
 			} catch (DepartamentoNotFound e2) {

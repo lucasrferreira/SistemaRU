@@ -20,7 +20,7 @@ public class CriarDepartamento extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
 
-	DepartamentoVO				departamento;
+	DepartamentoVO	departamento;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -66,25 +66,12 @@ public class CriarDepartamento extends HttpServlet
 			request.getRequestDispatcher("WEB-INF/departamento/CriarDepartamento.jsp").forward(request, response);
 		} catch (SiglaAlreadyExistsException e)
 		{
-			request.setAttribute("erro", "Sigla informada já existe");
+			request.setAttribute("erro", "Sigla informada ja existe");
 			request.getRequestDispatcher("WEB-INF/departamento/CriarDepartamento.jsp").forward(request, response);
 		}
 
 	}
 
-	private DepartamentoVO formToVo(HttpServletRequest request)
-	{
-		DepartamentoVO dpto = new DepartamentoVO();
 
-		dpto.setNome((String) request.getParameter("nome"));
-		dpto.setSigla((String) request.getParameter("sigla"));
-
-		return dpto;
-	}
-
-	private void voToForm(HttpServletRequest request, DepartamentoVO dpto)
-	{
-
-	}
 
 }

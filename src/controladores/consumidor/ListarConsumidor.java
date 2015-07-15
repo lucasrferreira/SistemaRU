@@ -29,83 +29,23 @@ public class ListarConsumidor extends HttpServlet {
 		if (acao == null) acao = "";
 		
 		switch (acao) {
-			case "Criar":
-				criarConsumidor(request,response);
-				break;
-			case "Atualizar":
-				atualizarConsumidor(request,response);
-				break;
-			case "Ver":
-				verConsumidor(request,response);
-				break;
-			// nos requisitos nao podemos remover consumidores
-//			case "Remover":
-//				removeConsumidor(request,response);
-//				break;
-			case "":
-			default:
-				listarConsumidores(request,response);				
+		case "Criar":
+			request.getRequestDispatcher("CriarConsumidor").forward(request,response);
+			break;
+		case "Atualizar":
+			request.getRequestDispatcher("AtualizarConsumidor").forward(request,response);
+			break;
+
+		case "":
+		default:
+			listarConsumidores(request,response);			
 		}
 	}
-
-	private void criarConsumidor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("CriarConsumidor").forward(request,response);
-	}
-	
-	private void atualizarConsumidor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("AtualizarConsumidor").forward(request,response);
-	}	
-
-	private void verConsumidor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("VerConsumidor").forward(request,response);
-	}
-
-//	private void removeConsumidor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		request.getRequestDispatcher("RemoverConsumidor").forward(request,response);
-//	}
 
 	private void listarConsumidores(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("consumidores", _listarConsumidoresDisponiveis(request));
-		request.getRequestDispatcher("WEB-INF/consumidor/ListarConsumidor.jsp").forward(request,response);
+		request.setAttribute("consumidores", GerirCurso.listarCursos(request.getSession()));
+		request.getRequestDispatcher("WEB-INF/consumidor/ListarConsumidores.jsp").forward(request,response);
 	}
 
-	// metodos de persistencia de Consumidor
-
-	public static Collection<Consumidor> _listarConsumidoresDisponiveis(HttpServletRequest request){
-		
-		HttpSession session = request.getSession();
-
-		Collection<Consumidor> consumidoresDisponiveis = (Collection<Consumidor>)session.getAttribute("consumidoresDisponiveis");
-//		
-
-		session.setAttribute("consumidoresDisponiveis", consumidoresDisponiveis);
-
-		return consumidoresDisponiveis;
-	}
-	
-	public static void _adicionarConsumidor(HttpServletRequest request, Consumidor consumido) {
-		Set<Consumidor> consumidoresDisponiveis = (Set<Consumidor>)request.getSession().getAttribute("consumidoresDisponiveis");
-		consumidoresDisponiveis.add(consumido);
-		request.getSession().setAttribute("consumidoresDisponiveis",consumidoresDisponiveis);
-	}
-
-	public static Consumidor _buscarConsumidor(HttpServletRequest request, CPF cpfConsumido) {
-		Set<Consumidor> consumidoresDisponiveis = (Set<Consumidor>)request.getSession().getAttribute("consumidoresDisponiveis");
-		for(Consumidor ci : consumidoresDisponiveis){
-			if (cpfConsumido.equals(ci.getCpf()))
-				return ci;
-		}
-		return null;
-	}
-
-	public static void _atualizarConsumidor (HttpServletRequest request, Consumidor consumidor) throws ServletException, IOException {
-		Collection<Consumidor> consumidoresDisponiveis = (Collection<Consumidor>)request.getSession().getAttribute("consumidoresDisponiveis");
-		Consumidor consumidorAntigo = _buscarConsumidor(request,consumidor.getCpf());
-//		consumidoAntigo.setNome(consumido.getNome());
-//		consumidoAntigo.setDepartamento(consumido.getDepartamento());
-		consumidoresDisponiveis.add(consumidorAntigo);
-		
-		request.getSession().setAttribute("consumidoresDisponiveis", consumidoresDisponiveis);
-	}
 
 }
