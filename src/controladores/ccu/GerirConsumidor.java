@@ -56,7 +56,7 @@ public class GerirConsumidor
 			consumidor.setCpf(CPF.fromString(cpf));
 			
 				if (consumidor.getNome() == ""){
-					throw new NomeNotFoundException();
+					throw new NomeNotFoundException(nome);
 				}else{
 					if (consumidor.getAnoIngresso() == 0){
 						throw new AnoIngressoNotFound("Preencha o ano de ingresso");
