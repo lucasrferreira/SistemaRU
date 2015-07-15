@@ -6,7 +6,8 @@ import java.util.Collection;
 import controladores.ccu.exceptions.BancoErro;
 import controladores.ccu.exceptions.ConsumidorNotFound;
 import controladores.ccu.exceptions.NenhumResultado;
-import controladores.ccu.exceptions.SiglaNotFoundException;
+import controladores.ccu.exceptions.RefeicaoNotFound;
+import controladores.ccu.exceptions.ValorNotFound;
 import entidades.RefeicaoFinder;
 import entidades.Ticket;
 import entidades.TicketFinder;
@@ -56,6 +57,7 @@ public class GerirTicket
 				if (ticket.getConsumidor() == null){
 					throw new ConsumidorNotFound("Preencha o consumidor");
 				}
+			}	
 		}
 		// ticket.setConsumidor(ConsumidorFinder._buscarConsumidor(consumidor));
 		ticket._adicionarTicket();
