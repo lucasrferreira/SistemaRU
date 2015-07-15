@@ -40,7 +40,7 @@ public class AlunoFinder {
 		Conexao.initConnection();
 		ResultSet rs = null;
 		
-		String prepare = "Select * from aluno , consumidor where aluno.cpf = consumidor.cpf and aluno.cpf = ?;";
+		String prepare = "Select * from aluno, consumidor where aluno.cpf = consumidor.cpf and aluno.cpf = ?;";
 		PreparedStatement psmt = Conexao.prepare(prepare);
 		
 		psmt.setString(1, cpf.toString());

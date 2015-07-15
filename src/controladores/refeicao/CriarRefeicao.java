@@ -51,7 +51,7 @@ public class CriarRefeicao extends HttpServlet
 
 		String descricao = (String) request.getParameter("descricao");
 		String op_veg = (String) request.getParameter("op_veg");
-		String turno = (String) request.getParameter("descricao");
+		String turno = (String) request.getParameter("turno");
 
 		// try {
 		try
@@ -59,13 +59,16 @@ public class CriarRefeicao extends HttpServlet
 			try
 			{
 				GerirRefeicao.criarRefeicao( op_veg, descricao, turno);
+				request.setAttribute("message", "Nova refeicao criada!");
+				request.getRequestDispatcher("ListarRefeicao").forward(request, response);
 			} catch (DescricaoNotFound | OpVegNotFound | TurnoNotFound e)
 			{
+
+				request.setAttribute("message", "Não foi possivel inserir" + e.getMessage());
+				request.getRequestDispatcher("ListarRefeicao").forward(request, response);
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			request.setAttribute("message", "Nova refeicao criada!");
-			request.getRequestDispatcher("ListarRefeicao").forward(request, response);
 		} catch (ClassNotFoundException e)
 		{
 			// TODO Auto-generated catch block

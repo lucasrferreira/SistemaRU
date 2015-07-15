@@ -50,6 +50,9 @@ public class Index extends HttpServlet {
 			case "Consumidor":
 				request.getRequestDispatcher("ListarConsumidor").forward(request,response);
 				break;
+			case "Refeicao":
+				request.getRequestDispatcher("ListarRefeicao").forward(request,response);
+				break;
 			case "":
 			default:
 				request.getRequestDispatcher("WEB-INF/Index.jsp").forward(request,response);

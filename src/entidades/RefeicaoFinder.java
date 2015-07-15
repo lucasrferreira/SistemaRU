@@ -34,6 +34,7 @@ public class RefeicaoFinder implements Serializable {
 			colRefeicao.add(Refeicao.load(rs));
 		}
 
+		rs.close();
 		Conexao.closeConnection();
 		return colRefeicao;
 	}

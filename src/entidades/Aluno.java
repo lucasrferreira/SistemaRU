@@ -16,12 +16,19 @@ public class Aluno extends Consumidor{
 	private Curso curso;
 
 
+	public Aluno(String nome, int matricula, int ano)
+	{
+		super(nome, matricula, ano);
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public void _adicionarAluno() throws ClassNotFoundException, SQLException 
 	{
 		super._adicionarConsumidor();
 		Conexao.initConnection();
 		
-		String prepare = "Insert into aluno ( cpf, curso) value (?, ?);";
+		String prepare = "Insert into aluno ( cpf, curso) values (?, ?);";
 		
 		PreparedStatement pstmt = Conexao.prepare(prepare);
 

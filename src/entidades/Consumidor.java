@@ -34,7 +34,7 @@ public class Consumidor
 
 		Conexao.initConnection();
 
-		String prepare = "Insert into consumidor (nome, matricula, ano, sexo, titulo, cpf) value (?, ?, ? , ? , ?, ?);";
+		String prepare = "Insert into consumidor (nome, matricula, ano, sexo, titulo, cpf) values (?, ?, ? , ? , ?, ?);";
 
 		PreparedStatement pstmt = Conexao.prepare(prepare);
 
@@ -133,21 +133,21 @@ public class Consumidor
 	{
 		Consumidor consumidor = new Consumidor();
 
-		consumidor.setNome(rs.getString("consumidor.nome"));
-		consumidor.setMatricula(rs.getInt("consumidor.matricula"));
-		consumidor.setCpf(CPF.fromString(rs.getString("consumidor.cpf")));
-		consumidor.setAnoIngresso(rs.getInt("consumidor.ano"));
+		consumidor.setNome(rs.getString("nome"));
+		consumidor.setMatricula(rs.getInt("matricula"));
+		consumidor.setCpf(CPF.fromString(rs.getString("cpf")));
+		consumidor.setAnoIngresso(rs.getInt("ano"));
 
-		if (rs.getString("consumidor.sexo").equals(Sexo.FEMININO.getSexo()))
+		if (rs.getString("sexo").equals(Sexo.FEMININO.getSexo()))
 			consumidor.setSexo(Sexo.FEMININO);
-		if (rs.getString("consumidor.sexo").equals(Sexo.MASCULINO.getSexo()))
+		if (rs.getString("sexo").equals(Sexo.MASCULINO.getSexo()))
 			consumidor.setSexo(Sexo.MASCULINO);
 
-		if (rs.getString("consumidor.titulo").equals(Titulo.MESTRADO.getTitulo()))
+		if (rs.getString("titulo").equals(Titulo.MESTRADO.getTitulo()))
 			consumidor.setTitulo(Titulo.MESTRADO);
-		if (rs.getString("consumidor.titulo").equals(Titulo.DOUTORADO.getTitulo()))
+		if (rs.getString("titulo").equals(Titulo.DOUTORADO.getTitulo()))
 			consumidor.setTitulo(Titulo.DOUTORADO);
-		if (rs.getString("consumidor.titulo").equals(Titulo.ESPECIALIZACAO.getTitulo()))
+		if (rs.getString("titulo").equals(Titulo.ESPECIALIZACAO.getTitulo()))
 			consumidor.setTitulo(Titulo.ESPECIALIZACAO);
 		return consumidor;
 	}

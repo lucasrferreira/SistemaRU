@@ -1,6 +1,7 @@
 package controladores.refeicao;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirRefeicao;
+import entidades.Refeicao;
 
 @WebServlet("/ListarRefeicao")
 public class ListarRefeicao extends HttpServlet {
@@ -39,15 +41,20 @@ public class ListarRefeicao extends HttpServlet {
 	}
 
 	private void listarRefeicao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try
-		{
-			request.setAttribute("refeicao", GerirRefeicao.listarRefeicoes());
-			request.getRequestDispatcher("WEB-INF/refeicao/ListarRefeicao.jsp").forward(request,response);
-		} catch (Exception e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try
+			{
+				request.setAttribute("refeicoes", GerirRefeicao.listarRefeicoes());
+				request.getRequestDispatcher("WEB-INF/refeicao/ListarRefeicao.jsp").forward(request,response);
+				
+			} catch (Exception e)
+			{
+				request.setAttribute("refeicoes", new ArrayList<Refeicao>());
+				request.getRequestDispatcher("WEB-INF/refeicao/ListarRefeicao.jsp").forward(request,response);
+				e.printStackTrace();
+			}
+//			request.getRequestDispatcher("WEB-INF/refeicao/ListarRefeicao.jsp").forward(request,response);
+		
+		
 	}
 	
 	

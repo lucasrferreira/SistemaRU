@@ -52,6 +52,7 @@ public class CursoFinder implements Serializable
 			curso = Curso.load(rs);
 		}
 
+		rs.close();
 		Conexao.closeConnection();
 
 		return curso;

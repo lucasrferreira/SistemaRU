@@ -13,7 +13,9 @@ OLA MUNDO
 	<input type="submit" name="navegacao" value="Consumidor">
 </form>
 	<input type="submit" name="navegacao" value="Funcionario">
-	<input type="submit" name="navegacao" value="Refeiçao">
+<form action="Refeicao" method="post">
+	<input type="submit" name="navegacao" value="Refeicao">
+</form>
 <form action="Curso" method="post">
 	<input type="submit" name="navegacao" value="Curso">
 </form>

@@ -38,7 +38,7 @@ public class Refeicao implements Serializable
 	{
 
 		Conexao.initConnection();
-		String prepare = "Insert into refeicao (descricao, turno, op_veg) value ( ?, ?, ?);";
+		String prepare = "Insert into refeicao (descricao, turno, op_veg) values ( ?, ?, ?);";
 		PreparedStatement pstmt = Conexao.prepare(prepare);
 
 		pstmt.setString(1, descricao);

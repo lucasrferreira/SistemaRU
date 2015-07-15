@@ -65,6 +65,8 @@ public class CriarAluno extends HttpServlet
 
 	private void criarAluno(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		System.out.println("\n\n\n\n passou");
+		
 		String nome = (String) request.getParameter("nome");
 		int matricula = (Integer.parseInt(request.getParameter("matricula")));
 		int ano = (Integer.parseInt(request.getParameter("anoIngresso")));
@@ -77,11 +79,12 @@ public class CriarAluno extends HttpServlet
 		{
 			GerirAluno.criarAluno(nome, cpf, sexo, matricula, titulo, ano, curso);
 			request.setAttribute("message", "Novo Aluno criado!");
-			request.getRequestDispatcher("ListarAluno").forward(request, response);
+			request.getRequestDispatcher("ListarConsumidor").forward(request, response);
 
 		} catch (ClassNotFoundException | SiglaNotFoundException | NomeNotFoundException | SiglaAlreadyExistsException | SQLException | AnoIngressoNotFound | SexoNotFound | TituloNotFound | MatriculaNotFound | CursoNotFound e)
 		{
-			// TODO Auto-generated catch block
+			request.setAttribute("message", "Não foi possivel adicionar o aluno");
+			request.getRequestDispatcher("ListarConsumidor").forward(request, response);
 			e.printStackTrace();
 		}
 		;

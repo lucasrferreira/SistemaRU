@@ -33,7 +33,7 @@ public class Ticket implements Serializable
 
 		Conexao.initConnection();
 
-		String prepare = "Insert into ticket (valor, refeicao, consumidor) value (?, ?, ?);";
+		String prepare = "Insert into ticket (valor, refeicao, consumidor) values (?, ?, ?);";
 
 		PreparedStatement pstmt = Conexao.prepare(prepare);
 

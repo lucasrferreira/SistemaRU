@@ -9,13 +9,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Criar curso</title>
+<title>Criar Aluno</title>
 </head>
 <%@include file="../messagePage.jsp" %>
 <% Collection<Curso> cursosDisponiveis = (Collection<Curso>)request.getAttribute("cursosDisponiveis"); %>
 
 <body>
-	<form action="CriarCurso" method="post">
+	<form action="CriarAluno" method="post">
 	Nome : <input type="text" name ="nome" value = "">
 	Matricula : <input type="text" name ="matricula" value = "">
 	CPF : <input type="text" name ="cpf" value = "">
@@ -31,7 +31,7 @@
 		<option value = "<%= Titulo.ESPECIALIZACAO.getTitulo() %>"><%= Titulo.ESPECIALIZACAO.getTitulo() %></option>		
 		<option value = "<%=  Titulo.MESTRADO.getTitulo() %>"><%=  Titulo.MESTRADO.getTitulo() %></option>		
 	</select>	
-	departamento : <select name ="curso">
+	Curso : <select name ="curso">
 	<option value=""></option>
 	<% for(Curso cursoDisp : cursosDisponiveis){ %>
 		<option value="<%=cursoDisp.getSigla()%>"><%=cursoDisp.getNome()%></option>

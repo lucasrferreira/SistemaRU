@@ -18,7 +18,7 @@ public class Funcionario extends Consumidor {
 		super._adicionarConsumidor();
 		Conexao.initConnection();
 		
-		String prepare = "Insert into funcionario ( cpf, departamento) value (?, ?);";
+		String prepare = "Insert into funcionario ( cpf, departamento) values (?, ?);";
 		
 		PreparedStatement pstmt = Conexao.prepare(prepare);
 

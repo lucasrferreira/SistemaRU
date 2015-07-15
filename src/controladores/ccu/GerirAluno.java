@@ -25,7 +25,7 @@ public class GerirAluno
 			throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException, 
 			AnoIngressoNotFound, SexoNotFound, TituloNotFound, MatriculaNotFound, CursoNotFound {
 		
-		Aluno aluno = (Aluno) new Consumidor(nome, matricula, ano);
+		Aluno aluno = new Aluno(nome, matricula, ano);
 
 		if (sexo.equals(Sexo.FEMININO.getSexo()))
 			aluno.setSexo(Sexo.FEMININO);

@@ -50,6 +50,14 @@ public class GerirRefeicao
 	{
 
 		Refeicao refeicao = new Refeicao(descricao, op_veg);
+
+		if (turno.equals(TurnoVO.MANHA.getTurno()))
+			refeicao.setTurno(TurnoVO.MANHA);
+		if (turno.equals(TurnoVO.NOITE.getTurno()))
+			refeicao.setTurno(TurnoVO.NOITE);
+		if (turno.equals(TurnoVO.TARDE.getTurno()))
+			refeicao.setTurno(TurnoVO.TARDE);
+
 		if (refeicao.getDescricao() == "")
 		{
 			throw new DescricaoNotFound("Preencha a descricao");
@@ -65,19 +73,9 @@ public class GerirRefeicao
 					throw new TurnoNotFound("Preencha o turno");
 				}
 			}
-			refeicao._adicionarRefeicao();
-			// retorno um departamento bobo
 		}
 
-		if (turno.equals(TurnoVO.MANHA.getTurno()))
-			refeicao.setTurno(TurnoVO.MANHA);
-		if (turno.equals(TurnoVO.NOITE.getTurno()))
-			refeicao.setTurno(TurnoVO.NOITE);
-		if (turno.equals(TurnoVO.TARDE.getTurno()))
-			refeicao.setTurno(TurnoVO.TARDE);
-
 		refeicao._adicionarRefeicao();
-		// retorno um refeicao bobo }
 
 	}
 
@@ -102,7 +100,7 @@ public class GerirRefeicao
 					throw new TurnoNotFound("Preencha o turno");
 				}
 			}
-			refeicao._adicionarRefeicao();
+			
 			// retorno um departamento bobo
 		}
 		if (turno.equals(TurnoVO.MANHA.getTurno()))
