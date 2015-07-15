@@ -2,13 +2,9 @@ package controladores.ccu;
 
 import java.util.Collection;
 
-import entidades.Aluno;
 import entidades.Consumidor;
 import entidades.ConsumidorFinder;
-import entidades.Funcionario;
-import entidades.value_objects.AlunoVO;
 import entidades.value_objects.CPF;
-import entidades.value_objects.FuncionarioVO;
 import entidades.value_objects.Sexo;
 import entidades.value_objects.Titulo;
 
