@@ -2,53 +2,73 @@ package controladores.ccu;
 
 import java.util.Collection;
 
-import entidades.Aluno;
 import entidades.Consumidor;
-import entidades.Funcionario;
-import entidades.value_objects.AlunoVO;
-import entidades.value_objects.ConsumidorVO;
-import entidades.value_objects.FuncionarioVO;
+import entidades.ConsumidorFinder;
+import entidades.value_objects.CPF;
+import entidades.value_objects.Sexo;
+import entidades.value_objects.Titulo;
 
 public class GerirConsumidor
 {
 
-	public static Collection<ConsumidorVO> listarConsumidores() throws Exception
+	public static Collection<Consumidor> listarConsumidores() throws Exception
 	{
-		return Consumidor._listarConsumidoresDisponiveis();
+		return ConsumidorFinder._listarConsumidoresDisponiveis();
 	}
 
-	public static ConsumidorVO buscarConsumidor(ConsumidorVO consumidorAntigo) throws Exception
+	public static Consumidor buscarConsumidor(String cpf) throws Exception
 	{
-		AlunoVO aluno;
-		if(consumidorAntigo instanceof AlunoVO){
-			aluno = (AlunoVO) consumidorAntigo;
-			consumidorAntigo = Aluno._buscarAluno(aluno);
-		}
-		FuncionarioVO funcionario;
-		if(consumidorAntigo instanceof FuncionarioVO)
-		{
-			funcionario = (FuncionarioVO) consumidorAntigo;
-			consumidorAntigo = Funcionario._buscarFuncionario(funcionario);
-		}
 		
-		return consumidorAntigo;
+		
+		return ConsumidorFinder._buscarConsumidor(CPF.fromString(cpf));
 	}
 
-	public static void criarConsumidor(ConsumidorVO dpto) throws Exception
+	public static void criarConsumidor(String nome, String cpf, String sexo, int matricula, String titulo, int ano) throws Exception
 	{
 
-		if (Consumidor._buscarConsumidor(dpto) != null)
+		if (ConsumidorFinder._buscarConsumidor(CPF.fromString(cpf)) != null)
 		{
-			Consumidor._adicionarConsumidor(dpto);
+			Consumidor consumidor = new Consumidor(nome, matricula, ano);
+			
+			consumidor.setCpf(CPF.fromString(cpf));
+			
+
+			if (sexo.equals(Sexo.FEMININO.getSexo()))
+				consumidor.setSexo(Sexo.FEMININO);
+			if (sexo.equals(Sexo.MASCULINO.getSexo()))
+				consumidor.setSexo(Sexo.MASCULINO);
+
+			if (titulo.equals(Titulo.MESTRADO.getTitulo()))
+				consumidor.setTitulo(Titulo.MESTRADO);
+			if (titulo.equals(Titulo.DOUTORADO.getTitulo()))
+				consumidor.setTitulo(Titulo.DOUTORADO);
+			if (titulo.equals(Titulo.ESPECIALIZACAO.getTitulo()))
+				consumidor.setTitulo(Titulo.ESPECIALIZACAO);
+			
+			consumidor._adicionarConsumidor();
 			// retorno um consumidor bobo }
 		}
 	}
 
-	public static void atualizarConsumidor(ConsumidorVO consumidor) throws Exception
+	public static void atualizarConsumidor(String nome, String cpf, String sexo, int matricula, String titulo, int ano) throws Exception
 	{
 
-		consumidor = buscarConsumidor(consumidor);
+		Consumidor consumidor = ConsumidorFinder._buscarConsumidor(CPF.fromString(cpf));
+		
+		if (sexo.equals(Sexo.FEMININO.getSexo()))
+			consumidor.setSexo(Sexo.FEMININO);
+		if (sexo.equals(Sexo.MASCULINO.getSexo()))
+			consumidor.setSexo(Sexo.MASCULINO);
 
-		Consumidor._atualizarConsumidor(consumidor);
+		if (titulo.equals(Titulo.MESTRADO.getTitulo()))
+			consumidor.setTitulo(Titulo.MESTRADO);
+		if (titulo.equals(Titulo.DOUTORADO.getTitulo()))
+			consumidor.setTitulo(Titulo.DOUTORADO);
+		if (titulo.equals(Titulo.ESPECIALIZACAO.getTitulo()))
+			consumidor.setTitulo(Titulo.ESPECIALIZACAO);
+		
+
+		
+		consumidor._atualizarConsumidor();
 	}
 }

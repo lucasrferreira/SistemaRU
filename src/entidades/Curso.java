@@ -10,10 +10,11 @@ import entidades.Departamento;
 
 public class Curso implements Serializable
 {
-	private String	nome;
-	private String	sigla;
+	private String			nome;
+	private String			sigla;
 
 	private Departamento departamento;
+
 
 	public Curso(String sigla, String nome)
 	{

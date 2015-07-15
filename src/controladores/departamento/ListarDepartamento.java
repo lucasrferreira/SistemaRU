@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirDepartamento;
-import entidades.value_objects.DepartamentoVO;
 
 @WebServlet("/ListarDepartamento")
 public class ListarDepartamento extends HttpServlet {

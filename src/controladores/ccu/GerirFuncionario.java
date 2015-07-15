@@ -1,42 +1,60 @@
 package controladores.ccu;
 
 import java.sql.SQLException;
-import java.util.Collection;
 
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
+import entidades.Consumidor;
+import entidades.DepartamentoFinder;
 import entidades.Funcionario;
-import entidades.value_objects.FuncionarioVO;
+import entidades.FuncionarioFinder;
+import entidades.value_objects.CPF;
+import entidades.value_objects.Sexo;
+import entidades.value_objects.Titulo;
 
 public class GerirFuncionario {
 	
 	
-	
-	public static Collection<FuncionarioVO> listarFuncionarios() throws Exception {
-		return Funcionario._listarFuncionariosDisponiveis();
-	}
-	
-	public static FuncionarioVO buscarFuncionario( FuncionarioVO funcionarioAntigo) throws ClassNotFoundException, SQLException {
+	public static void criarFuncionario(String nome, String cpf, String sexo, int matricula, String titulo, int ano, String departamento) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException {
 		
-		funcionarioAntigo = Funcionario._buscarFuncionario(funcionarioAntigo);
+		Funcionario funcionario = (Funcionario) new Consumidor(nome, matricula, ano);
+		
+		funcionario.setDepartamento(DepartamentoFinder._buscarDepartamento(departamento));
+		
+		try
+		{
+			funcionario.setCpf(CPF.fromString(cpf));
+		} catch (Exception e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 
-		
-		return funcionarioAntigo;
-	}	
+		if (sexo.equals(Sexo.FEMININO.getSexo()))
+			funcionario.setSexo(Sexo.FEMININO);
+		if (sexo.equals(Sexo.MASCULINO.getSexo()))
+			funcionario.setSexo(Sexo.MASCULINO);
+
+		if (titulo.equals(Titulo.MESTRADO.getTitulo()))
+			funcionario.setTitulo(Titulo.MESTRADO);
+		if (titulo.equals(Titulo.DOUTORADO.getTitulo()))
+			funcionario.setTitulo(Titulo.DOUTORADO);
+		if (titulo.equals(Titulo.ESPECIALIZACAO.getTitulo()))
+			funcionario.setTitulo(Titulo.ESPECIALIZACAO);
 	
-	public static void criarFuncionario(FuncionarioVO dpto) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException {
 		
-		if (Funcionario._buscarFuncionario(dpto)!= null){
-			Funcionario._adicionarFuncionario(dpto);
-					//retorno um funcionario bobo	}
+		try
+		{
+			if (FuncionarioFinder._buscarFuncionario(CPF.fromString(cpf))!= null){
+				funcionario._adicionarFuncionario();
+			}
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
-	public static void atualizarFuncionario(FuncionarioVO funcionario) throws ClassNotFoundException, SQLException{
-		
-		funcionario= buscarFuncionario(funcionario);
-		
-		Funcionario._atualizarFuncionario(funcionario);
-	}	
 }
