@@ -15,8 +15,7 @@ import entidades.CursoFinder;
 import entidades.Departamento;
 import entidades.DepartamentoFinder;
 
-public class GerirCurso
-{
+public class GerirCurso{
 	public static Collection<Curso> listarCursos() throws NenhumResultado, BancoErro, ClassNotFoundException, SQLException
 	{
 		try

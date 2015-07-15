@@ -62,7 +62,7 @@ public class GerirAluno {
 				}
 					}
 						}
-
+		
 		if (sexo.equals(Sexo.FEMININO.getSexo()))
 			aluno.setSexo(Sexo.FEMININO);
 		if (sexo.equals(Sexo.MASCULINO.getSexo()))

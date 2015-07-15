@@ -7,5 +7,5 @@ public class RefeicaoNotFound extends Exception{
 	public RefeicaoNotFound(String erro)
 	{
 		this.erro = erro;
-	}
+		}
 }

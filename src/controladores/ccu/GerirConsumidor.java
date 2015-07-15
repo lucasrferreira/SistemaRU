@@ -78,7 +78,6 @@ public class GerirConsumidor
 							}
 								}
 				
-					
 	
 			if (sexo.equals(Sexo.FEMININO.getSexo()))
 				consumidor.setSexo(Sexo.FEMININO);
