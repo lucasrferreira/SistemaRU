@@ -1,6 +1,7 @@
 package controladores.ccu;
 
 import java.sql.SQLException;
+import java.util.Collection;
 
 import controladores.ccu.exceptions.CursoNotFound;
 import controladores.ccu.exceptions.DepartamentoNotFound;
@@ -8,17 +9,17 @@ import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
 import entidades.Curso;
+import entidades.CursoFinder;
 import entidades.Departamento;
-import entidades.value_objects.CursoVO;
-import entidades.value_objects.DepartamentoVO;
+import entidades.DepartamentoFinder;
 
 public class GerirCurso
 {
-	public static Object listarCursos()
+	public static Collection<Curso> listarCursos()
 	{
 		try
 		{
-			return Curso._listarCursosDisponiveis();
+			return CursoFinder._listarCursosDisponiveis();
 		} catch (ClassNotFoundException e)
 		{
 			// TODO Auto-generated catch block
@@ -31,13 +32,14 @@ public class GerirCurso
 		return null;
 	}
 
-	public static CursoVO buscarCurso(CursoVO cursoAntigo) throws CursoNotFound
+	public static Curso buscarCurso(String sigla) throws CursoNotFound
 	{
+		Curso curso = null;
 		try
 		{
 			try
 			{
-				cursoAntigo = Curso._buscarCurso(cursoAntigo);
+				curso = CursoFinder._buscarCurso(sigla);
 			} catch (ClassNotFoundException e)
 			{
 				// TODO Auto-generated catch block
@@ -51,24 +53,26 @@ public class GerirCurso
 		{
 			throw new CursoNotFound();
 		}
-		if (cursoAntigo == null)
+		if (curso == null)
 		{
 			throw new CursoNotFound();
 		}
 
-		return cursoAntigo;
+		return curso;
 	}
 
-	public static void criarCurso(CursoVO curso) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, DepartamentoNotFound, ClassNotFoundException, SQLException
+	public static void criarCurso(String sigla, String nome, String departamento) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, DepartamentoNotFound, ClassNotFoundException, SQLException
 	{
-		DepartamentoVO dpto = Departamento._buscarDepartamento(curso.getDepartamento());
+		Departamento dpto = DepartamentoFinder._buscarDepartamento(departamento);
 
 		if (dpto == null)
 		{
 			throw new DepartamentoNotFound();
 		} else
 		{
-			if (Curso._buscarCurso(curso) == null)
+			Curso curso = new Curso(sigla, nome);
+
+			if (CursoFinder._buscarCurso(sigla) == null)
 			{
 				if (curso.getSigla() == "")
 				{
@@ -80,7 +84,7 @@ public class GerirCurso
 						throw new NomeNotFoundException();
 					} else
 					{
-						Curso._adicionarCurso(curso);
+						curso._adicionarCurso();
 					}
 				}
 			} else
@@ -90,18 +94,30 @@ public class GerirCurso
 		}
 	}
 
-	public static void atualizarCurso(CursoVO cursoAntigo) throws CursoNotFound, DepartamentoNotFound, ClassNotFoundException, SQLException
+	public static void atualizarCurso(String sigla, String nome, String departamento) throws CursoNotFound, DepartamentoNotFound, ClassNotFoundException, SQLException, SiglaNotFoundException, NomeNotFoundException
 	{
-		DepartamentoVO dpto = Departamento._buscarDepartamento(cursoAntigo.getDepartamento());
+		Departamento dpto = DepartamentoFinder._buscarDepartamento(departamento);
 
 		if (dpto == null)
 		{
 			throw new DepartamentoNotFound();
 		} else
 		{
+			Curso curso = new Curso(sigla, nome);
 
-			Curso._atualizarCurso(cursoAntigo);
-
+			if (curso.getSigla() == "")
+			{
+				throw new SiglaNotFoundException();
+			} else
+			{
+				if (curso.getNome() == "")
+				{
+					throw new NomeNotFoundException();
+				} else
+				{
+					curso._adicionarCurso();
+				}
+			}
 		}
 	}
 }
