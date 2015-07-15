@@ -1,45 +1,48 @@
 package controladores.ccu;
 
-import java.sql.SQLException;
 import java.util.Collection;
 
-import controladores.ccu.exceptions.NomeNotFoundException;
-import controladores.ccu.exceptions.SiglaAlreadyExistsException;
-import controladores.ccu.exceptions.SiglaNotFoundException;
+import entidades.Consumidor;
+import entidades.Refeicao;
+import entidades.RefeicaoFinder;
 import entidades.Ticket;
-import entidades.value_objects.TicketVO;
+import entidades.TicketFinder;
 
 public class GerirTicket
 {
 
-	public static Collection<TicketVO> listarTickets() throws Exception
+	public static Collection<Ticket> listarTickets() throws Exception
 	{
-		return Ticket._listarTicketsDisponiveis();
+		return TicketFinder._listarTicketsDisponiveis();
 	}
 
-	public static TicketVO buscarTicket(TicketVO ticketAntigo) throws Exception
+	public static Ticket buscarTicket(int idTicket) throws Exception
 	{
 
-		ticketAntigo = Ticket._buscarTicket(ticketAntigo);
+		Ticket ticketAntigo = TicketFinder._buscarTicket(idTicket);
 
 		return ticketAntigo;
 	}
 
-	public static void criarTicket(TicketVO dpto) throws Exception
+	public static void criarTicket(double valor, String consumidor, int refeicao) throws Exception
 	{
+		Ticket ticket = new Ticket();
 
-		if (Ticket._buscarTicket(dpto) != null)
-		{
-			Ticket._adicionarTicket(dpto);
-			// retorno um ticket bobo }
-		}
+		ticket.setValor(valor);
+
+		ticket.setRefeicao(RefeicaoFinder._buscarRefeicao(refeicao));
+		// ticket.setConsumidor(ConsumidorFinder._buscarConsumidor(consumidor));
+		ticket._adicionarTicket();
 	}
 
-	public static void atualizarTicket(TicketVO ticket) throws Exception
+	public static void atualizarTicket(int idRefeicao ,double valor, String consumidor, int refeicao) throws Exception
 	{
 
-		ticket = buscarTicket(ticket);
+		Ticket ticket = buscarTicket(idRefeicao);
 
-		Ticket._atualizarTicket(ticket);
+		ticket.setRefeicao(RefeicaoFinder._buscarRefeicao(refeicao));
+		//msm coisa com consumidor
+		
+		ticket._atualizarTicket();
 	}
 }

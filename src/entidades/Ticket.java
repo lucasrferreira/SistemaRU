@@ -1,84 +1,121 @@
 package entidades;
 
 import java.io.Serializable;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
 
-import persistencia.DepartamentoService;
-import persistencia.TicketService;
+import persistencia.Conexao;
 import entidades.value_objects.CPF;
-import entidades.value_objects.ConsumidorVO;
-import entidades.value_objects.RefeicaoVO;
-import entidades.value_objects.TicketVO;
 
-public class Ticket implements Serializable {
+public class Ticket implements Serializable
+{
 	// metodos de persistencia de TicketVO
+	private double		valor;
+	private Refeicao	refeicao;
+	private Consumidor	consumidor;
+	private int			idTicket;
 
-	public static Collection<TicketVO> _listarTicketsDisponiveis() throws Exception {
-
-		Collection<TicketVO> colTicket = new ArrayList<TicketVO>();
-		ResultSet rs = null;
-
-		TicketService.initConnection();
-		rs = TicketService.listar();
-		while (rs.next()) {
-			TicketVO ticket = new TicketVO();
-
-			ticket.setIdTicket(rs.getInt("id"));
-			ticket.setValor(rs.getDouble("id"));
-
-			ticket.setConsumidor(new ConsumidorVO());
-			ticket.getConsumidor().setCpf(CPF.fromString(rs.getString("consumidor")));
-
-			ticket.setRefeicao(new RefeicaoVO());
-			ticket.getRefeicao().setIdRefeicao(rs.getInt("refeicao"));
-				
-			colTicket.add(ticket);
-		}
-
-		DepartamentoService.closeConnection();
-		return colTicket;
+	public Ticket()
+	{
 	}
 
-	public static void _adicionarTicket(TicketVO ticket) throws ClassNotFoundException, SQLException {
+	public Ticket(double valor, Refeicao refeicao, Consumidor consumidor)
+	{
+		this.valor = valor;
+		this.consumidor = consumidor;
+		this.refeicao = refeicao;
 
-		TicketService.initConnection();
-		TicketService.insert(ticket);
-		TicketService.closeConnection();
 	}
 
-	public static TicketVO _buscarTicket(TicketVO ticket) throws Exception {
-		
-		TicketService.initConnection();
-		ResultSet rs = TicketService.busca(ticket);
-		
-		if(rs.next())
-		{
-			ticket.setIdTicket(rs.getInt("id"));
-			ticket.setValor(rs.getDouble("id"));
-
-			ticket.setConsumidor(new ConsumidorVO());
-			ticket.getConsumidor().setCpf(CPF.fromString(rs.getString("consumidor")));
-
-			ticket.setRefeicao(new RefeicaoVO());
-			ticket.getRefeicao().setIdRefeicao(rs.getInt("refeicao"));
-			
-			
-		}
-		
-		TicketService.closeConnection();
-		
-		return ticket;
-		
-	}
-
-	public static void _atualizarTicket(TicketVO ticket) throws ClassNotFoundException, SQLException 
+	public void _adicionarTicket() throws ClassNotFoundException, SQLException
 	{
 
-		TicketService.initConnection();
-		TicketService.alterar(ticket);
-		TicketService.closeConnection();
+		Conexao.initConnection();
+
+		String prepare = "Insert into ticket (valor, refeicao, consumidor) value (?, ?, ?);";
+
+		PreparedStatement pstmt = Conexao.prepare(prepare);
+
+		pstmt.setDouble(1, valor);
+		pstmt.setInt(2, refeicao.getIdRefeicao());
+		pstmt.setString(3, consumidor.getCpf().toString());
+
+		pstmt.execute();
+
+		Conexao.closeConnection();
+	}
+
+	public void _atualizarTicket() throws ClassNotFoundException, SQLException
+	{
+
+		Conexao.initConnection();
+		String prepare = "Update ticket set valor = ?, refeicao =  ?, consumidor = ? where id = ?;";
+
+		PreparedStatement pstmt = Conexao.prepare(prepare);
+
+		pstmt.setDouble(1, valor);
+		pstmt.setInt(2, refeicao.getIdRefeicao());
+		pstmt.setString(2, consumidor.getCpf().toString());
+
+		pstmt.setInt(3, idTicket);
+
+		Conexao.closeConnection();
+	}
+
+	public double getValor()
+	{
+		return valor;
+	}
+
+	public Consumidor getConsumidor()
+	{
+		return consumidor;
+	}
+
+	public Refeicao getRefeicao()
+	{
+		return refeicao;
+	}
+
+	public void setValor(double valor)
+	{
+		this.valor = valor;
+	}
+
+	public void setRefeicao(Refeicao refeicao)
+	{
+		this.refeicao = refeicao;
+	}
+
+	public void setConsumidor(Consumidor consumidor)
+	{
+		this.consumidor = consumidor;
+	}
+
+	public int getIdTicket()
+	{
+		return idTicket;
+	}
+
+	public void setIdTicket(int idTicket)
+	{
+		this.idTicket = idTicket;
+	}
+
+	public static Ticket load(ResultSet rs) throws Exception
+	{
+		Ticket ticket = new Ticket();
+
+		ticket.setIdTicket(rs.getInt("id"));
+		ticket.setValor(rs.getDouble("id"));
+
+		ticket.setConsumidor(new Consumidor());
+		ticket.getConsumidor().setCpf(CPF.fromString(rs.getString("consumidor")));
+
+		ticket.setRefeicao(new Refeicao());
+		ticket.getRefeicao().setIdRefeicao(rs.getInt("refeicao"));		
+		
+		return ticket;
 	}
 }

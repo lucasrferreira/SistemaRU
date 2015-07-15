@@ -6,14 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import persistencia.Conexao;
-import entidades.value_objects.DepartamentoVO;
 
 public class Curso implements Serializable
 {
 	private String			nome;
 	private String			sigla;
 
-	private DepartamentoVO	departamento;
+	private Departamento	departamento;
 
 	public Curso(String sigla, String nome)
 	{
@@ -35,7 +34,7 @@ public class Curso implements Serializable
 		curso.setSigla(rs.getString("sigla"));
 		curso.setNome(rs.getString("nome"));
 
-		curso.setDepartamento(new DepartamentoVO());
+		curso.setDepartamento(new Departamento());
 		curso.getDepartamento().setSigla(rs.getString("departamento"));
 
 		return curso;
@@ -101,12 +100,12 @@ public class Curso implements Serializable
 		this.sigla = sigla;
 	}
 
-	public DepartamentoVO getDepartamento()
+	public Departamento getDepartamento()
 	{
 		return departamento;
 	}
 
-	public void setDepartamento(DepartamentoVO departamento)
+	public void setDepartamento(Departamento departamento)
 	{
 		this.departamento = departamento;
 	}

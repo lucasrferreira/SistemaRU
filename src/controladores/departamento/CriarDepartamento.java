@@ -13,14 +13,12 @@ import controladores.ccu.GerirDepartamento;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
-import entidades.value_objects.DepartamentoVO;
 
 @WebServlet("/CriarDepartamento")
 public class CriarDepartamento extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
 
-	DepartamentoVO				departamento;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -72,19 +70,6 @@ public class CriarDepartamento extends HttpServlet
 
 	}
 
-	private DepartamentoVO formToVo(HttpServletRequest request)
-	{
-		DepartamentoVO dpto = new DepartamentoVO();
-
-		dpto.setNome((String) request.getParameter("nome"));
-		dpto.setSigla((String) request.getParameter("sigla"));
-
-		return dpto;
-	}
-
-	private void voToForm(HttpServletRequest request, DepartamentoVO dpto)
-	{
-
-	}
+	
 
 }
