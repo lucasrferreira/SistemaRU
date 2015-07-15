@@ -61,7 +61,7 @@ public class CriarFuncionario extends HttpServlet
 			request.setAttribute("message", "Novo Funcionario criado!");
 			request.getRequestDispatcher("ListarFuncionario").forward(request, response);
 
-		} catch (ClassNotFoundException | SiglaNotFoundException | NomeNotFoundException | SiglaAlreadyExistsException | SQLException | CursoNotFound | AnoIngressoNotFound | SexoNotFound | MatriculaNotFound | TituloNotFound e)
+		} catch (ClassNotFoundException | SiglaNotFoundException | NomeNotFoundException | SQLException | CursoNotFound | AnoIngressoNotFound | SexoNotFound | MatriculaNotFound | TituloNotFound e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
