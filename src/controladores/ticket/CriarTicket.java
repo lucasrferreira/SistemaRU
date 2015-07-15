@@ -8,13 +8,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controladores.ccu.GerirTicket;
+import entidades.value_objects.CPF;
+import entidades.value_objects.ConsumidorVO;
 import entidades.value_objects.RefeicaoVO;
 import entidades.value_objects.TicketVO;
 
 
 
 
-@WebServlet("/CriarDepartamento")
+@WebServlet("/CriarTicket")
 public class CriarTicket extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -28,6 +31,9 @@ public class CriarTicket extends HttpServlet {
 				case "Criar":
 					criarTicket(request,response);
 					break;
+				case "Atualizar":
+					request.getRequestDispatcher("AtualizarTicket").forward(request,response);
+					break;
 				default:
 					request.getRequestDispatcher("ListarTicket").forward(request,response);
 			}
@@ -37,22 +43,6 @@ public class CriarTicket extends HttpServlet {
 	}
 
 	private void criarTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ticket = formToVo(request);
-		
-//		try {
-			GerirTicket.criarTicket(ticket);
-			request.setAttribute("message", "Novo departamento criado!");
-			request.getRequestDispatcher("ListarDepartamento").forward(request,response);
-//		} catch (RefeicaoNotFoundException | ValorNotFoundException | ConsumidorNotFoundException e2) {
-//			request.setAttribute("erro", "Um ticket deve conter uma descricao, valor, consumdior");
-//			request.getRequestDispatcher("WEB-INF/departamento/CriarDepartamento.jsp").forward(request,response);
-//		}		
-		
-	}
-	
-	
-	private TicketVO formToVo (HttpServletRequest request)
-	{
 		TicketVO ticket = new TicketVO();		
 		
 		ticket.setValor(Double.parseDouble(request.getParameter("valor")));		
@@ -60,15 +50,32 @@ public class CriarTicket extends HttpServlet {
 		ticket.setRefeicao(new RefeicaoVO());
 		ticket.getRefeicao().setIdRefeicao(Integer.parseInt(request.getParameter("idRefeicao")));
 		
-		//ticket.setRefeicao((String) request.getParameter("sigla"));
+		ticket.setConsumidor(new ConsumidorVO());
+		try
+		{
+			ticket.getConsumidor().setCpf(CPF.fromString("cpf"));
+		} catch (Exception e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
-		return ticket;
+		
+		
+			try
+			{
+				GerirTicket.criarTicket(ticket);
+				request.setAttribute("message", "Novo ticket criado!");
+				request.getRequestDispatcher("ListarTicket").forward(request,response);
+			} catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+	
+		
 	}
 	
-	private void voToForm (HttpServletRequest request, TicketVO dpto)
-	{
-		
-		
-	}
 
 }
