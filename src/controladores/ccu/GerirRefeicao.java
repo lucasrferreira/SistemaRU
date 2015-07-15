@@ -93,9 +93,11 @@ public class GerirRefeicao
 		}else{
 			if (refeicao.getOp_veg() == ""){
 				throw new OpVegNotFound("Preencha a opcao vegetariana");
+			}else{
+				if (refeicao.getTurno() == null){
+					throw new TurnoNotFound("Preencha o turno");
+				}
 			}
-				
-			
 				refeicao._adicionarRefeicao();
 				//retorno um departamento bobo
 			}

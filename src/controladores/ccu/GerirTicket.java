@@ -63,10 +63,10 @@ public class GerirTicket
 		ticket._adicionarTicket();
 	}
 
-	public static void atualizarTicket(int idRefeicao ,double valor, String consumidor, int refeicao) throws Exception
+	public static void atualizarTicket(int idTicket ,double valor, String consumidor, int refeicao) throws Exception
 	{
 
-		Ticket ticket = buscarTicket(idRefeicao);
+		Ticket ticket = buscarTicket(idTicket);
 
 		ticket.setRefeicao(RefeicaoFinder._buscarRefeicao(refeicao));
 		//msm coisa com consumidor

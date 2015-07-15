@@ -1,6 +1,7 @@
 package controladores.funcionario;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,53 +9,60 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import controladores.ccu.GerirFuncionario;
+import controladores.ccu.exceptions.NomeNotFoundException;
+import controladores.ccu.exceptions.SiglaAlreadyExistsException;
+import controladores.ccu.exceptions.SiglaNotFoundException;
 
-import entidades.value_objects.FuncionarioVO;
+@WebServlet("/AtualizarFuncionario")
+public class AtualizarFuncionario extends HttpServlet
+{
+	private static final long	serialVersionUID	= 1L;
 
-@WebServlet("/AtualizarDepartamento")
-public class AtualizarFuncionario extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 
 		String acao = (String) request.getParameter("acaoAtualizar");
 		if (acao == null)
 			acao = "";
 
-		switch (acao) {
+		switch (acao)
+		{
 			case "Cancelar":
 			case "Voltar":
-				request.getRequestDispatcher("ListarFuncionario").forward(request,response);
+				request.getRequestDispatcher("ListarFuncionario").forward(request, response);
 				break;
 			case "Atualizar":
-				atualizarFuncionarioAntigo(request,response);
+				atualizarFuncionarioAntigo(request, response);
 				break;
 			default:
-				try {
-					FuncionarioVO funcionarioAntigo = GerirFuncionario.buscarDepartamento(request.getSession(),request.getParameter("sigla"));
-					request.setAttribute("funcionario antigo", funcionarioAntigo);
-					request.getRequestDispatcher("WEB-INF/funcionario/AtualizarFuncionario.jsp").forward(request,response);
-				} catch (DepartamentoNotFound e2) {
-					request.setAttribute("erro", "O funcionario informado nao existe");
-					request.getRequestDispatcher("WEB-INF/departamento/AtualizarFuncionario.jsp").forward(request,response);
-				}				
+
 		}
 	}
-	
-	
+
 	private void atualizarFuncionarioAntigo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String nome = (String) request.getParameter("nome");
-		String sigla = (String) request.getParameter("sigla");
+		int matricula = (Integer.parseInt(request.getParameter("matricula")));
+		int ano = (Integer.parseInt(request.getParameter("anoIngresso")));
+		String sexo = (String) request.getParameter("sexo");
+		String cpf = (String) request.getParameter("cpf");
+		String titulo = (String) request.getParameter("titulo");
+		String departamento = (String) request.getParameter("departamento");
+
 		
-		if (nome=="" || sigla==""){
-			request.setAttribute("erro", "Um funcionario deve conter ");
-			request.getRequestDispatcher("WEB-INF/funcionario/AtualizarFuncionario.jsp").forward(request,response);
-		}else{
 		
-				GerirFuncionario.atualizarFuncionario(request.getSession(), , );
-				request.getRequestDispatcher("ListarFuncionario").forward(request,response);
+		
+		try
+		{
+			GerirFuncionario.atualizarFuncionario(nome, cpf, sexo, matricula, titulo, ano, departamento);
+		} catch (ClassNotFoundException | SiglaNotFoundException | NomeNotFoundException | SiglaAlreadyExistsException | SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.getRequestDispatcher("ListarFuncionario").forward(request,response);
 				
 					
-		}
+		
 	}
 }

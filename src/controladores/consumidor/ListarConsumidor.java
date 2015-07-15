@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import controladores.ccu.GerirConsumidor;
 import entidades.Consumidor;
 import entidades.value_objects.CPF;
 
@@ -43,7 +44,14 @@ public class ListarConsumidor extends HttpServlet {
 	}
 
 	private void listarConsumidores(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("consumidores", GerirCurso.listarCursos(request.getSession()));
+		try
+		{
+			request.setAttribute("consumidores", GerirConsumidor.listarConsumidores());
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		request.getRequestDispatcher("WEB-INF/consumidor/ListarConsumidores.jsp").forward(request,response);
 	}
 

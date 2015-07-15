@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import entidades.value_objects.RefeicaoVO;
+import controladores.ccu.GerirRefeicao;
 
 @WebServlet("/ListarRefeicao")
 public class ListarRefeicao extends HttpServlet {
@@ -39,22 +39,18 @@ public class ListarRefeicao extends HttpServlet {
 	}
 
 	private void listarRefeicao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("refeicao", GerirRefeicao.listarDepartamentos());
-		request.getRequestDispatcher("WEB-INF/refeicao/ListarRefeicao.jsp").forward(request,response);
+		try
+		{
+			request.setAttribute("refeicao", GerirRefeicao.listarRefeicoes());
+			request.getRequestDispatcher("WEB-INF/refeicao/ListarRefeicao.jsp").forward(request,response);
+		} catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
-	private RefeicaoVO formToVo (HttpServletRequest request)
-	{
-		
-		
-		return new RefeicaoVO();
-	}
 	
-	private void voToForm (HttpServletRequest request, RefeicaoVO dpto)
-	{
-		
-		
-	}
 
 }

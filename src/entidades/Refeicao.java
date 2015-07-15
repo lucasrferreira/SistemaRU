@@ -28,6 +28,12 @@ public class Refeicao implements Serializable
 		// TODO Auto-generated constructor stub
 	}
 
+	public Refeicao(String descricao, String op_veg)
+	{
+		this.descricao = descricao;
+		this.op_veg = op_veg;
+	}
+
 	public void _adicionarRefeicao() throws ClassNotFoundException, SQLException
 	{
 

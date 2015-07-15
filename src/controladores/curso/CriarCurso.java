@@ -18,61 +18,74 @@ import controladores.ccu.exceptions.SiglaNotFoundException;
 import entidades.Curso;
 
 @WebServlet("/CriarCurso")
-public class CriarCurso extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class CriarCurso extends HttpServlet
+{
+	private static final long	serialVersionUID	= 1L;
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		String acao = (String) request.getParameter("acaoCriar");
 		Collection<Curso> cursosDisponiveis = GerirCurso.listarCursos();
 		request.setAttribute("departamentosDisponiveis", cursosDisponiveis);
-		
-		if (acao != null){
-			switch (acao) {
+
+		if (acao != null)
+		{
+			switch (acao)
+			{
 				case "Criar":
-				try {
-					criarCurso(request,response);
-				} catch (DepartamentoNotFound e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					criarCurso(request, response);
 					break;
 				default:
-					request.getRequestDispatcher("ListarCurso").forward(request,response);
+					request.getRequestDispatcher("ListarCurso").forward(request, response);
 			}
-		}else{
-			request.getRequestDispatcher("WEB-INF/curso/CriarCurso.jsp").forward(request,response);	
+		} else
+		{
+			request.getRequestDispatcher("WEB-INF/curso/CriarCurso.jsp").forward(request, response);
 		}
 	}
 
-	private void criarCurso(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, DepartamentoNotFound {
+	private void criarCurso(HttpServletRequest request, HttpServletResponse response)
+	{
 		String nome = (String) request.getParameter("nome");
 		String sigla = (String) request.getParameter("sigla");
-		
-		try {
+
+		try
+		{
+			GerirCurso.criarCurso(nome, sigla, request.getParameter("aluno"));
+			request.setAttribute("message", "Novo departamento criado!");
 			try
 			{
-				GerirCurso.criarCurso(nome, sigla, request.getParameter("aluno"));
-				request.setAttribute("message", "Novo departamento criado!");
-				request.getRequestDispatcher("ListarCurso").forward(request,response);
-			} catch (ClassNotFoundException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e)
+				request.getRequestDispatcher("ListarCurso").forward(request, response);
+			} catch (ServletException | IOException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			
-		} catch (SiglaNotFoundException | NomeNotFoundException e2) {
+		} catch (DepartamentoNotFound e)
+		{
 			request.setAttribute("erro", "Um curso deve conter um nome, uma sigla e um departamento");
-			request.getRequestDispatcher("WEB-INF/curso/CriarCurso.jsp").forward(request,response);
-			
-		}catch (SiglaAlreadyExistsException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException | SQLException e)
+		{
+			e.printStackTrace();
+		} catch (SiglaNotFoundException | NomeNotFoundException e2)
+		{
+			request.setAttribute("erro", "Um curso deve conter um nome, uma sigla e um departamento");
+		} catch (SiglaAlreadyExistsException e)
+		{
 			request.setAttribute("erro", "Sigla informada ja existe");
-			request.getRequestDispatcher("WEB-INF/curso/CriarCurso.jsp").forward(request,response);
 
 		}
+		
+		try
+		{
+			request.getRequestDispatcher("WEB-INF/curso/CriarCurso.jsp").forward(request, response);
+		} catch (ServletException | IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
+
 }

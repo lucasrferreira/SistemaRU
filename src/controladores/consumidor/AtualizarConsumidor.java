@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirConsumidor;
 
-@WebServlet("/CriarConsumidor")
-public class CriarConsumidor extends HttpServlet
+@WebServlet("/AtualizarConsumidor")
+public class AtualizarConsumidor extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
 
@@ -23,19 +23,19 @@ public class CriarConsumidor extends HttpServlet
 		{
 			switch (acao)
 			{
-				case "Criar":
-					criarConsumidor(request, response);
+				case "Atualizar":
+					atualizarConsumidor(request, response);
 					break;
 				default:
-					request.getRequestDispatcher("ListarConsumidor").forward(request, response);
+					request.getRequestDispatcher("WEB-INF/consumidor/AtualizarConsumidor.jsp").forward(request, response);
 			}
 		} else
 		{
-			request.getRequestDispatcher("WEB-INF/consumidor/CriarConsumidor.jsp").forward(request, response);
+			request.getRequestDispatcher("/ListarConsumidor").forward(request, response);
 		}
 	}
 
-	private void criarConsumidor(HttpServletRequest request, HttpServletResponse response) 
+	private void atualizarConsumidor(HttpServletRequest request, HttpServletResponse response) 
 	{
 
 		String nome = (String) request.getParameter("nome");
