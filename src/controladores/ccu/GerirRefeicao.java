@@ -7,39 +7,59 @@ import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
 import entidades.Refeicao;
-import entidades.value_objects.RefeicaoVO;
+import entidades.RefeicaoFinder;
+import entidades.value_objects.TurnoVO;
 
 public class GerirRefeicao
 {
 
-	public static Collection<RefeicaoVO> listarRefeicoes() throws Exception
+	public static Collection<Refeicao> listarRefeicoes() throws Exception
 	{
-		return Refeicao._listarRefeicoesDisponiveis();
+		return RefeicaoFinder._listarRefeicoesDisponiveis();
 	}
 
-	public static RefeicaoVO buscarRefeicao(RefeicaoVO refeicaoAntigo) throws ClassNotFoundException, SQLException
+	public static Refeicao buscarRefeicao(int idRefeicao) throws ClassNotFoundException, SQLException
 	{
-
-		refeicaoAntigo = Refeicao._buscarRefeicao(refeicaoAntigo);
+		
+		Refeicao refeicaoAntigo = RefeicaoFinder._buscarRefeicao(idRefeicao);
 
 		return refeicaoAntigo;
 	}
 
-	public static void criarRefeicao(RefeicaoVO dpto) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException
+	public static void criarRefeicao(int idRefeicao, String op_veg, String descricao, String turno) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException
 	{
 
-		if (Refeicao._buscarRefeicao(dpto) != null)
+		if (RefeicaoFinder._buscarRefeicao(idRefeicao) != null)
 		{
-			Refeicao._adicionarRefeicao(dpto);
+
+			Refeicao refeicao = new Refeicao(idRefeicao, descricao, op_veg);
+			if (turno.equals(TurnoVO.MANHA.getTurno()))
+				refeicao.setTurno(TurnoVO.MANHA);
+			if (turno.equals(TurnoVO.NOITE.getTurno()))
+				refeicao.setTurno(TurnoVO.NOITE);
+			if (turno.equals(TurnoVO.TARDE.getTurno()))
+				refeicao.setTurno(TurnoVO.TARDE);
+			
+			refeicao._adicionarRefeicao();
 			// retorno um refeicao bobo }
 		}
 	}
 
-	public static void atualizarRefeicao(RefeicaoVO refeicao) throws ClassNotFoundException, SQLException
+	public static void atualizarRefeicao(int idRefeicao, String op_veg, String descricao, String turno) throws ClassNotFoundException, SQLException
 	{
+		Refeicao refeicao = new Refeicao(idRefeicao, descricao, op_veg);
+		
+		refeicao = RefeicaoFinder._buscarRefeicao(idRefeicao);
 
-		refeicao = buscarRefeicao(refeicao);
-
-		Refeicao._atualizarRefeicao(refeicao);
+		if (turno.equals(TurnoVO.MANHA.getTurno()))
+			refeicao.setTurno(TurnoVO.MANHA);
+		if (turno.equals(TurnoVO.NOITE.getTurno()))
+			refeicao.setTurno(TurnoVO.NOITE);
+		if (turno.equals(TurnoVO.TARDE.getTurno()))
+			refeicao.setTurno(TurnoVO.TARDE);
+		refeicao.setDescricao(descricao);
+		refeicao.setOp_veg(op_veg);
+		
+		refeicao._atualizarRefeicao();
 	}
 }
