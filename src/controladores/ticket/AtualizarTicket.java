@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirTicket;
-import entidades.value_objects.ConsumidorVO;
+import entidades.Consumidor;
 import entidades.value_objects.RefeicaoVO;
 import entidades.value_objects.TicketVO;
 
@@ -52,10 +52,13 @@ public class AtualizarTicket extends HttpServlet {
 	
 	
 	private void atualizarTicketAntigo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Re
+		
 		double valor = (Double.parseDouble(request.getParameter("valor")));
 		//duvida em como pegar
 		RefeicaoVO refeicao = new RefeicaoVO(request.getParameter("refeicao"));
+		Consumidor consumidor = new Consumidor();
+		consumidor = ge
+		
 		
 		
 
