@@ -45,17 +45,5 @@ public class ListarDepartamento extends HttpServlet {
 	}
 	
 	
-	private DepartamentoVO formToVo (HttpServletRequest request)
-	{
-		
-		
-		return new DepartamentoVO();
-	}
-	
-	private void voToForm (HttpServletRequest request, DepartamentoVO dpto)
-	{
-		
-		
-	}
 
 }

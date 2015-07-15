@@ -1,35 +1,49 @@
 package controladores.ccu;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.servlet.http.HttpSession;
-
-import controladores.ccu.exceptions.DepartamentoNotFound;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
 import entidades.Departamento;
-import entidades.value_objects.DepartamentoVO;
+import entidades.DepartamentoFinder;
 
 public class GerirDepartamento {
 	
 	
 	
-	public static Collection<DepartamentoVO> listarDepartamentos() {
-		return Departamento._listarDepartamentosDisponiveis();
+	public static Collection<Departamento> listarDepartamentos() {
+		try
+		{
+			return DepartamentoFinder._listarDepartamentosDisponiveis();
+		} catch (ClassNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return new ArrayList<Departamento>();
 	}
 	
-	public static void criarDepartamento(DepartamentoVO dpto) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException {
+	public static void criarDepartamento(String sigla, String nome) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException {
 		
-		if (Departamento._buscarDepartamento(dpto).getSigla() != null){
+		Departamento dpto = new Departamento(nome, sigla);
+		
+		if (DepartamentoFinder._buscarDepartamento(sigla)!= null){
 			if (dpto.getSigla()==""){
 				throw new SiglaNotFoundException();
 			}else{
 				if (dpto.getNome()==""){
 					throw new NomeNotFoundException();
 				}else{
-					Departamento._adicionarDepartamento(dpto);
+					dpto._adicionarDepartamento();
 					//retorno um departamento bobo
 				}
 			}
