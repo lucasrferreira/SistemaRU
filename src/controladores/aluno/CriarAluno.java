@@ -1,6 +1,7 @@
 package controladores.aluno;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,13 +13,10 @@ import controladores.ccu.GerirAluno;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
-import entidades.value_objects.AlunoVO;
 
 @WebServlet("/CriarAluno")
 public class CriarAluno extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	AlunoVO aluno;
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String acao = (String) request.getParameter("acaoCriar");
@@ -29,7 +27,7 @@ public class CriarAluno extends HttpServlet {
 					criarAluno(request,response);
 					break;
 				default:
-					request.getRequestDispatcher("ListarAluno").forward(request,response);
+					request.getRequestDispatcher("ListarConsumidor").forward(request,response);
 			}
 		}else{
 			request.getRequestDispatcher("WEB-INF/aluno/CriarAluno.jsp").forward(request,response);	
@@ -37,30 +35,29 @@ public class CriarAluno extends HttpServlet {
 	}
 
 	private void criarAluno(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		aluno = formToVo(request);
+		String nome = (String) request.getParameter("nome");
+		int matricula = (Integer.parseInt(request.getParameter("matricula")));
+		int ano = (Integer.parseInt(request.getParameter("anoIngresso")));
+		String sexo = (String) request.getParameter("sexo");
+		String cpf = (String) request.getParameter("cpf");
+		String titulo = (String) request.getParameter("titulo");
+		String curso = (String) request.getParameter("curso");
 		
-			GerirAluno.criarDepartamento(aluno);
+		try
+		{
+			GerirAluno.criarAluno(nome, cpf, sexo, matricula, titulo, ano, curso);
 			request.setAttribute("message", "Novo Aluno criado!");
 			request.getRequestDispatcher("ListarAluno").forward(request,response);
+		
+		} catch (ClassNotFoundException | SiglaNotFoundException | NomeNotFoundException | SiglaAlreadyExistsException | SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
 	
 		
 	}
 	
-	
-	private AlunoVO formToVo (HttpServletRequest request)
-	{
-		AlunoVO aluno = new AlunoVO();
-		
-		aluno.setNome((String) request.getParameter("nome"));
-		
-		
-		return aluno;
-	}
-	
-	private void voToForm (HttpServletRequest request, AlunoVO aluno)
-	{
-		
-		
-	}
+
 
 }

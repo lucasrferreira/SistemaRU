@@ -1,6 +1,7 @@
 package controladores.refeicao;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirRefeicao;
 import controladores.ccu.exceptions.DepartamentoNotFound;
-import entidades.value_objects.RefeicaoVO;
+import entidades.Refeicao;
 
 @WebServlet("/AtualizarRefeicao")
 public class AtualizarRefeicao extends HttpServlet {
@@ -31,21 +32,29 @@ public class AtualizarRefeicao extends HttpServlet {
 				atualizarRefeicaoAntiga(request,response);
 				break;
 			default:
-				try {
-					RefeicaoVO refeicaoAntiga = GerirRefeicao.buscarRefeicao(request.getSession(),request.getParameter("sigla"));
-					request.setAttribute("refeicao antiga",refeicaoAntiga);
-					request.getRequestDispatcher("WEB-INF/refeicao/AtualizarRefeicao.jsp").forward(request,response);
-				} catch (DepartamentoNotFound e2) {
-					request.setAttribute("erro", "A refeicao informada nao existe");
-					request.getRequestDispatcher("WEB-INF/refeicao/AtualizarRefeicao.jsp").forward(request,response);
-				}				
+				buscar(request, response);
 		}
 	}
 	
+	private void buscar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		int idRefeicao = Integer.parseInt(request.getParameter("idRefeicao"));
+		try {
+			Refeicao refeicaoAntiga = GerirRefeicao.buscarRefeicao(idRefeicao);
+			request.setAttribute("refeicao antiga",refeicaoAntiga);
+			request.getRequestDispatcher("WEB-INF/refeicao/AtualizarRefeicao.jsp").forward(request,response);
+		} catch (ClassNotFoundException | SQLException | ServletException | IOException e2) {
+			request.setAttribute("erro", "A refeicao informada nao existe");
+			request.getRequestDispatcher("WEB-INF/refeicao/AtualizarRefeicao.jsp").forward(request,response);
+		}				
+
+	}
 	
 	private void atualizarRefeicaoAntiga(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String descricao = (String) request.getParameter("descricao");
 		String op_veg = (String) request.getParameter("op_veg");
+		String turno  = (String) request.getParameter("descricao");
+		int idRefeicao = Integer.parseInt(request.getParameter("idRefeicao"));
 		
 		
 		if (descricao == "" || op_veg == ""){
@@ -53,10 +62,10 @@ public class AtualizarRefeicao extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/departamento/AtualizarDepartamento.jsp").forward(request,response);
 		}else{
 			try {
-				GerirRefeicao.atualizarRefeicao(request.getSession(), descricao, op_veg);
+				GerirRefeicao.atualizarRefeicao(idRefeicao, op_veg, descricao, turno);
 				request.getRequestDispatcher("ListarDepartamento").forward(request,response);
 				
-			} catch (DepartamentoNotFound e2) {
+			} catch (ClassNotFoundException | SQLException e2) {
 				request.setAttribute("erro", "A refeicao informada nao existe");
 				request.getRequestDispatcher("WEB-INF/refeicao/AtualizarRefeicao.jsp").forward(request,response);
 			}			

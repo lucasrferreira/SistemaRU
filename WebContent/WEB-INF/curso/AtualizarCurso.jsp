@@ -1,5 +1,5 @@
-<%@ page import="entidades.value_objects.CursoVO" %>
-<%@ page import="entidades.value_objects.DepartamentoVO" %>
+<%@ page import="entidades.Curso" %>
+<%@ page import="entidades.Departamento" %>
 <%@ page import="java.util.Collection" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,8 +10,8 @@
 <title>Atualizar curso</title>
 </head>
 <%@include file="../messagePage.jsp" %>
-<% CursoVO curso = (CursoVO)request.getAttribute("curso antigo");%>
-<% Collection<DepartamentoVO> departamentosDisponiveis = (Collection<DepartamentoVO>)request.getAttribute("departamentosDisponiveis"); %>
+<% Curso curso = (Curso)request.getAttribute("curso antigo");%>
+<% Collection<Departamento> departamentosDisponiveis = (Collection<Departamento>)request.getAttribute("departamentosDisponiveis"); %>
 
 <body>
 	<form action="AtualizarCurso" method="post">
@@ -21,7 +21,7 @@
 	Nome : <input type="text" name ="nome" value = "<%=nome%>">
 	Sigla : <%=sigla%> <input type="hidden" name ="sigla" value = "<%=sigla%>">
 	Departamento : <select name ="departamento">
-	<% for(DepartamentoVO dptoi : departamentosDisponiveis){ %>
+	<% for(Departamento dptoi : departamentosDisponiveis){ %>
 		<option value="<%=dptoi.getSigla()%>" <%= dptoi.equals(curso.getDepartamento())? "selected" : ""  %>><%=dptoi.getNome()%></option>
 	<% } %>
 	</select>	
