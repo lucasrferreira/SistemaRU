@@ -4,7 +4,16 @@ import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 
+import controladores.ccu.exceptions.BancoErro;
+import controladores.ccu.exceptions.DescricaoNotFound;
+import controladores.ccu.exceptions.NenhumResultado;
+import controladores.ccu.exceptions.NomeNotFoundException;
+import controladores.ccu.exceptions.OpVegNotFound;
+import controladores.ccu.exceptions.SiglaNotFoundException;
+import controladores.ccu.exceptions.TurnoNotFound;
+import controladores.ccu.exceptions.sigla.SiglaAlreadyExistsException;
 import persistencia.Conexao;
 import entidades.value_objects.TurnoVO;
 
@@ -75,20 +84,9 @@ public class Refeicao implements Serializable
 	{
 		return turno;
 	}
-
-	public void setTurno(TurnoVO turno)
-	{
-		this.turno = turno;
-	}
-
 	public String getDescricao()
 	{
 		return descricao;
-	}
-
-	public void setDescricao(String descricao)
-	{
-		this.descricao = descricao;
 	}
 
 	public String getOp_veg()
@@ -96,36 +94,101 @@ public class Refeicao implements Serializable
 		return op_veg;
 	}
 
-	public void setOp_veg(String op_veg)
-	{
-		this.op_veg = op_veg;
-	}
 
 	public int getIdRefeicao()
 	{
 		return idRefeicao;
 	}
 
-	public void setIdRefeicao(int idRefeicao)
-	{
-		this.idRefeicao = idRefeicao;
-	}
-
-	public static Refeicao load(ResultSet rs) throws SQLException
-	{
-		Refeicao refeicao = new Refeicao();
-
-		refeicao.setIdRefeicao(rs.getInt("id"));
-		refeicao.setDescricao(rs.getString("descricao"));
-		refeicao.setOp_veg(rs.getString("op_veg"));
+	public Refeicao load(ResultSet rs) throws SQLException
+	{	
+		this.idRefeicao = rs.getInt("id");
+		this.descricao =  rs.getString("descricao");
+		this.op_veg = rs.getString("op_veg");
 
 		if (rs.getString("turno").equals(TurnoVO.MANHA.getTurno()))
-			refeicao.setTurno(TurnoVO.MANHA);
+			this.turno = TurnoVO.MANHA;
 		if (rs.getString("turno").equals(TurnoVO.NOITE.getTurno()))
-			refeicao.setTurno(TurnoVO.NOITE);
+			this.turno = TurnoVO.NOITE;
 		if (rs.getString("turno").equals(TurnoVO.TARDE.getTurno()))
-			refeicao.setTurno(TurnoVO.TARDE);
+			this.turno = TurnoVO.TARDE;
 
-		return refeicao;
+		return this;
+	}
+	
+	
+	
+
+// Domain model 
+	public static Collection<Refeicao> listarRefeicoes() throws Exception
+	{
+		try
+		{
+			Collection<Refeicao> colRefeicao = RefeicaoFinder._listarRefeicoesDisponiveis();
+			if (colRefeicao.size() == 0)
+			{
+				throw new NenhumResultado("Banco vazio");
+			}
+
+		} catch (ClassNotFoundException | SQLException e)
+		{
+			e.printStackTrace();
+			throw new BancoErro("Erro ao listar Refeicoes");
+		}
+
+		return RefeicaoFinder._listarRefeicoesDisponiveis();
+	}
+
+	public static Refeicao buscarRefeicao(int idRefeicao) throws ClassNotFoundException, SQLException
+	{
+
+		Refeicao refeicaoAntigo = RefeicaoFinder._buscarRefeicao(idRefeicao);
+
+		return refeicaoAntigo;
+	}
+
+	public void criarRefeicao(String op_veg, String descricao, String turno) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound
+
+	{
+
+//		Refeicao refeicao = new Refeicao(descricao, op_veg);
+
+		if (turno.equals(TurnoVO.MANHA.getTurno()))
+			this.turno = TurnoVO.MANHA;
+		else if (turno.equals(TurnoVO.NOITE.getTurno()))
+			this.turno = TurnoVO.NOITE;
+		else if (turno.equals(TurnoVO.TARDE.getTurno()))
+			this.turno = TurnoVO.TARDE;
+		else
+			//exception
+
+		if (descricao == "")
+			throw new DescricaoNotFound("Preencha a descricao");
+		if (op_veg == "")
+			throw new OpVegNotFound("Prrencha a opcao vegetaliana");
+		
+		this._adicionarRefeicao();
+
+	}
+
+	public void atualizarRefeicao(int idRefeicao, String op_veg, String descricao, String turno) throws ClassNotFoundException, SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound
+	{
+		if (turno.equals(TurnoVO.MANHA.getTurno()))
+			this.turno = TurnoVO.MANHA;
+		else if (turno.equals(TurnoVO.NOITE.getTurno()))
+			this.turno = TurnoVO.NOITE;
+		else if (turno.equals(TurnoVO.TARDE.getTurno()))
+			this.turno = TurnoVO.TARDE;
+		else
+			//exception
+
+		if (descricao == "")
+			throw new DescricaoNotFound("Preencha a descricao");
+		if (op_veg == "")
+			throw new OpVegNotFound("Prrencha a opcao vegetaliana");
+		
+		this.idRefeicao = idRefeicao;
+		
+		this._atualizarRefeicao();
 	}
 }

@@ -10,13 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controladores.ccu.GerirCurso;
 import controladores.ccu.exceptions.BancoErro;
 import controladores.ccu.exceptions.DepartamentoNotFound;
 import controladores.ccu.exceptions.NenhumResultado;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
 import controladores.ccu.exceptions.sigla.SiglaAlreadyExistsException;
+import entidades.Curso;
 import entidades.Departamento;
 
 @WebServlet("/CriarCurso")
@@ -24,6 +24,7 @@ public class CriarCurso extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
 	Departamento departamento = new Departamento();
+	Curso curso = new Curso();
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -63,10 +64,10 @@ public class CriarCurso extends HttpServlet
 		String nome = (String) request.getParameter("nome");
 		String departamento = (String) request.getParameter("departamento");
 		String sigla = (String) request.getParameter("sigla");
-
+		
 		try
 		{
-			GerirCurso.criarCurso(sigla, nome, departamento);
+			curso.criarCurso(sigla, nome, departamento);
 			request.setAttribute("message", "Novo departamento criado!");
 			try
 			{

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirAluno;
-import controladores.ccu.GerirCurso;
 import controladores.ccu.exceptions.AnoIngressoNotFound;
 import controladores.ccu.exceptions.BancoErro;
 import controladores.ccu.exceptions.CursoNotFound;
@@ -21,6 +20,7 @@ import controladores.ccu.exceptions.SexoNotFound;
 import controladores.ccu.exceptions.SiglaNotFoundException;
 import controladores.ccu.exceptions.TituloNotFound;
 import controladores.ccu.exceptions.sigla.SiglaAlreadyExistsException;
+import entidades.Curso;
 
 @WebServlet("/CriarAluno")
 public class CriarAluno extends HttpServlet
@@ -49,9 +49,10 @@ public class CriarAluno extends HttpServlet
 
 	private void abrirForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		Curso curso = new Curso();
 		try
 		{
-			request.setAttribute("cursosDisponiveis", GerirCurso.listarCursos());
+			request.setAttribute("cursosDisponiveis", curso.listarCursos());
 		} catch (ClassNotFoundException | NenhumResultado | BancoErro | SQLException e)
 		{
 			request.setAttribute("erro", "Não foi possivel encontrar cursos disponiveis");

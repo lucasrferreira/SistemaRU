@@ -27,7 +27,8 @@ public class CursoFinder implements Serializable
 
 		while (rs.next())
 		{
-			colCurso.add(Curso.load(rs));
+			Curso curso = new Curso();
+			colCurso.add(curso.load(rs));
 		}
 
 		Conexao.closeConnection();
@@ -38,8 +39,8 @@ public class CursoFinder implements Serializable
 	public static Curso _buscarCurso(String sigla) throws ClassNotFoundException, SQLException
 	{
 		ResultSet rs = null;
-		Curso curso = null;
 		Conexao.initConnection();
+		Curso curso = null;
 		
 		String prepare = "Select * from curso where sigla = ?;";
 		
@@ -49,7 +50,8 @@ public class CursoFinder implements Serializable
 		rs = psmt.executeQuery();
 		if (rs.next())
 		{
-			curso = Curso.load(rs);
+			Curso _curso = new Curso();
+			curso =  _curso.load(rs);
 		}
 
 		rs.close();
@@ -58,6 +60,7 @@ public class CursoFinder implements Serializable
 		return curso;
 
 	}
+	
 
 
 }

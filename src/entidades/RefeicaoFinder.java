@@ -31,7 +31,8 @@ public class RefeicaoFinder implements Serializable {
 		rs = pstmt.executeQuery();
 		
 		while (rs.next()) {
-			colRefeicao.add(Refeicao.load(rs));
+			Refeicao refeicao = new Refeicao();
+			colRefeicao.add(refeicao.load(rs));
 		}
 
 		rs.close();
@@ -58,7 +59,8 @@ public class RefeicaoFinder implements Serializable {
 		rs = pstmt.executeQuery();
 		
 		if (rs.next()) {
-			refeicao = 	Refeicao.load(rs);
+			Refeicao _refeicao = new Refeicao();
+			refeicao = 	_refeicao.load(rs);
 		}
 
 		Conexao.closeConnection();

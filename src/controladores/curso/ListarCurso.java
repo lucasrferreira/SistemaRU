@@ -9,14 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controladores.ccu.GerirCurso;
 import controladores.ccu.exceptions.BancoErro;
 import controladores.ccu.exceptions.NenhumResultado;
+import entidades.Curso;
 
 @WebServlet("/ListarCurso")
 public class ListarCurso extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+      
+	Curso curso = new Curso();
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		listarCursos(request, response);
 	}
@@ -41,7 +43,7 @@ public class ListarCurso extends HttpServlet {
 	private void listarCursos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try
 		{
-			request.setAttribute("cursos", GerirCurso.listarCursos());
+			request.setAttribute("cursos", curso.listarCursos());
 			request.getRequestDispatcher("WEB-INF/curso/ListarCurso.jsp").forward(request,response);
 		} catch (ClassNotFoundException | NenhumResultado | BancoErro | SQLException e)
 		{		
