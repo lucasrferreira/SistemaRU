@@ -62,7 +62,7 @@ public class Funcionario extends Consumidor {
 	{
 		Funcionario func = (Funcionario) Consumidor.load(rs);
 		
-		func.setDepartamento(DepartamentoFinder._buscarDepartamento(rs.getString("funcionario.departamento")));
+		func.setDepartamento(DepartamentoFinder.get(rs.getString("funcionario.departamento")));
 		
 		return func;
 		

@@ -14,6 +14,7 @@
 <%@include file="../messagePage.jsp" %>
 <% Collection<Curso> cursosDisponiveis = (Collection<Curso>)request.getAttribute("cursosDisponiveis"); %>
 
+
 <body>
 	<form action="CriarAluno" method="post">
 	Nome : <input type="text" name ="nome" value = "">
@@ -26,7 +27,7 @@
 		<option value = "<%= Sexo.MASCULINO.getSexo() %>"><%= Sexo.MASCULINO.getSexo() %></option>		
 	</select>	
 	Titulo :
-	<select name ="titulo">
+	<select name ="titulo" >
 		<option value = "<%= Titulo.DOUTORADO.getTitulo() %>"><%= Titulo.DOUTORADO.getTitulo() %></option>
 		<option value = "<%= Titulo.ESPECIALIZACAO.getTitulo() %>"><%= Titulo.ESPECIALIZACAO.getTitulo() %></option>		
 		<option value = "<%=  Titulo.MESTRADO.getTitulo() %>"><%=  Titulo.MESTRADO.getTitulo() %></option>		

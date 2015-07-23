@@ -20,7 +20,7 @@ public class GerirCurso{
 	{
 		try
 		{
-			Collection<Curso> colCurso = CursoFinder._listarCursosDisponiveis();
+			Collection<Curso> colCurso = CursoFinder.getAll();
 			if(colCurso.size() == 0)
 			{
 				throw new NenhumResultado("Banco vazio");
@@ -32,7 +32,7 @@ public class GerirCurso{
 			throw new BancoErro("Erro ao listar Cursos");
 		}
 		
-		return CursoFinder._listarCursosDisponiveis();
+		return CursoFinder.getAll();
 	}
 	
 
@@ -69,7 +69,7 @@ public class GerirCurso{
 			throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, 
 			DepartamentoNotFound, ClassNotFoundException, SQLException
 	{
-		Departamento dpto = DepartamentoFinder._buscarDepartamento(departamento);
+		Departamento dpto = DepartamentoFinder.get(departamento);
 
 		if (dpto == null)
 		{
@@ -103,7 +103,7 @@ public class GerirCurso{
 
 	public static void atualizarCurso(String sigla, String nome, String departamento) throws CursoNotFound, DepartamentoNotFound, ClassNotFoundException, SQLException, SiglaNotFoundException, NomeNotFoundException
 	{
-		Departamento dpto = DepartamentoFinder._buscarDepartamento(departamento);
+		Departamento dpto = DepartamentoFinder.get(departamento);
 
 		if (dpto == null)
 		{

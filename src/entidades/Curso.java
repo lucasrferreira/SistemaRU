@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import persistencia.Conexao;
-import entidades.Departamento;
 
 public class Curso implements Serializable
 {
@@ -29,15 +28,18 @@ public class Curso implements Serializable
 		// TODO Auto-generated constructor stub
 	}
 	
-	public static Curso load(ResultSet rs) throws SQLException
+	public static Curso load(ResultSet rs) throws SQLException, ClassNotFoundException
 	{
 		Curso curso = new Curso();
 
 		curso.setSigla(rs.getString("sigla"));
 		curso.setNome(rs.getString("nome"));
 
-		curso.setDepartamento(new Departamento());
-		curso.getDepartamento().setSigla(rs.getString("departamento"));
+		
+		Departamento departamento = DepartamentoFinder.get(rs.getString("departamento"));
+		
+		curso.setDepartamento(departamento);
+		
 
 		return curso;
 	}

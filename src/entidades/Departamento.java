@@ -6,6 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import controladores.ccu.exceptions.BancoErro;
+import controladores.ccu.exceptions.NenhumResultado;
+import controladores.ccu.exceptions.NomeNotFoundException;
+import controladores.ccu.exceptions.SiglaAlreadyExistsException;
+import controladores.ccu.exceptions.SiglaNotFoundException;
 import persistencia.Conexao;
 
 public class Departamento
@@ -23,19 +28,18 @@ public class Departamento
 	{
 	}
 
-	public static Departamento load(ResultSet rs) throws SQLException
+	public Departamento load(ResultSet rs) throws SQLException
 	{
-		Departamento dpart = new Departamento();
-
-		dpart.setSigla(rs.getString("sigla"));
-		dpart.setNome(rs.getString("nome"));
-		return dpart;
+		
+		this.sigla = rs.getString("sigla");
+		this.nome = rs.getString("nome");
+		return this;
 		
 	}
 
 	// metodos de persistencia para Departamento
 
-	public void _adicionarDepartamento() throws ClassNotFoundException, SQLException
+	public void insert() throws ClassNotFoundException, SQLException
 	{
 
 		Conexao.initConnection();
@@ -55,7 +59,7 @@ public class Departamento
 
 
 
-	public void _atualizarDepartamento() throws ClassNotFoundException, SQLException
+	public void update() throws ClassNotFoundException, SQLException
 	{
 
 		Conexao.initConnection();
@@ -75,14 +79,58 @@ public class Departamento
 
 	}
 
+
+	// Domain Model functions //
+
+	public Collection<Departamento> listarDepartamentos() throws BancoErro, NenhumResultado, ClassNotFoundException, SQLException {
+
+		try
+		{
+			Collection<Departamento> colDepartamento = DepartamentoFinder.getAll();
+			if(colDepartamento.size() == 0)
+			{
+				throw new NenhumResultado("Banco vazio");
+			}
+
+		} catch (ClassNotFoundException | SQLException e)
+		{
+			e.printStackTrace();
+
+			throw new BancoErro("Erro ao listar Departamentos");
+		}
+		return DepartamentoFinder.getAll();
+
+	}
+	
+	public void criarDepartamento(String sigla, String nome) 
+			throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException {
+		
+//		Departamento dpto = new Departamento(nome, sigla);
+		
+		Departamento busca = DepartamentoFinder.get(sigla);
+		if (busca == null){
+			if (sigla==""){
+				throw new SiglaNotFoundException("Preencha a sigla");
+			}else{
+				if (nome==""){
+					throw new NomeNotFoundException("Preencha o nome");
+				}else{
+					this.sigla = sigla;
+					this.nome = nome;
+					this.insert();
+					
+				}
+			}
+		}else{
+			throw new SiglaAlreadyExistsException(sigla);
+		}
+	}
+
+	
+	//Getters
 	public String getNome()
 	{
 		return nome;
-	}
-
-	public void setNome(String nome)
-	{
-		this.nome = nome;
 	}
 
 	public String getSigla()
@@ -90,9 +138,7 @@ public class Departamento
 		return sigla;
 	}
 
-	public void setSigla(String sigla)
-	{
-		this.sigla = sigla;
-	}
-
+	
+	
+	
 }

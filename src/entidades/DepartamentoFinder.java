@@ -10,9 +10,9 @@ import persistencia.Conexao;
 
 public class DepartamentoFinder
 {
+	private static Departamento departamento = new Departamento();
 	
-	
-	public static Collection<Departamento> _listarDepartamentosDisponiveis() throws ClassNotFoundException, SQLException
+	public static Collection<Departamento> getAll() throws ClassNotFoundException, SQLException
 	{
 
 		Collection<Departamento> colDpto = new ArrayList<Departamento>();
@@ -28,7 +28,7 @@ public class DepartamentoFinder
 		
 		while(rs.next()){
 		
-			colDpto.add(Departamento.load(rs));
+			colDpto.add(departamento.load(rs));
 		}
 		
 		rs.close();
@@ -37,7 +37,7 @@ public class DepartamentoFinder
 		return colDpto;
 	}
 	
-	public static Departamento _buscarDepartamento(String sigla) throws ClassNotFoundException, SQLException
+	public static Departamento get(String sigla) throws ClassNotFoundException, SQLException
 	{
 		Departamento dp = null;
 
@@ -52,7 +52,7 @@ public class DepartamentoFinder
 
 		if (rs.next())
 		{
-			dp = Departamento.load(rs);
+			dp = departamento.load(rs);
 			return dp;
 		}
 		rs.close();

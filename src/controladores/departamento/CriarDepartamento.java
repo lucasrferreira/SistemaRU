@@ -9,16 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controladores.ccu.GerirDepartamento;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
+import entidades.Departamento;
 
 @WebServlet("/CriarDepartamento")
 public class CriarDepartamento extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
-
+	Departamento departamento = new Departamento();
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String acao = (String) request.getParameter("acaoCriar");
@@ -49,7 +50,7 @@ public class CriarDepartamento extends HttpServlet
 		try
 		{
 
-			GerirDepartamento.criarDepartamento(sigla, nome);
+			departamento.criarDepartamento(sigla, nome);
 			request.setAttribute("message", "Novo departamento criado!");
 			request.getRequestDispatcher("ListarDepartamento").forward(request, response);
 		} catch (ClassNotFoundException | SQLException e)

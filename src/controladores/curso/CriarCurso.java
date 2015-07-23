@@ -11,21 +11,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirCurso;
-import controladores.ccu.GerirDepartamento;
 import controladores.ccu.exceptions.BancoErro;
 import controladores.ccu.exceptions.DepartamentoNotFound;
 import controladores.ccu.exceptions.NenhumResultado;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
-import entidades.Curso;
 import entidades.Departamento;
 
 @WebServlet("/CriarCurso")
 public class CriarCurso extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
-
+	Departamento departamento = new Departamento();
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String acao = (String) request.getParameter("acaoCriar");
@@ -33,7 +32,7 @@ public class CriarCurso extends HttpServlet
 		null;
 		try
 		{
-			departamentoDisponiveis = GerirDepartamento.listarDepartamentos();
+			departamentoDisponiveis = departamento.listarDepartamentos();
 			request.setAttribute("departamentosDisponiveis", departamentoDisponiveis);
 
 		} catch (ClassNotFoundException | NenhumResultado | BancoErro | SQLException e)

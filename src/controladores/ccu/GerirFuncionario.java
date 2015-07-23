@@ -28,7 +28,7 @@ public class GerirFuncionario
 		
 		Funcionario funcionario = (Funcionario) new Consumidor(nome, matricula, ano);
 
-		funcionario.setDepartamento(DepartamentoFinder._buscarDepartamento(departamento));
+		funcionario.setDepartamento(DepartamentoFinder.get(departamento));
 
 		try
 		{
@@ -94,7 +94,7 @@ public class GerirFuncionario
 
 		Funcionario funcionario = (Funcionario) new Consumidor(nome, matricula, ano);
 
-		funcionario.setDepartamento(DepartamentoFinder._buscarDepartamento(departamento));
+		funcionario.setDepartamento(DepartamentoFinder.get(departamento));
 
 		try
 		{

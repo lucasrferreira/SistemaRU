@@ -4,15 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>RU Bugdex</title>
 </head>
 <body>
-OLA MUNDO
 
+<h1> Bugdex </h1>
 <form action="Consumidor" method="post">
 	<input type="submit" name="navegacao" value="Consumidor">
 </form>
-	<input type="submit" name="navegacao" value="Funcionario">
+	<!-- <input type="submit" name="navegacao" value="Funcionario"> -->
 <form action="Refeicao" method="post">
 	<input type="submit" name="navegacao" value="Refeicao">
 </form>
@@ -22,8 +22,7 @@ OLA MUNDO
 <form action="Departamento" method="post">
 	<input type="submit" name="navegacao" value="Departamento">
 </form>
-	<input type="submit" name="navegacao" value="Turno">
-	<input type="submit" name="navegacao" value="Ticket">
-
+	<!-- <input type="submit" name="navegacao" value="Ticket">
+ -->
 </body>
 </html>

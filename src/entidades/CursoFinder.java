@@ -12,7 +12,7 @@ import persistencia.Conexao;
 public class CursoFinder implements Serializable
 {
 
-	public static Collection<Curso> _listarCursosDisponiveis() throws ClassNotFoundException, SQLException
+	public static Collection<Curso> getAll() throws ClassNotFoundException, SQLException
 	{
 
 		Collection<Curso> colCurso = new ArrayList<Curso>();
