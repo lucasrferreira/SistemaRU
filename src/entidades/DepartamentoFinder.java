@@ -10,7 +10,7 @@ import persistencia.Conexao;
 
 public class DepartamentoFinder
 {
-	private static Departamento departamento = new Departamento();
+//	private static Departamento departamento = new Departamento();
 	
 	public static Collection<Departamento> getAll() throws ClassNotFoundException, SQLException
 	{
@@ -27,7 +27,8 @@ public class DepartamentoFinder
 		rs = psmt.executeQuery();
 		
 		while(rs.next()){
-		
+			
+			Departamento departamento = new Departamento();
 			colDpto.add(departamento.load(rs));
 		}
 		
@@ -52,6 +53,7 @@ public class DepartamentoFinder
 
 		if (rs.next())
 		{
+			Departamento departamento = new Departamento();
 			dp = departamento.load(rs);
 			return dp;
 		}

@@ -15,7 +15,6 @@ import controladores.ccu.exceptions.CursoNotFound;
 import controladores.ccu.exceptions.MatriculaNotFound;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SexoNotFound;
-import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
 import controladores.ccu.exceptions.TituloNotFound;
 

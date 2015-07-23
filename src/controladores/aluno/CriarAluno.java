@@ -18,9 +18,9 @@ import controladores.ccu.exceptions.MatriculaNotFound;
 import controladores.ccu.exceptions.NenhumResultado;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SexoNotFound;
-import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
 import controladores.ccu.exceptions.TituloNotFound;
+import controladores.ccu.exceptions.sigla.SiglaAlreadyExistsException;
 
 @WebServlet("/CriarAluno")
 public class CriarAluno extends HttpServlet

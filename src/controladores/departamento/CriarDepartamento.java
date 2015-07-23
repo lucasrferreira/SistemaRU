@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.exceptions.NomeNotFoundException;
-import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
+import controladores.ccu.exceptions.nome.NomeEmptyException;
+import controladores.ccu.exceptions.sigla.SiglaAlreadyExistsException;
+import controladores.ccu.exceptions.sigla.SiglaEmptyException;
 import entidades.Departamento;
 
 @WebServlet("/CriarDepartamento")
@@ -59,13 +61,13 @@ public class CriarDepartamento extends HttpServlet
 			request.getRequestDispatcher("WEB-INF/departamento/CriarDepartamento.jsp").forward(request, response);
 			e.printStackTrace();
 
-		} catch (SiglaNotFoundException | NomeNotFoundException e2)
+		} catch (SiglaEmptyException| NomeEmptyException e2)
 		{
 			request.setAttribute("erro", "Um departamento deve conter um nome e uma sigla");
 			request.getRequestDispatcher("WEB-INF/departamento/CriarDepartamento.jsp").forward(request, response);
 		} catch (SiglaAlreadyExistsException e)
 		{
-			request.setAttribute("erro", "Sigla informada ja existe: " +e.getSigla());
+			request.setAttribute("erro", "Sigla informada ja existe: " +e.getMessage());
 			request.getRequestDispatcher("WEB-INF/departamento/CriarDepartamento.jsp").forward(request, response);
 		}
 

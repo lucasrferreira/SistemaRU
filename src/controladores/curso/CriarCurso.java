@@ -15,8 +15,8 @@ import controladores.ccu.exceptions.BancoErro;
 import controladores.ccu.exceptions.DepartamentoNotFound;
 import controladores.ccu.exceptions.NenhumResultado;
 import controladores.ccu.exceptions.NomeNotFoundException;
-import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
+import controladores.ccu.exceptions.sigla.SiglaAlreadyExistsException;
 import entidades.Departamento;
 
 @WebServlet("/CriarCurso")

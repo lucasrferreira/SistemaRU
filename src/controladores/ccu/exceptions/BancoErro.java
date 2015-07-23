@@ -1,12 +1,15 @@
 package controladores.ccu.exceptions;
 
 public class BancoErro extends Exception {
-	
-	String erro;
-	
+		
+	/**
+	 * 
+	 */
+	private static final long	serialVersionUID	= 3194623518047730691L;
+
 	public BancoErro(String erro)
 	{
-		this.erro = erro;
+		super(erro);
 	}
 	
 }

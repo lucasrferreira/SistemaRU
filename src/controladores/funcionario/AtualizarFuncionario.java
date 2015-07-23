@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import controladores.ccu.GerirFuncionario;
 import controladores.ccu.exceptions.NomeNotFoundException;
-import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.SiglaNotFoundException;
+import controladores.ccu.exceptions.sigla.SiglaAlreadyExistsException;
 
 @WebServlet("/AtualizarFuncionario")
 public class AtualizarFuncionario extends HttpServlet

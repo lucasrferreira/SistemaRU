@@ -10,7 +10,6 @@ import controladores.ccu.exceptions.MatriculaNotFound;
 import controladores.ccu.exceptions.NenhumResultado;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.SexoNotFound;
-import controladores.ccu.exceptions.SiglaAlreadyExistsException;
 import controladores.ccu.exceptions.TituloNotFound;
 import entidades.Consumidor;
 import entidades.ConsumidorFinder;
