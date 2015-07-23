@@ -99,7 +99,7 @@ public class Funcionario extends Consumidor {
 
 		this.nome =  rs.getString("nome");
 		this.matricula = rs.getInt("matricula");
-		this.cpf = CPF.fromString(rs.getString("funcionario.cpf"));
+		this.cpf = CPF.fromString(rs.getString("cpf"));
 		this.anoIngresso = rs.getInt("ano");
 
 		if (rs.getString("sexo").equals(Sexo.FEMININO.getSexo()))
@@ -134,19 +134,17 @@ public class Funcionario extends Consumidor {
 
 		if (sexo.equals(Sexo.FEMININO.getSexo()))
 			this.sexo = Sexo.FEMININO;
-		if (sexo.equals(Sexo.MASCULINO.getSexo()))
+		else if (sexo.equals(Sexo.MASCULINO.getSexo()))
 			this.sexo = Sexo.MASCULINO;
 		else
 			throw new SexoNotFound("Sexo está incorreto");
 		
 		if (titulo.equals(Titulo.MESTRADO.getTitulo()))
 			this.titulo = Titulo.MESTRADO;
-		if (titulo.equals(Titulo.DOUTORADO.getTitulo()))
+		else if (titulo.equals(Titulo.DOUTORADO.getTitulo()))
 			this.titulo = Titulo.DOUTORADO;
-		if (titulo.equals(Titulo.ESPECIALIZACAO.getTitulo()))
+		else if (titulo.equals(Titulo.ESPECIALIZACAO.getTitulo()))
 			this.titulo = Titulo.ESPECIALIZACAO;
-		else
-			//something
 
 		if (nome == "")
 			throw new NomeEmptyException();
@@ -165,12 +163,17 @@ public class Funcionario extends Consumidor {
 		
 		this.cpf = CPF.fromString(cpf);
 		
-		if (AlunoFinder.get(CPF.fromString(cpf)) == null)
-			throw new CpfAlreadyExists("Ja existe um Consumidor com esse CPF");
-
-		if (departamento != "")
+		try {
+			if (AlunoFinder.get(CPF.fromString(cpf)).getCpf() != null)
+				throw new CpfAlreadyExists("Ja existe um Consumidor com esse CPF");
+		}
+		catch ( Exception e)
+		{
+		}
+		if (departamento == "")
 			throw new DepartamentoNotFound();
 		
+		this.departamento = DepartamentoFinder.get(departamento);
 		this.insert();
 		
 	}
