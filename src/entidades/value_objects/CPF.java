@@ -1,6 +1,6 @@
 package entidades.value_objects;
 
-public class CPF {
+public class CPF{
 	
 	private int[] digitos;
 	

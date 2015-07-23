@@ -6,12 +6,14 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import persistencia.Conexao;
-import controladores.ccu.exceptions.AnoIngressoNotFound;
+import controladores.ccu.exceptions.AnoIngressoEmpty;
 import controladores.ccu.exceptions.CpfAlreadyExists;
+import controladores.ccu.exceptions.CpfEmpty;
 import controladores.ccu.exceptions.DepartamentoNotFound;
-import controladores.ccu.exceptions.MatriculaNotFound;
+import controladores.ccu.exceptions.MatriculaEmpty;
+import controladores.ccu.exceptions.NomeEmpty;
+import controladores.ccu.exceptions.SexoEmpty;
 import controladores.ccu.exceptions.SexoNotFound;
-import controladores.ccu.exceptions.nome.NomeEmptyException;
 import entidades.value_objects.CPF;
 import entidades.value_objects.Sexo;
 import entidades.value_objects.Titulo;
@@ -145,23 +147,29 @@ public class Funcionario extends Consumidor {
 			this.titulo = Titulo.DOUTORADO;
 		else if (titulo.equals(Titulo.ESPECIALIZACAO.getTitulo()))
 			this.titulo = Titulo.ESPECIALIZACAO;
+		else
+			throw new SexoNotFound("Título está incorreto");
 
+		if (cpf == "")
+			throw new CpfEmpty("", "CPF é obrigatório");
+		else
+			this.cpf = CPF.fromString(cpf);
 		if (nome == "")
-			throw new NomeEmptyException();
+			throw new NomeEmpty("", "Nome é obrigatório");
 		else
 			this.nome = nome;
 		if(sexo == "")
-			throw new SexoNotFound("Sexo é campo obrigatorio");
+			throw new SexoEmpty("", "Sexo é obrigatório");
 		if(matricula == 0)//Trocar por valida matricula
-			throw new MatriculaNotFound("Matricula é obrigatório");
+			throw new MatriculaEmpty("Matricula é obrigatório");
 		else
 			this.matricula = matricula;
 		if(ano == 0)//trocar pro valida ano
-			throw new AnoIngressoNotFound("Ano é obrigatorio");
+			throw new AnoIngressoEmpty("Ano é obrigatorio");
 		else
 			this.anoIngresso = ano;
 		
-		this.cpf = CPF.fromString(cpf);
+		
 		
 		try {
 			if (AlunoFinder.get(CPF.fromString(cpf)).getCpf() != null)
