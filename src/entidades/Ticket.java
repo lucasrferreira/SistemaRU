@@ -16,18 +16,7 @@ public class Ticket implements Serializable
 	private Consumidor	consumidor;
 	private int			idTicket;
 
-	public Ticket()
-	{
-	}
-
-	public Ticket(double valor, Refeicao refeicao, Consumidor consumidor)
-	{
-		this.valor = valor;
-		this.consumidor = consumidor;
-		this.refeicao = refeicao;
-
-	}
-
+	
 	public void _adicionarTicket() throws ClassNotFoundException, SQLException
 	{
 
@@ -113,8 +102,7 @@ public class Ticket implements Serializable
 		ticket.setConsumidor(new Consumidor());
 		ticket.getConsumidor().setCpf(CPF.fromString(rs.getString("consumidor")));
 
-		ticket.setRefeicao(new Refeicao());
-		ticket.getRefeicao().setIdRefeicao(rs.getInt("refeicao"));		
+		ticket.setRefeicao(RefeicaoFinder._buscarRefeicao(rs.getInt("refeicao")));
 		
 		return ticket;
 	}

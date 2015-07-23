@@ -12,7 +12,7 @@ import entidades.value_objects.CPF;
 public class AlunoFinder {
 	
 
-	public static Collection<Aluno> _listarAlunosDisponiveis() throws Exception
+	public static Collection<Aluno> getAll() throws Exception
 	{
 		Collection<Aluno> colAlu = new ArrayList<Aluno>();
 		ResultSet rs = null;		
@@ -25,8 +25,9 @@ public class AlunoFinder {
 			rs = psmt.executeQuery();
 			
 			
-			while(rs.next()){				
-				colAlu.add(Aluno.load(rs));
+			while(rs.next()){
+				Aluno aluno = new Aluno();
+				colAlu.add(aluno.load(rs));
 			}
 
 			Conexao.closeConnection();
@@ -35,10 +36,11 @@ public class AlunoFinder {
 	}
 	
 
-	public static Aluno _buscarAluno(CPF cpf) throws Exception 
+	public static Aluno get(CPF cpf) throws Exception 
 	{
 		Conexao.initConnection();
 		ResultSet rs = null;
+		Aluno aluno = null;
 		
 		String prepare = "Select * from aluno, consumidor where aluno.cpf = consumidor.cpf and aluno.cpf = ?;";
 		PreparedStatement psmt = Conexao.prepare(prepare);
@@ -48,14 +50,15 @@ public class AlunoFinder {
 		rs = psmt.executeQuery();
 		
 		
-		if(rs.next()){				
-			return Aluno.load(rs);
+		if(rs.next()){
+			Aluno _aluno = new Aluno();
+			aluno = _aluno.load(rs);
 		}
 
 		
 		Conexao.closeConnection();
 		
-		return null;
+		return aluno;
 	}
 
 }

@@ -1,9 +1,12 @@
 package entidades;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import controladores.ccu.exceptions.AnoIngressoNotFound;
+import controladores.ccu.exceptions.MatriculaNotFound;
+import controladores.ccu.exceptions.SexoNotFound;
+import controladores.ccu.exceptions.nome.NomeEmptyException;
 import persistencia.Conexao;
 import entidades.value_objects.CPF;
 import entidades.value_objects.Sexo;
@@ -12,45 +15,44 @@ import entidades.value_objects.Titulo;
 public class Consumidor
 {
 
-	private String	nome;
-	private int		matricula;
-	private int		anoIngresso;
-	private Sexo	sexo;
-	private Titulo	titulo;
+	protected String	nome;
+	protected int		matricula;
+	protected int		anoIngresso;
+	protected Sexo		sexo;
+	protected Titulo	titulo;
 	protected CPF		cpf;
 
-	public Consumidor()
+	public String getNome()
 	{
-	}
-	public Consumidor(String nome, int matricula, int ano)
-	{
-		this.anoIngresso = ano;
-		this.matricula = matricula;
-		this.nome = nome;
-	}
-	
-	public void _adicionarConsumidor() throws SQLException, ClassNotFoundException
-	{
-
-		Conexao.initConnection();
-
-		String prepare = "Insert into consumidor (nome, matricula, ano, sexo, titulo, cpf) values (?, ?, ? , ? , ?, ?);";
-
-		PreparedStatement pstmt = Conexao.prepare(prepare);
-
-		pstmt.setString(1, nome);
-		pstmt.setInt(2, matricula);
-		pstmt.setInt(3, anoIngresso);
-		pstmt.setString(4, sexo.getSexo());
-		pstmt.setString(5, titulo.getTitulo());
-		pstmt.setString(6, cpf.toString());
-
-		pstmt.execute();
-
-		Conexao.closeConnection();
+		return nome;
 	}
 
-	public void _atualizarConsumidor() throws ClassNotFoundException, SQLException
+	public int getMatricula()
+	{
+		return matricula;
+	}
+
+	public int getAnoIngresso()
+	{
+		return anoIngresso;
+	}
+
+	public Sexo getSexo()
+	{
+		return sexo;
+	}
+
+	public Titulo getTitulo()
+	{
+		return titulo;
+	}
+
+	public CPF getCpf()
+	{
+		return cpf;
+	}
+
+	private void update() throws SQLException, ClassNotFoundException
 	{
 		Conexao.initConnection();
 
@@ -65,91 +67,73 @@ public class Consumidor
 		pstmt.setString(5, titulo.getTitulo());
 
 		pstmt.setString(6, cpf.toString());
+		
+		System.out.println(nome + " " + cpf.toString());
+		pstmt.execute();
+		
 		Conexao.closeConnection();
 
 	}
 
-	public String getNome()
+	// Domain Model
+	
+	public Consumidor buscaConsumidor(String cpf) throws Exception
 	{
-		return nome;
+		Consumidor aluno = AlunoFinder.get(CPF.fromString(cpf));
+		if(aluno!=null)
+			return aluno;
+		Consumidor funcionario = FuncionarioFinder.get(CPF.fromString(cpf));
+		if(funcionario!=null)
+			return funcionario;
+		
+		return null;
 	}
-
-	public void setNome(String nome)
+	
+	public void AtualizarConsumidor(String cpf, String nome, int matricula, int ano, String sexo) throws Exception
 	{
+		Consumidor consumidor = AlunoFinder.get(CPF.fromString(cpf));
+
+		if (consumidor != null)
+		{
+			this.titulo = consumidor.getTitulo();
+		} else
+		{
+			consumidor = FuncionarioFinder.get(CPF.fromString(cpf));
+			if (consumidor != null)
+			{
+				this.titulo = consumidor.getTitulo();
+			}
+		}
+
+		if (nome == "")
+			throw new NomeEmptyException();
+		else
+			this.nome = nome;
+		if(sexo == "")
+			throw new SexoNotFound("Sexo é campo obrigatorio");
+		if(matricula == 0)//Trocar por valida matricula
+			throw new MatriculaNotFound("Matricula é obrigatório");
+		else
+			this.matricula = matricula;
+		if(ano == 0)//trocar pro valida ano
+			throw new AnoIngressoNotFound("Ano é obrigatorio");
+		else
+			this.anoIngresso = ano;
+		
+		this.cpf = CPF.fromString(cpf);
 		this.nome = nome;
-	}
-
-	public int getMatricula()
-	{
-		return matricula;
-	}
-
-	public void setMatricula(int matricula)
-	{
 		this.matricula = matricula;
-	}
-
-	public int getAnoIngresso()
-	{
-		return anoIngresso;
-	}
-
-	public void setAnoIngresso(int anoIngresso)
-	{
-		this.anoIngresso = anoIngresso;
-	}
-
-	public Sexo getSexo()
-	{
-		return sexo;
-	}
-
-	public void setSexo(Sexo sexo)
-	{
-		this.sexo = sexo;
-	}
-
-	public Titulo getTitulo()
-	{
-		return titulo;
-	}
-
-	public void setTitulo(Titulo titulo)
-	{
-		this.titulo = titulo;
-	}
-
-	public CPF getCpf()
-	{
-		return cpf;
-	}
-
-	public void setCpf(CPF cpf)
-	{
-		this.cpf = cpf;
-	}
-
-	public static Consumidor load(ResultSet rs) throws Exception
-	{
-		Consumidor consumidor = new Consumidor();
-
-		consumidor.setNome(rs.getString("nome"));
-		consumidor.setMatricula(rs.getInt("matricula"));
-		consumidor.setCpf(CPF.fromString(rs.getString("cpf")));
-		consumidor.setAnoIngresso(rs.getInt("ano"));
-
-		if (rs.getString("sexo").equals(Sexo.FEMININO.getSexo()))
-			consumidor.setSexo(Sexo.FEMININO);
-		if (rs.getString("sexo").equals(Sexo.MASCULINO.getSexo()))
-			consumidor.setSexo(Sexo.MASCULINO);
-
-		if (rs.getString("titulo").equals(Titulo.MESTRADO.getTitulo()))
-			consumidor.setTitulo(Titulo.MESTRADO);
-		if (rs.getString("titulo").equals(Titulo.DOUTORADO.getTitulo()))
-			consumidor.setTitulo(Titulo.DOUTORADO);
-		if (rs.getString("titulo").equals(Titulo.ESPECIALIZACAO.getTitulo()))
-			consumidor.setTitulo(Titulo.ESPECIALIZACAO);
-		return consumidor;
+		this.anoIngresso = ano;
+				
+		if (sexo.equals(Sexo.FEMININO.getSexo()))
+			this.sexo = Sexo.FEMININO;
+		else if (sexo.equals(Sexo.MASCULINO.getSexo()))
+			this.sexo = Sexo.MASCULINO;
+		else
+			throw new SexoNotFound("Sexo está incorreto");
+		
+	
+		this.update();
 	}
 
 }

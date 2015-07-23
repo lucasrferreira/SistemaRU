@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controladores.ccu.GerirRefeicao;
-import controladores.ccu.exceptions.DepartamentoNotFound;
 import controladores.ccu.exceptions.DescricaoNotFound;
 import controladores.ccu.exceptions.OpVegNotFound;
 import controladores.ccu.exceptions.TurnoNotFound;
@@ -21,6 +19,8 @@ public class AtualizarRefeicao extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
 
+	
+	Refeicao refeicao = new Refeicao();
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 
@@ -47,7 +47,7 @@ public class AtualizarRefeicao extends HttpServlet
 		int idRefeicao = Integer.parseInt(request.getParameter("idRefeicao"));
 		try
 		{
-			Refeicao refeicaoAntiga = GerirRefeicao.buscarRefeicao(idRefeicao);
+			Refeicao refeicaoAntiga = refeicao.buscarRefeicao(idRefeicao);
 			request.setAttribute("refeicao", refeicaoAntiga);
 			request.getRequestDispatcher("WEB-INF/refeicao/AtualizarRefeicao.jsp").forward(request, response);
 		} catch (ClassNotFoundException | SQLException | ServletException | IOException e2)
@@ -67,7 +67,7 @@ public class AtualizarRefeicao extends HttpServlet
 
 		try
 		{
-			GerirRefeicao.atualizarRefeicao(idRefeicao, op_veg, descricao, turno);
+			refeicao.atualizarRefeicao(idRefeicao, op_veg, descricao, turno);
 			request.setAttribute("mensagem", "Refeicao atualizada com sucesso");
 
 		} catch (ClassNotFoundException | SQLException | DescricaoNotFound | OpVegNotFound | TurnoNotFound e)

@@ -50,19 +50,34 @@
 				
 		<table width="80%">
 		  <tr>
+		 	<th>Selecione</th>
 		 	<th>Nome</th>
 		    <th>Matricula</th>
 		    <th>Ano Ingresso</th>
 		    <th>Sexo</th>
 		    <th>CPF</th>
+		    <th>Curso/Departamento</th>
 		   </tr>
 		  <%
 			  try{
 				  Collection<Consumidor> consumidoresDisponiveis = (Collection<Consumidor>)request.getAttribute("consumidores");
 				  for (Consumidor consumidori: consumidoresDisponiveis){
 					  %>   <tr align="center">
-							    <td><input type="radio" name='CPF' value='<%=consumidori.getCpf().toString()%>'><%=consumidori.getCpf().toString()%></td>
+							    <td><input type="radio" name='cpf' value='<%=consumidori.getCpf().toString()%>'></td>
 							    <td><%=consumidori.getNome()%></td>
+							    <td><%=consumidori.getMatricula()%></td>
+							    <td><%=consumidori.getAnoIngresso()%></td>
+							    <td><%=consumidori.getSexo()%></td>
+							    <td><%=consumidori.getCpf().toString()%></td>
+							    
+							    <% if(consumidori instanceof Aluno) {
+							    	Aluno aluno = (Aluno) consumidori;%>
+							    	<td><%=aluno.getCurso().getNome()%></td>
+							 	<%} if(consumidori instanceof Funcionario) { 
+							 		Funcionario funcionario = (Funcionario) consumidori;
+							 		%>
+							 		<td><%= funcionario.getDepartamento().getNome()%></td>
+							 	<%} %>
 							  </tr>
 					  	 </tr> <%
 				  }

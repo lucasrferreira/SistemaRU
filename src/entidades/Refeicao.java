@@ -139,9 +139,8 @@ public class Refeicao implements Serializable
 		return RefeicaoFinder._listarRefeicoesDisponiveis();
 	}
 
-	public static Refeicao buscarRefeicao(int idRefeicao) throws ClassNotFoundException, SQLException
+	public Refeicao buscarRefeicao(int idRefeicao) throws ClassNotFoundException, SQLException
 	{
-
 		Refeicao refeicaoAntigo = RefeicaoFinder._buscarRefeicao(idRefeicao);
 
 		return refeicaoAntigo;

@@ -38,7 +38,7 @@ public class Curso implements Serializable
 		return this;
 	}
 
-	public void _adicionarCurso() throws ClassNotFoundException, SQLException
+	public void insert() throws ClassNotFoundException, SQLException
 	{
 
 		Conexao.initConnection();
@@ -56,7 +56,7 @@ public class Curso implements Serializable
 		Conexao.closeConnection();
 	}
 
-	public void _atualizarCurso() throws ClassNotFoundException, SQLException
+	public void update() throws ClassNotFoundException, SQLException
 	{
 
 		Conexao.initConnection();
@@ -118,7 +118,7 @@ public class Curso implements Serializable
 		this.nome = nome;
 		this.departamento = dpto;
 
-		this._adicionarCurso();
+		this.insert();
 
 	}
 
@@ -139,7 +139,7 @@ public class Curso implements Serializable
 		this.nome = nome;
 		this.departamento = dpto;
 
-		this._atualizarCurso();
+		this.update();
 	}
 
 	public String getNome()

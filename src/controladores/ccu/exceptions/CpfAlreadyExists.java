@@ -8,4 +8,8 @@ public class CpfAlreadyExists extends Exception
 	public CpfAlreadyExists(CPF cpf) {
 		this.cpf = cpf;
 	}
+	public CpfAlreadyExists(String string)
+	{
+		super(string);
+	}
 }

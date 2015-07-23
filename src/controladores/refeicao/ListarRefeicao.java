@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controladores.ccu.GerirRefeicao;
 import entidades.Refeicao;
 
 @WebServlet("/ListarRefeicao")
 public class ListarRefeicao extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    Refeicao refeicao = new Refeicao();
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		listarRefeicao(request, response);
 	}
@@ -43,7 +43,7 @@ public class ListarRefeicao extends HttpServlet {
 	private void listarRefeicao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			try
 			{
-				request.setAttribute("refeicoes", GerirRefeicao.listarRefeicoes());
+				request.setAttribute("refeicoes", refeicao.listarRefeicoes());
 				request.getRequestDispatcher("WEB-INF/refeicao/ListarRefeicao.jsp").forward(request,response);
 				
 			} catch (Exception e)

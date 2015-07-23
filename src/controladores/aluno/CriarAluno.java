@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controladores.ccu.GerirAluno;
 import controladores.ccu.exceptions.AnoIngressoNotFound;
 import controladores.ccu.exceptions.BancoErro;
 import controladores.ccu.exceptions.CursoNotFound;
@@ -20,12 +19,15 @@ import controladores.ccu.exceptions.SexoNotFound;
 import controladores.ccu.exceptions.SiglaNotFoundException;
 import controladores.ccu.exceptions.TituloNotFound;
 import controladores.ccu.exceptions.sigla.SiglaAlreadyExistsException;
+import entidades.Aluno;
 import entidades.Curso;
 
 @WebServlet("/CriarAluno")
 public class CriarAluno extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
+	Curso						curso				= new Curso();
+	Aluno						aluno				= new Aluno();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -49,7 +51,6 @@ public class CriarAluno extends HttpServlet
 
 	private void abrirForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		Curso curso = new Curso();
 		try
 		{
 			request.setAttribute("cursosDisponiveis", curso.listarCursos());
@@ -66,8 +67,7 @@ public class CriarAluno extends HttpServlet
 
 	private void criarAluno(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
-		System.out.println("\n\n\n\n passou");
-		
+
 		String nome = (String) request.getParameter("nome");
 		int matricula = (Integer.parseInt(request.getParameter("matricula")));
 		int ano = (Integer.parseInt(request.getParameter("anoIngresso")));
@@ -78,18 +78,14 @@ public class CriarAluno extends HttpServlet
 
 		try
 		{
-			GerirAluno.criarAluno(nome, cpf, sexo, matricula, titulo, ano, curso);
+			aluno.criarAluno(nome, cpf, sexo, matricula, titulo, ano, curso);
 			request.setAttribute("message", "Novo Aluno criado!");
 			request.getRequestDispatcher("ListarConsumidor").forward(request, response);
-
-		} catch (ClassNotFoundException | SiglaNotFoundException | NomeNotFoundException | SiglaAlreadyExistsException | SQLException | AnoIngressoNotFound | SexoNotFound | TituloNotFound | MatriculaNotFound | CursoNotFound e)
+		} catch (Exception e)
 		{
-			request.setAttribute("message", "Não foi possivel adicionar o aluno");
-			request.getRequestDispatcher("ListarConsumidor").forward(request, response);
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		;
 
 	}
-
 }

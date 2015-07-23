@@ -51,7 +51,7 @@ public class CriarTicket extends HttpServlet
 		Collection<Consumidor> colConsumidor = new ArrayList<Consumidor>();
 		try
 		{
-			colConsumidor.addAll(AlunoFinder._listarAlunosDisponiveis());
+			colConsumidor.addAll(AlunoFinder.getAll());
 		} catch (Exception e)
 		{
 			// TODO Auto-generated catch block
@@ -60,7 +60,7 @@ public class CriarTicket extends HttpServlet
 		
 		try
 		{
-			colConsumidor.addAll(FuncionarioFinder._listarFuncionariosDisponiveis());
+			colConsumidor.addAll(FuncionarioFinder.getAll());
 		} catch (Exception e)
 		{
 			// TODO Auto-generated catch block

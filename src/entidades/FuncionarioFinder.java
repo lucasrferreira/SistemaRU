@@ -12,7 +12,7 @@ import entidades.value_objects.CPF;
 public class FuncionarioFinder
 {
 
-	public static Collection<Funcionario> _listarFuncionariosDisponiveis() throws Exception
+	public static Collection<Funcionario> getAll() throws Exception
 	{
 		Collection<Funcionario> colFunc = new ArrayList<Funcionario>();
 		ResultSet rs = null;
@@ -28,8 +28,8 @@ public class FuncionarioFinder
 
 			while (rs.next())
 			{
-
-				colFunc.add(Funcionario.load(rs));
+				Funcionario funcionario = new Funcionario();
+				colFunc.add(funcionario.load(rs));
 			}
 
 			Conexao.closeConnection();
@@ -42,10 +42,11 @@ public class FuncionarioFinder
 		return colFunc;
 	}
 
-	public static Funcionario _buscarFuncionario(CPF cpf) throws Exception
+	public static Funcionario get(CPF cpf) throws Exception
 	{
 		Conexao.initConnection();
 		ResultSet rs = null;
+		Funcionario funcionario = null;
 		
 		String prepare = "Select * from funcionario, consumidor where funcionario.cpf = consumidor.cpf and consumidor.cpf = ?;";
 		
@@ -57,13 +58,14 @@ public class FuncionarioFinder
 		
 		if (rs.next())
 		{
-			return Funcionario.load(rs);
+			Funcionario _funcionario = new Funcionario();
+			funcionario = _funcionario.load(rs);
 
 		}
 
 		Conexao.closeConnection();
 
-		return null;
+		return funcionario;
 	}
 
 }

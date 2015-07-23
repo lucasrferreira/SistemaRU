@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controladores.ccu.GerirRefeicao;
 import controladores.ccu.exceptions.DescricaoNotFound;
 import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.OpVegNotFound;
@@ -19,11 +18,13 @@ import controladores.ccu.exceptions.sigla.SiglaAlreadyExistsException;
 //import controladores.ccu.exceptions.DescricaoNotFoundException;
 //import controladores.ccu.exceptions.TurnoNotFoundException;
 //import controladores.ccu.exceptions.OpVegNotFoundException;
+import entidades.Refeicao;
 
 @WebServlet("/CriarRefeicao")
 public class CriarRefeicao extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
+	Refeicao refeicao = new Refeicao();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -57,7 +58,7 @@ public class CriarRefeicao extends HttpServlet
 		{
 			try
 			{
-				GerirRefeicao.criarRefeicao( op_veg, descricao, turno);
+				refeicao.criarRefeicao( op_veg, descricao, turno);
 				request.setAttribute("message", "Nova refeicao criada!");
 				request.getRequestDispatcher("ListarRefeicao").forward(request, response);
 			} catch (DescricaoNotFound | OpVegNotFound | TurnoNotFound e)

@@ -3,23 +3,25 @@ package controladores.consumidor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import controladores.ccu.GerirConsumidor;
+import entidades.Aluno;
 import entidades.Consumidor;
-import entidades.value_objects.CPF;
+import entidades.Funcionario;
 
 @WebServlet("/ListarConsumidor")
 public class ListarConsumidor extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
+
+	Collection<Consumidor>		colConsumidor		= new ArrayList<Consumidor>();
+	Funcionario					funcionario			= new Funcionario();
+	Aluno						aluno				= new Aluno();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -54,9 +56,12 @@ public class ListarConsumidor extends HttpServlet
 
 	private void listarConsumidores(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		colConsumidor = new ArrayList<Consumidor>();
 		try
 		{
-			request.setAttribute("consumidores", GerirConsumidor.listarConsumidores());
+			colConsumidor.addAll(funcionario.listarFuncionario());
+			colConsumidor.addAll(aluno.listarAluno());
+			request.setAttribute("consumidores", colConsumidor);
 		} catch (Exception e)
 		{
 			request.setAttribute("consumidores", new ArrayList<Consumidor>());

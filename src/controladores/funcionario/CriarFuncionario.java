@@ -1,7 +1,6 @@
 package controladores.funcionario;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controladores.ccu.GerirFuncionario;
-import controladores.ccu.exceptions.AnoIngressoNotFound;
-import controladores.ccu.exceptions.CursoNotFound;
-import controladores.ccu.exceptions.MatriculaNotFound;
-import controladores.ccu.exceptions.NomeNotFoundException;
-import controladores.ccu.exceptions.SexoNotFound;
-import controladores.ccu.exceptions.SiglaNotFoundException;
-import controladores.ccu.exceptions.TituloNotFound;
+import entidades.Funcionario;
 
 @WebServlet("/CriarFuncionario")
 public class CriarFuncionario extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
 
+	Funcionario funcionario = new Funcionario();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
@@ -54,17 +47,17 @@ public class CriarFuncionario extends HttpServlet
 		String titulo = (String) request.getParameter("titulo");
 		String departamento = (String) request.getParameter("departamento");
 
-		try
-		{
-			GerirFuncionario.criarFuncionario(nome, cpf, sexo, matricula, titulo, ano, departamento);
-			request.setAttribute("message", "Novo Funcionario criado!");
-			request.getRequestDispatcher("ListarFuncionario").forward(request, response);
-
-		} catch (ClassNotFoundException | SiglaNotFoundException | NomeNotFoundException | SQLException | CursoNotFound | AnoIngressoNotFound | SexoNotFound | MatriculaNotFound | TituloNotFound e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try
+			{
+				funcionario.criarFuncionario(nome, cpf, sexo, matricula, titulo, ano, departamento);
+				request.setAttribute("message", "Novo Funcionario criado!");
+				request.getRequestDispatcher("ListarFuncionario").forward(request, response);
+			} catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 	
 	}
 
