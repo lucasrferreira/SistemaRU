@@ -6,15 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 
+import persistencia.Conexao;
 import controladores.ccu.exceptions.BancoErro;
+import controladores.ccu.exceptions.DescricaoEmpty;
 import controladores.ccu.exceptions.DescricaoNotFound;
 import controladores.ccu.exceptions.NenhumResultado;
 import controladores.ccu.exceptions.NomeNotFoundException;
+import controladores.ccu.exceptions.OpVegEmpty;
 import controladores.ccu.exceptions.OpVegNotFound;
 import controladores.ccu.exceptions.SiglaNotFoundException;
 import controladores.ccu.exceptions.TurnoNotFound;
 import controladores.ccu.exceptions.sigla.SiglaAlreadyExistsException;
-import persistencia.Conexao;
 import entidades.value_objects.TurnoVO;
 
 public class Refeicao implements Serializable
@@ -146,7 +148,8 @@ public class Refeicao implements Serializable
 		return refeicaoAntigo;
 	}
 
-	public void criarRefeicao(String op_veg, String descricao, String turno) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound
+	public void criarRefeicao(String op_veg, String descricao, String turno) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, 
+	SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound, DescricaoEmpty, OpVegEmpty
 
 	{
 
@@ -162,9 +165,9 @@ public class Refeicao implements Serializable
 			//exception
 
 		if (descricao == "")
-			throw new DescricaoNotFound("Preencha a descricao");
+			throw new DescricaoEmpty("", "Preencha a descricao");
 		if (op_veg == "")
-			throw new OpVegNotFound("Prrencha a opcao vegetaliana");
+			throw new OpVegEmpty("", "Prrencha a opcao vegetaliana");
 		
 		this._adicionarRefeicao();
 

@@ -3,11 +3,13 @@ package entidades;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import controladores.ccu.exceptions.AnoIngressoNotFound;
-import controladores.ccu.exceptions.MatriculaNotFound;
+import persistencia.Conexao;
+import controladores.ccu.exceptions.AnoIngressoEmpty;
+import controladores.ccu.exceptions.CpfEmpty;
+import controladores.ccu.exceptions.MatriculaEmpty;
+import controladores.ccu.exceptions.SexoEmpty;
 import controladores.ccu.exceptions.SexoNotFound;
 import controladores.ccu.exceptions.nome.NomeEmptyException;
-import persistencia.Conexao;
 import entidades.value_objects.CPF;
 import entidades.value_objects.Sexo;
 import entidades.value_objects.Titulo;
@@ -110,20 +112,21 @@ public class Consumidor
 		else
 			this.nome = nome;
 		if(sexo == "")
-			throw new SexoNotFound("Sexo é campo obrigatorio");
+			throw new SexoEmpty("", "Sexo é campo obrigatorio");
 		if(matricula == 0)//Trocar por valida matricula
-			throw new MatriculaNotFound("Matricula é obrigatório");
+			throw new MatriculaEmpty("Matricula é obrigatório");
 		else
 			this.matricula = matricula;
 		if(ano == 0)//trocar pro valida ano
-			throw new AnoIngressoNotFound("Ano é obrigatorio");
+			throw new AnoIngressoEmpty("Ano é obrigatorio");
 		else
 			this.anoIngresso = ano;
-		
-		this.cpf = CPF.fromString(cpf);
-		this.nome = nome;
-		this.matricula = matricula;
-		this.anoIngresso = ano;
+		if(cpf == "")
+			throw new CpfEmpty("", "CPF é obrigatorio");
+		else
+			this.cpf = CPF.fromString(cpf);
+	
+
 				
 		if (sexo.equals(Sexo.FEMININO.getSexo()))
 			this.sexo = Sexo.FEMININO;
