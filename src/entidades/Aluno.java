@@ -6,12 +6,13 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 import persistencia.Conexao;
-import controladores.ccu.exceptions.AnoIngressoNotFound;
+import controladores.ccu.exceptions.AnoIngressoEmpty;
 import controladores.ccu.exceptions.CpfAlreadyExists;
-import controladores.ccu.exceptions.CursoNotFound;
-import controladores.ccu.exceptions.MatriculaNotFound;
+import controladores.ccu.exceptions.CursoEmpty;
+import controladores.ccu.exceptions.MatriculaEmpty;
+import controladores.ccu.exceptions.NomeEmpty;
+import controladores.ccu.exceptions.SexoEmpty;
 import controladores.ccu.exceptions.SexoNotFound;
-import controladores.ccu.exceptions.nome.NomeEmptyException;
 import entidades.value_objects.CPF;
 import entidades.value_objects.Sexo;
 import entidades.value_objects.Titulo;
@@ -132,10 +133,10 @@ public class Aluno extends Consumidor{
 		
 		if (sexo.equals(Sexo.FEMININO.getSexo()))
 			this.sexo = Sexo.FEMININO;
-		if (sexo.equals(Sexo.MASCULINO.getSexo()))
-			this.sexo = Sexo.MASCULINO;
+		else if (sexo.equals(Sexo.MASCULINO.getSexo()))
+			this.sexo = Sexo.MASCULINO;	
 		else
-			throw new SexoNotFound("Sexo está incorreto");
+			throw new SexoEmpty("", "Sexo está incorreto");
 		
 		if (titulo.equals(Titulo.MESTRADO.getTitulo()))
 			this.titulo = Titulo.MESTRADO;
@@ -147,21 +148,21 @@ public class Aluno extends Consumidor{
 			//something
 
 		if (nome == "")
-			throw new NomeEmptyException();
+			throw new NomeEmpty("", "Nome é obrigatório");
 		else
 			this.nome = nome;
 		if(sexo == "")
 			throw new SexoNotFound("Sexo é campo obrigatorio");
 		if(matricula == 0)//Trocar por valida matricula
-			throw new MatriculaNotFound("Matricula é obrigatório");
+			throw new MatriculaEmpty("Matricula é obrigatório");
 		else
 			this.matricula = matricula;
 		if(ano == 0)//trocar pro valida ano
-			throw new AnoIngressoNotFound("Ano é obrigatorio");
+			throw new AnoIngressoEmpty("Ano é obrigatorio");
 		else
 			this.anoIngresso = ano;
 		if(curso == "")
-			throw new CursoNotFound("Curso é obrigatorio");
+			throw new CursoEmpty("", "Curso é obrigatorio");
 		else
 			this.curso = CursoFinder._buscarCurso(curso);
 		
