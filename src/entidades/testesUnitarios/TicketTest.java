@@ -1,10 +1,11 @@
-package entidades;
+package entidades.testesUnitarios;
 
 import org.junit.Test;
 
 import controladores.ccu.exceptions.ConsumidorEmpty;
 import controladores.ccu.exceptions.RefeicaoEmpty;
 import controladores.ccu.exceptions.ValorEmpty;
+import entidades.Ticket;
 
 public class TicketTest
 {
