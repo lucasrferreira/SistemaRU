@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import controladores.ccu.exceptions.AnoIngressoEmpty;
 import controladores.ccu.exceptions.CpfEmpty;
-import controladores.ccu.exceptions.CursoEmpty;
+import controladores.ccu.exceptions.DepartamentoEmpty;
 import controladores.ccu.exceptions.MatriculaEmpty;
 import controladores.ccu.exceptions.NomeEmpty;
 import controladores.ccu.exceptions.SexoEmpty;
@@ -71,12 +71,12 @@ public class FuncionarioTest
 		
 	}
 	
-	@Test(expected = CursoEmpty.class)
+	@Test(expected = DepartamentoEmpty.class)
 	public void testCurso() throws Exception
 	{
 		Funcionario funcionario = new Funcionario();
 		
-		funcionario.criarFuncionario("Leticia", "12345678911", Sexo.FEMININO.getSexo(), 2015, Titulo.DOUTORADO.getTitulo(), 2015, " ");
+		funcionario.criarFuncionario("Leticia", "12345678911", Sexo.FEMININO.getSexo(), 2015, Titulo.DOUTORADO.getTitulo(), 2015, "");
 		
 	}
 	

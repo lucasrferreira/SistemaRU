@@ -15,6 +15,7 @@ import controladores.ccu.exceptions.NomeNotFoundException;
 import controladores.ccu.exceptions.OpVegEmpty;
 import controladores.ccu.exceptions.OpVegNotFound;
 import controladores.ccu.exceptions.SiglaNotFoundException;
+import controladores.ccu.exceptions.TurnoEmpty;
 import controladores.ccu.exceptions.TurnoNotFound;
 import controladores.ccu.exceptions.sigla.SiglaAlreadyExistsException;
 import entidades.value_objects.TurnoVO;
@@ -149,7 +150,7 @@ public class Refeicao implements Serializable
 	}
 
 	public void criarRefeicao(String op_veg, String descricao, String turno) throws SiglaNotFoundException, NomeNotFoundException, SiglaAlreadyExistsException, ClassNotFoundException, 
-	SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound, DescricaoEmpty, OpVegEmpty
+	SQLException, DescricaoNotFound, OpVegNotFound, TurnoNotFound, DescricaoEmpty, OpVegEmpty, TurnoEmpty
 
 	{
 
@@ -162,7 +163,7 @@ public class Refeicao implements Serializable
 		else if (turno.equals(TurnoVO.TARDE.getTurno()))
 			this.turno = TurnoVO.TARDE;
 		else
-			//exception
+			throw new TurnoEmpty("", "");
 
 		if (descricao == "")
 			throw new DescricaoEmpty("", "Preencha a descricao");

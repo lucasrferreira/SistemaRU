@@ -8,11 +8,13 @@ import java.util.Collection;
 import persistencia.Conexao;
 import controladores.ccu.exceptions.AnoIngressoEmpty;
 import controladores.ccu.exceptions.CpfAlreadyExists;
+import controladores.ccu.exceptions.CpfEmpty;
 import controladores.ccu.exceptions.CursoEmpty;
 import controladores.ccu.exceptions.MatriculaEmpty;
 import controladores.ccu.exceptions.NomeEmpty;
 import controladores.ccu.exceptions.SexoEmpty;
 import controladores.ccu.exceptions.SexoNotFound;
+import controladores.ccu.exceptions.TituloEmpty;
 import entidades.value_objects.CPF;
 import entidades.value_objects.Sexo;
 import entidades.value_objects.Titulo;
@@ -138,6 +140,9 @@ public class Aluno extends Consumidor{
 		else
 			throw new SexoEmpty("", "Sexo está incorreto");
 		
+		if(titulo =="")
+			throw new TituloEmpty("", "");
+		
 		if (titulo.equals(Titulo.MESTRADO.getTitulo()))
 			this.titulo = Titulo.MESTRADO;
 		if (titulo.equals(Titulo.DOUTORADO.getTitulo()))
@@ -166,6 +171,8 @@ public class Aluno extends Consumidor{
 		else
 			this.curso = CursoFinder._buscarCurso(curso);
 		
+		if(cpf == "")
+			throw new CpfEmpty("", "");
 		
 		this.cpf = CPF.fromString(cpf);
 		

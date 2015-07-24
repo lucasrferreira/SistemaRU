@@ -9,11 +9,12 @@ import persistencia.Conexao;
 import controladores.ccu.exceptions.AnoIngressoEmpty;
 import controladores.ccu.exceptions.CpfAlreadyExists;
 import controladores.ccu.exceptions.CpfEmpty;
-import controladores.ccu.exceptions.DepartamentoNotFound;
+import controladores.ccu.exceptions.DepartamentoEmpty;
 import controladores.ccu.exceptions.MatriculaEmpty;
 import controladores.ccu.exceptions.NomeEmpty;
 import controladores.ccu.exceptions.SexoEmpty;
 import controladores.ccu.exceptions.SexoNotFound;
+import controladores.ccu.exceptions.TituloEmpty;
 import entidades.value_objects.CPF;
 import entidades.value_objects.Sexo;
 import entidades.value_objects.Titulo;
@@ -139,7 +140,7 @@ public class Funcionario extends Consumidor {
 		else if (sexo.equals(Sexo.MASCULINO.getSexo()))
 			this.sexo = Sexo.MASCULINO;
 		else
-			throw new SexoNotFound("Sexo está incorreto");
+			throw new SexoEmpty("Sexo está incorreto", departamento);
 		
 		if (titulo.equals(Titulo.MESTRADO.getTitulo()))
 			this.titulo = Titulo.MESTRADO;
@@ -148,7 +149,7 @@ public class Funcionario extends Consumidor {
 		else if (titulo.equals(Titulo.ESPECIALIZACAO.getTitulo()))
 			this.titulo = Titulo.ESPECIALIZACAO;
 		else
-			throw new SexoNotFound("Título está incorreto");
+			throw new TituloEmpty("Título está incorreto", "");
 
 		if (cpf == "")
 			throw new CpfEmpty("", "CPF é obrigatório");
@@ -179,7 +180,7 @@ public class Funcionario extends Consumidor {
 		{
 		}
 		if (departamento == "")
-			throw new DepartamentoNotFound();
+			throw new DepartamentoEmpty(departamento, departamento);
 		
 		this.departamento = DepartamentoFinder.get(departamento);
 		this.insert();
