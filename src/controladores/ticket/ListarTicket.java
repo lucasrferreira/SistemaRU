@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controladores.ccu.GerirTicket;
+import entidades.Ticket;
 
 
 @WebServlet("/ListarTicket")
 public class ListarTicket extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	Ticket ticket = new Ticket();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		listarTicket(request, response);
@@ -41,11 +42,11 @@ public class ListarTicket extends HttpServlet {
 	private void listarTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try
 		{
-			request.setAttribute("tickets", GerirTicket.listarTickets());
+			request.setAttribute("tickets", ticket.listarTickets());
 			request.getRequestDispatcher("WEB-INF/ticket/ListarTicket.jsp").forward(request,response);
 		} catch (Exception e)
 		{
-			// TODO Auto-generated catch block
+			request.getRequestDispatcher("WEB-INF/ticket/ListarTicket.jsp").forward(request,response);
 			e.printStackTrace();
 		}
 		

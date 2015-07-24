@@ -12,7 +12,7 @@ public class Conexao {
 
 	private static String URL = "jdbc:postgresql://localhost:5432/ru";
 	private static String user = "ruAdmin";
-	private static String senha = "admin";
+	private static String senha = "admin"; 
 
 	private static Connection connection;
 	protected static PreparedStatement psmt;

@@ -15,40 +15,14 @@
 </head>
 <%@include file="../messagePage.jsp" %>
 <body>
-<% Collection<Consumidor> consumidoresDisponiveis = (Collection<Consumidor>)request.getAttribute("colConsumidor"); %>
 
-<% Collection<Refeicao> refeicoesDisponiveis= (Collection<Refeicao>)request.getAttribute("colRefeicao"); %>
-
-	<form action="CriarTicket" method="post">
+	<form action="ConfirmarTicket" method="post">
 	
 	Turno : 
-	<select name= "turno">
-		<option value= "<%= TurnoVO.MANHA %>" > <%= TurnoVO.MANHA.getTurno() %> </option>
-		<option value="<%= TurnoVO.NOITE %>" > <%= TurnoVO.NOITE.getTurno() %> </option>
-		<option value="<%= TurnoVO.TARDE %>" > <%= TurnoVO.TARDE.getTurno() %> </option>
-	</select>
 	
 	Consumidor : 
-	<select name= "consumidor">
-		<% for(Consumidor consumidor : consumidoresDisponiveis) { %>
-		
-		<option value="<%= consumidor.getCpf() %>" > <%= consumidor.getNome() %> </option>
-		
-		<%} %>
-		
-	</select>
 	
 	Refeição : 
-	<select name= "refeicao">
-		<% for(Refeicao refeicao: refeicoesDisponiveis) { %>
-		
-		<option value="<%= refeicao.getIdRefeicao()%>" > <%= refeicao.getDescricao() %> </option>
-		
-		<%} %>
-		
-	</select>
-	
-	<input type="submit" name="acaoCriar" value="Calcular Preco">
 	
 	Preco: <input type="text" name="preco" readonly />
 	

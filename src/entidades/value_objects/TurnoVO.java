@@ -24,5 +24,18 @@ public enum TurnoVO {
 		return turno;
 	}
 	
-
+	public static TurnoVO turnoVO(String turno)
+	{
+		if (turno.equals(TurnoVO.MANHA.getTurno()))
+			return TurnoVO.MANHA;
+		if (turno.equals(TurnoVO.TARDE.getTurno()))
+			return TurnoVO.TARDE;
+		if (turno.equals(TurnoVO.NOITE.getTurno()))
+			return TurnoVO.NOITE;
+		
+		return null;
+		
+	}
+	
+	
 }

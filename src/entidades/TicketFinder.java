@@ -12,7 +12,7 @@ public class TicketFinder implements Serializable
 {
 
 
-	public static Collection<Ticket> _listarTicketsDisponiveis() throws Exception
+	public static Collection<Ticket> getAll() throws Exception
 	{
 
 		Collection<Ticket> colTicket = new ArrayList<Ticket>();
@@ -26,7 +26,8 @@ public class TicketFinder implements Serializable
 		
 		while (rs.next())
 		{
-			colTicket.add(Ticket.load(rs));
+			Ticket _ticket = new Ticket();
+			colTicket.add(_ticket.load(rs));
 		}
 
 		Conexao.closeConnection();
@@ -34,7 +35,7 @@ public class TicketFinder implements Serializable
 	}
 
 
-	public static Ticket _buscarTicket(int idTicket) throws Exception
+	public static Ticket get(int idTicket) throws Exception
 	{
 		Ticket ticket = null;
 		
@@ -44,12 +45,13 @@ public class TicketFinder implements Serializable
 		
 		PreparedStatement psmt = Conexao.prepare(prepare);
 		
-		psmt.setInt(1, ticket.getIdTicket());
+		psmt.setInt(1, idTicket);
 		ResultSet rs = psmt.executeQuery();
 
 		if (rs.next())
 		{
-			ticket = Ticket.load(rs);
+			Ticket _ticket = new Ticket();
+			ticket = _ticket.load(rs);
 		}
 
 		Conexao.closeConnection();
