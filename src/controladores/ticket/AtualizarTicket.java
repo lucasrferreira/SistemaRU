@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import controladores.ccu.GerirTicket;
 import entidades.Ticket;
 
 @WebServlet("/AtualizarTicket")
 public class AtualizarTicket extends HttpServlet
 {
 	private static final long	serialVersionUID	= 1L;
-
+	Ticket ticket = new Ticket();
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 
@@ -42,8 +42,8 @@ public class AtualizarTicket extends HttpServlet
 		int idTicket = Integer.parseInt(request.getParameter("idTicket"));
 		try
 		{
-			Ticket ticket = GerirTicket.buscarTicket(idTicket);
-			request.setAttribute("ticket antigo", ticket);
+			Ticket _ticket = ticket.buscarTicket(idTicket);
+			request.setAttribute("ticket antigo", _ticket);
 			request.getRequestDispatcher("WEB-INF/ticket/AtualizarTicket.jsp").forward(request, response);
 		} catch (Exception e)
 		{
@@ -55,13 +55,11 @@ public class AtualizarTicket extends HttpServlet
 	private void atualizarTicketAntigo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		int idTicket = Integer.parseInt(request.getParameter("idTicket"));
-		double valor = (Double.parseDouble(request.getParameter("valor")));
-		int refeicao = Integer.parseInt(request.getParameter("refeicao"));
-		String consumidor = request.getParameter("consumidor");
+		boolean pago = Boolean.getBoolean(request.getParameter("pago"));
 
 		try
 		{
-			GerirTicket.atualizarTicket(idTicket, valor, consumidor, refeicao);
+			ticket.atualizarTicket(idTicket, pago);
 			request.getRequestDispatcher("ListarDepartamento").forward(request, response);
 		} catch (Exception e)
 		{

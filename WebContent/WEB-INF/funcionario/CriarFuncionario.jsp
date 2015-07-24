@@ -18,9 +18,9 @@
 <body>
 	<form action="CriarFuncionario" method="post">
 	Nome : <input type="text" name ="nome" value = "">
-	Matricula : <input type="text" name ="matricula" value = "">
-	CPF : <input type="text" name ="cpf" value = "">
-	Ano : <input type="text" name ="anoIngresso" value = "">
+	Matricula : <input type="text" name ="matricula" value = 0>
+	CPF : <input type="text" name ="cpf" >
+	Ano : <input type="text" name ="anoIngresso" >
 	Sexo : 
 	<select name ="sexo">
 		<option value = "<%= Sexo.FEMININO.getSexo() %>"><%= Sexo.FEMININO.getSexo() %></option>

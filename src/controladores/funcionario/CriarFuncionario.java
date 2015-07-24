@@ -47,10 +47,12 @@ public class CriarFuncionario extends HttpServlet
 		{
 			Departamento departamento = new Departamento();
 			request.setAttribute("DepartamentosDisponiveis", departamento.listarDepartamentos());
+			request.getRequestDispatcher("WEB-INF/funcionario/CriarFuncionario.jsp").forward(request, response);
+
 		} catch (Exception e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("message", e.getMessage());
+			request.getRequestDispatcher("WEB-INF/funcionario/CriarFuncionario.jsp").forward(request, response);
 		}
 
 		request.getRequestDispatcher("WEB-INF/funcionario/CriarFuncionario.jsp").forward(request, response);
@@ -58,9 +60,23 @@ public class CriarFuncionario extends HttpServlet
 
 	private void criarFuncionario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
+		int ano, matricula = 0;
 		String nome = (String) request.getParameter("nome");
-		int matricula = (Integer.parseInt(request.getParameter("matricula")));
-		int ano = (Integer.parseInt(request.getParameter("anoIngresso")));
+		try
+		{
+			matricula = (Integer.parseInt(request.getParameter("matricula")));
+		} catch (Exception e)
+		{
+			matricula = 0;
+		}
+		try
+		{
+			ano = (Integer.parseInt(request.getParameter("anoIngresso")));
+		} catch (Exception e)
+		{
+			ano = 0;
+		}
+		
 		String sexo = (String) request.getParameter("sexo");
 		String cpf = (String) request.getParameter("cpf");
 		String titulo = (String) request.getParameter("titulo");
@@ -73,8 +89,9 @@ public class CriarFuncionario extends HttpServlet
 			request.getRequestDispatcher("ListarFuncionario").forward(request, response);
 		} catch (Exception e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("message", e.getMessage());
+			request.getRequestDispatcher("CriarFuncionario").forward(request, response);
+			
 		}
 
 	}
